@@ -26,7 +26,7 @@ function Header() {
   const serviceMenu = (
     <Menu>
       <Menu.Item key="1">
-        <Link to="/service/cleaning">Commission</Link>
+        <Link to="/service/cleaning">Assigments</Link>
       </Menu.Item>
       <Menu.Item key="2">
         <Link to="/service/maintenance">Maintenance</Link>
