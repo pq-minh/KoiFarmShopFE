@@ -9,6 +9,8 @@ import PrivateRoute from "./component/private-route";
 import Register from "./page/register";
 import FishMenu from "./page/fish"; 
 import ServiceMenu from "./page/service"; 
+import UserInfor from "./page/user-infor/user"
+import KoiAssigment from "./page/koi-assigment/index";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -31,6 +33,10 @@ const App = () => {
       ],
     },
     {
+      path: "userinfor",
+      element: <UserInfor />,
+    },
+    {
       path: "register",
       element: <Register />,
     },
@@ -47,7 +53,10 @@ const App = () => {
       path: "service/maintenance",
       element: <ServiceMenu />,
     },       
-      
+    {
+      path: "koi-assigment",
+      element: <KoiAssigment/>
+    }
   ]);
 
   return (

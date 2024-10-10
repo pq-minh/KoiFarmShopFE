@@ -11,9 +11,8 @@ const Register = () => {
   const handleRegister = async (values) => {
     console.log(values);
 
-    try {
-      
-      const response = await api.post("register", values);
+    try {     
+      const response = await api.post("user/register", values);
       const { token } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(response.data));
@@ -116,8 +115,8 @@ const Register = () => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
-                  label="Username"
-                  name="username"
+                  label="Email"
+                  name="email"
                   rules={[
                     {
                       required: true,
@@ -125,28 +124,9 @@ const Register = () => {
                     },
                   ]}
                 >
-                  <Input type="text" placeholder="Username" />
+                  <Input type="text" placeholder="Email" />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your email!",
-                      type: "email",
-                    },
-                  ]}
-                >
-                  <Input type="email" placeholder="Email" />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            
-            <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
                   label="Phone Number"
@@ -154,25 +134,11 @@ const Register = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please enter your phone number!",
+                      message: "Please enter your Phone Number",        
                     },
                   ]}
                 >
-                  <Input type="text" placeholder="Phone Number" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Address"
-                  name="address"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your address!",
-                    },
-                  ]}
-                >
-                  <Input type="text" placeholder="Address" />
+                  <Input type="phone" placeholder="phoneNumber" />
                 </Form.Item>
               </Col>
             </Row>
@@ -186,11 +152,43 @@ const Register = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please enter a password!",
+                      message: "Please enter your password!",
                     },
                   ]}
                 >
                   <Input type="password" placeholder="Password" />
+                </Form.Item>
+              </Col>
+              {/* <Col span={12}>
+                <Form.Item
+                  label="Address"
+                  name="address"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter your address!",
+                    },
+                  ]}
+                >
+                  <Input type="text" placeholder="Address" />
+                </Form.Item>
+              </Col> */}
+            </Row>
+
+            
+            <Row gutter={16}>
+              <Col span={24}>
+                <Form.Item
+                  label="Confirm Password"
+                  name="Confirmpassword"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter Confirm Password!",
+                    },
+                  ]}
+                >
+                  <Input type="password" placeholder="Confirm password" />
                 </Form.Item>
               </Col>
             </Row>

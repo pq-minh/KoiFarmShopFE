@@ -1,24 +1,25 @@
-import { Button, Form, Input } from "antd";
+import { Button, ColorPicker, Form, Input } from "antd";
 import "./index.scss";
 import api from "../../config/axios";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import { useState } from "react";
 
 const Login = () => {
+  const [error,setError] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (values) => {
     console.log(values);
-
+    
     try {
-      const response = await api.post("/user/login", values);
+      const response = await api.post("user/login", values);
       const { token } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(response.data));
       navigate("/");
     } catch (err) {
-      console.log(err);
-      alert(err.response.data);
+      setError(true);
     }
   };
 
@@ -56,12 +57,12 @@ const Login = () => {
 
             <Form.Item
               label="Email"
-              name="email"
+              name="Email"
               rules={[
-                { required: true, message: "Vui lòng nhập email!" },
+                { required: true, message: "Vui lòng nhập tên đăng nhập!" },
               ]}
             >
-              <Input type="text" placeholder="Email" />
+              <Input type="Email" placeholder="Email" />
             </Form.Item>
 
             <Form.Item
@@ -71,7 +72,12 @@ const Login = () => {
             >
               <Input type="password" placeholder="Password" />
             </Form.Item>
-
+            {/* Check if invalid user name or password */}
+            { error == true ? (
+              <p style={{color:"red"}}>Invalid UserName or Password</p>
+            ) :(
+              <p></p>
+            ) }
             <Form.Item>
               <Button type="primary" htmlType="submit" block>
                 Login

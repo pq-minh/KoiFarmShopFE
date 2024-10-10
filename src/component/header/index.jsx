@@ -1,8 +1,11 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, { useState }from "react";
+import { useEffect } from "react";
+
 import "./index.scss";
-import { Button, Dropdown, Menu } from "antd";
+import { Button, Dropdown, Menu  , Avatar, Space} from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { UserOutlined } from '@ant-design/icons';
 import {
   DownOutlined,
   ShoppingCartOutlined,
@@ -12,8 +15,13 @@ import {
 
 
 function Header() {
-  const navigate = useNavigate();
 
+  
+  const navigate = useNavigate();
+  const [token, setToken] = useState();
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
 
   const serviceMenu = (
     <Menu>
@@ -84,7 +92,9 @@ function Header() {
             </Link>
           </li>       
           <li>
-            <Button
+          {
+            token == null ? (
+              <Button
               type="primary"
               className="login-button"
               onClick={() => {
@@ -93,6 +103,20 @@ function Header() {
             >
               Login
             </Button>
+            ):( 
+              <Space direction="vertical" size={16}>
+          <Space wrap size={16}>
+            <Avatar  size={64} 
+             onClick={() => {
+            navigate("/userinfor"); // Điều hướng đến trang đăng nhập
+           }}
+          style={{ cursor: 'pointer' }} // Thêm con trỏ chuột để báo hiệu có thể nhấp
+             icon={<UserOutlined />}  />
+          </Space>
+        </Space>
+            )
+          }
+           
           </li>
         </ul>
       </nav>
