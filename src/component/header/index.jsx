@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState }from "react";
 import { useEffect } from "react";
-
+import { jwtDecode } from "jwt-decode";
 import "./index.scss";
 import { Button, Dropdown, Menu  , Avatar, Space} from "antd";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,13 +15,35 @@ import {
 
 
 function Header() {
-
-  
   const navigate = useNavigate();
-  const [token, setToken] = useState();
+  const [role, setRole] = useState(null);
+  const [token, setToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    setToken(localStorage.getItem("token"));
-  }, []);
+    const storedToken = localStorage.getItem("token");
+    setToken(storedToken);
+
+    if (storedToken) {
+      try {
+        const decodedToken = jwtDecode(storedToken);
+        console.log(decodedToken.role);
+        setRole(decodedToken.role); // Lưu vai trò vào state
+      } catch (error) {
+        console.error("Failed to decode token", error);
+        navigate("/"); // Điều hướng đến trang Home nếu có lỗi
+      }
+    } else {
+      navigate("/"); // Điều hướng đến trang Home nếu không có token
+    }
+
+    setIsLoading(false); // Kết thúc trạng thái loading
+  }, [navigate]);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Hiển thị khi đang xác thực
+  }
+
 
   const serviceMenu = (
     <Menu>
@@ -54,6 +76,16 @@ function Header() {
               Home
             </Link>
           </li>
+          {
+            role == "Staff" && (
+              <li>
+            <Link to="/" className="text-dark text-decoration-none">
+              Manage User
+            </Link>
+          </li>
+            )
+          }
+
           <li>
           <Link to="/fish" className="text-dark text-decoration-none">
               Fish

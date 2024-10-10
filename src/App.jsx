@@ -56,6 +56,15 @@ const App = () => {
     {
       path: "koi-assigment",
       element: <KoiAssigment/>
+    },{
+      path: "koi-assigment",
+      element: <PrivateRoute allowedRoles={['Staff', 'admin']} />, // Kiểm tra vai trò
+      children: [
+        {
+          path: "",
+          element: <KoiAssigment />,
+        }
+      ]
     }
   ]);
 
