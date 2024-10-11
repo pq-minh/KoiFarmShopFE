@@ -11,7 +11,7 @@ import FishMenu from "./page/fish";
 import ServiceMenu from "./page/service"; 
 import UserInfor from "./page/user-infor/user"
 import KoiAssigment from "./page/koi-assigment/index";
-
+import StaffPage from "./page/staff/staff";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -57,12 +57,12 @@ const App = () => {
       path: "koi-assigment",
       element: <KoiAssigment/>
     },{
-      path: "koi-assigment",
-      element: <PrivateRoute allowedRoles={['Staff', 'admin']} />, // Kiểm tra vai trò
+      path: "staff",
+      element: <PrivateRoute allowedRoles={['Staff']} />, 
       children: [
         {
           path: "",
-          element: <KoiAssigment />,
+          element: <StaffPage />,
         }
       ]
     }

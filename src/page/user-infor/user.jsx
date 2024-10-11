@@ -21,6 +21,7 @@ const UserInfor = () => {
 
   /* set token after fetch API */
   const [token, setToken] = useState();
+  const [roleuser,setRole] = useState(null);
   const [userData, setUserData] = useState(null);
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -29,6 +30,7 @@ const UserInfor = () => {
       try {
         const decodedData = jwtDecode(storedToken);
         setUserData(decodedData);
+        setRole(decodedData.role);
         console.log(decodedData);
       } catch (error) {
         console.error("Invalid token", error);
@@ -96,8 +98,8 @@ const UserInfor = () => {
                     <ChangePassword/>
                    ) : wizard === "Shipping Addresses" ?(
                     <Address/>
-                   ) :(
-                    null
+                   ) : wizard === "Manager Assigment"(
+
                    )
                   }
               

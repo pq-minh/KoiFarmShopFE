@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useState,useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import * as jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 const PrivateRoute = ({ allowedRoles }) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +14,7 @@ const PrivateRoute = ({ allowedRoles }) => {
     }
 
     try {
-      const decodedToken = jwt_decode(token);
+      const decodedToken = jwtDecode(token);
       const userRole = decodedToken.role; // Giả sử token có trường 'role'
 
       // Kiểm tra xem vai trò của người dùng có nằm trong danh sách vai trò được phép không

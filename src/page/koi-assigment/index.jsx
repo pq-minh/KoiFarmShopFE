@@ -85,9 +85,7 @@ const KoiAssigment =() => {
                 status: "Pending",
                      Quotations: [
                          {
-                                UserId: 2, // Thay thế bằng giá trị thực tế
-                                 User: { Id: 1, Name: "John Doe" },
-                                 createdate: values.assigmentdate.toISOString().split('T')[0],
+                                createdate: values.assigmentdate.toISOString().split('T')[0],
                                 price : 0,
                                 status: "Pending",
                          }
@@ -102,7 +100,7 @@ const KoiAssigment =() => {
     console.log(formData);
 
     // Gửi formData
-    const response = await api.post("request/CreateRequest", formData);
+    const response = await api.post("request/create-request", formData);
     if (response.status === 200) {
       message.success('Package created successfully.');
     }

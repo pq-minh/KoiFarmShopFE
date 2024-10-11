@@ -3,7 +3,7 @@ import React, { useState }from "react";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import "./index.scss";
-import { Button, Dropdown, Menu  , Avatar, Space} from "antd";
+import { Button, Dropdown, Menu  , Avatar, Space, Flex} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { UserOutlined } from '@ant-design/icons';
 import {
@@ -28,10 +28,10 @@ function Header() {
       try {
         const decodedToken = jwtDecode(storedToken);
         console.log(decodedToken.role);
-        setRole(decodedToken.role); // Lưu vai trò vào state
+        setRole(decodedToken.role); 
       } catch (error) {
         console.error("Failed to decode token", error);
-        navigate("/"); // Điều hướng đến trang Home nếu có lỗi
+        navigate("/"); 
       }
     } else {
       navigate("/"); // Điều hướng đến trang Home nếu không có token
@@ -79,7 +79,7 @@ function Header() {
           {
             role == "Staff" && (
               <li>
-            <Link to="/" className="text-dark text-decoration-none">
+            <Link to="/staff" className="text-dark text-decoration-none " >
               Manage User
             </Link>
           </li>
@@ -138,11 +138,11 @@ function Header() {
             ):( 
               <Space direction="vertical" size={16}>
           <Space wrap size={16}>
-            <Avatar  size={64} 
+            <Avatar  size={64}  
              onClick={() => {
             navigate("/userinfor"); // Điều hướng đến trang đăng nhập
            }}
-          style={{ cursor: 'pointer' }} // Thêm con trỏ chuột để báo hiệu có thể nhấp
+          style={{ cursor: 'pointer',display:Flex,right:-190 }} // Thêm con trỏ chuột để báo hiệu có thể nhấp
              icon={<UserOutlined />}  />
           </Space>
         </Space>
