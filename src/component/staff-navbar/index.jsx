@@ -7,10 +7,9 @@ import MenuList from '../menuliststaff/menulist';
 import Toggle from '../toggle-theme/toggle';
 const { Header, Sider } = Layout;
 
-function StaffAction() {
+function StaffAction({onMenuClick}) {
     const [darkTheme, setDarkTheme] = useState(true);
     const [collapsed, setCollapsed] = useState(false);
-    
     const toggleTheme = () => {
         setDarkTheme(!darkTheme);
     };
@@ -19,14 +18,18 @@ function StaffAction() {
         token: { colorBgContainer },
     } = theme.useToken();
 
+    const handleMenuClick = (key) => {
+        onMenuClick(key); // Gọi hàm từ prop với key nhấp
+    };
+
     return (
         <Layout>
             <Sider theme={darkTheme ? 'dark' : 'light'} className="sidebar" collapsed={collapsed} collapsible trigger={null}>         
                 <Logo />
-                <MenuList darkTheme={darkTheme} />
+                <MenuList darkTheme={darkTheme} onMenuClick={handleMenuClick} />
                 <Toggle darkTheme={darkTheme} toggleTheme={toggleTheme} />
             </Sider>
-            <Layout>
+            <Layout className='nav-content'>
                 <Header style={{ padding: 0, background: colorBgContainer }}>
                     <Button 
                         className="navbar-toggler" 

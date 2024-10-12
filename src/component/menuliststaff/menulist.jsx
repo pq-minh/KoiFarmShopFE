@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Menu } from 'antd'
 import { HomeOutlined,AppstoreOutlined,BarsOutlined, AreaChartOutlined,ProfileOutlined } from '@ant-design/icons'
-const MenuList = ({darkTheme}) => {
-  return (
+const MenuList = ({darkTheme, onMenuClick}) => {
+
+    return (
     <div>
-            <Menu theme={ darkTheme ? 'dark' : 'light'} defaultSelectedKeys={['Home']} mode='inline' className='menu-bar'>
+            <Menu theme={ darkTheme ? 'dark' : 'light'} defaultSelectedKeys={['Home']} mode='inline' className='menu-bar' 
+                onClick={(e) => onMenuClick(e.key)}
+            >
                 <Menu.Item key="Home" icon={<HomeOutlined />}>
                     Home
-                </Menu.Item>
-                <Menu.Item key="Profile" icon={<ProfileOutlined />}>
-                    Profile
                 </Menu.Item>
                 <Menu.SubMenu key="manage" icon={<BarsOutlined />} title="Manage">
                     <Menu.Item key="assigment" >

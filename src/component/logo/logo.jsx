@@ -1,10 +1,10 @@
 import React from 'react'
-import { FireFilled } from '@ant-design/icons'
+import { FireFilled,HeatMapOutlined } from '@ant-design/icons'
 const Logo = () => {
   return (
     <div className="logo">
         <div classname="logo-icon" >
-            <FireFilled/>
+        <HeatMapOutlined />
         </div>
     </div>
   )
