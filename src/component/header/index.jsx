@@ -10,10 +10,19 @@ import {
   BellOutlined
 } from "@ant-design/icons";
 
-
 function Header() {
   const navigate = useNavigate();
-
+ 
+  const FishOption = (
+    <Menu>
+      <Menu.Item key="1">
+        <Link to="/fish/single">Single</Link>
+      </Menu.Item>
+      <Menu.Item key="2">
+        <Link to="/fish/batch">Batch</Link>
+      </Menu.Item>
+    </Menu>
+  );
 
   const serviceMenu = (
     <Menu>
@@ -47,9 +56,14 @@ function Header() {
             </Link>
           </li>
           <li>
-          <Link to="/fish" className="text-dark text-decoration-none">
-              Fish
-            </Link>
+            <Dropdown overlay={FishOption}>
+              <a
+                className="ant-dropdown-link text-dark text-decoration-none"
+                onClick={(e) => e.preventDefault()}
+              >
+                Fish <DownOutlined className="dropdown-icon" />
+              </a>
+            </Dropdown>
           </li>
           <li>
             <Dropdown overlay={serviceMenu}>
@@ -60,7 +74,7 @@ function Header() {
                 Service <DownOutlined className="dropdown-icon" />
               </a>
             </Dropdown>
-          </li>          
+          </li>
           <li>
             <Link to="/" className="text-dark text-decoration-none">
               Feedbacks
@@ -71,18 +85,16 @@ function Header() {
               <ShoppingCartOutlined style={{ fontSize: "24px" }} /> Cart
             </Link>
           </li>
-
           <li>
-            <Link to="/" className="text-blue text-decoration-none">
+            <Link to="/allproduct" className="text-blue text-decoration-none">
               <SearchOutlined style={{ fontSize: "24px" }} /> Search
             </Link>
-          </li>   
-
+          </li>
           <li>
             <Link to="/" className="text-dark text-decoration-none">
-            <BellOutlined style={{ fontSize: "25px"}}/>
+              <BellOutlined style={{ fontSize: "25px" }} />
             </Link>
-          </li>       
+          </li>
           <li>
             <Button
               type="primary"

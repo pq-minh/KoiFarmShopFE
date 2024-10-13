@@ -7,8 +7,10 @@ import Login from "./page/login";
 import Dashboard from "./page/admin";
 import PrivateRoute from "./component/private-route";
 import Register from "./page/register";
-import FishMenu from "./page/fish"; 
+import SingleKoi from "./page/fish/Single"; 
 import ServiceMenu from "./page/service"; 
+import BatchKoi from "./page/fish/batch";
+import AllProduct from "./page/fish/allproduct";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -35,10 +37,13 @@ const App = () => {
       element: <Register />,
     },
     {
-      path: "fish", 
-      element: <FishMenu />,
+      path: "/fish/single", 
+      element: <SingleKoi />,
     },
-    
+    {
+      path: "/fish/batch",
+      element: <BatchKoi/>
+    },
     {
       path: "service/cleaning",
       element: <ServiceMenu />,
@@ -46,7 +51,11 @@ const App = () => {
     {
       path: "service/maintenance",
       element: <ServiceMenu />,
-    },       
+    },   
+    {
+      path: "allproduct",
+      element: <AllProduct />
+    }    
       
   ]);
 
