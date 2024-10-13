@@ -19,7 +19,7 @@ function StaffAction({onMenuClick}) {
     } = theme.useToken();
 
     const handleMenuClick = (key) => {
-        onMenuClick(key); // Gọi hàm từ prop với key nhấp
+        onMenuClick(key); 
     };
 
     return (

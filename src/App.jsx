@@ -13,6 +13,7 @@ import UserInfor from "./page/user-infor/user"
 import KoiAssigment from "./page/koi-assigment/index";
 import StaffPage from "./page/staff/staff";
 import Shop from "./page/shop/Shop";
+import Details from "./page/productdetails/Details";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const App = () => {
     {
       path: "service/cleaning",
       element: <ServiceMenu />,
+    },
+    {
+      path: "details",
+      element: <Details/>,
     },
     {
       path: "service/maintenance",
