@@ -12,6 +12,7 @@ import ServiceMenu from "./page/service";
 import UserInfor from "./page/user-infor/user"
 import KoiAssigment from "./page/koi-assigment/index";
 import StaffPage from "./page/staff/staff";
+import Shop from "./page/shop/Shop";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -41,8 +42,8 @@ const App = () => {
       element: <Register />,
     },
     {
-      path: "fish", 
-      element: <FishMenu />,
+      path: "shop", 
+      element: <Shop />,
     },
     
     {

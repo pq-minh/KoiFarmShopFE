@@ -1,0 +1,16 @@
+.filter-box{
+    display: flex;
+   position: relative;
+   top: 5px;
+   left: 70px;
+   .name-box{
+    margin-bottom: 15px;
+   }
+   .price-box{
+    margin-bottom: 15px;
+   }
+   .category-box{
+    margin-bottom: 25px;
+
+   }
+}

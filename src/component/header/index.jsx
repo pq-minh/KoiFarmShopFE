@@ -87,8 +87,8 @@ function Header() {
           }
 
           <li>
-          <Link to="/fish" className="text-dark text-decoration-none">
-              Fish
+          <Link to="/shop" className="text-dark text-decoration-none">
+              Koi Shop
             </Link>
           </li>
           <li>

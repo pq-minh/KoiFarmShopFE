@@ -19,7 +19,7 @@ const KoiAssigment = () => {
               headers: {
                 'Authorization': `Bearer ${token}`, 
                 'Content-Type': 'application/json-patch+json',
-              },
+              },  
             });            
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
@@ -32,24 +32,28 @@ const KoiAssigment = () => {
         };       
         fetchData('https://localhost:7228/api/quotation/get-quotation');
       }, []);
+
       //
       const handleUpdate =  (record) => {
+        //dua record vao state
         setSelectedRecord(record);
+        //dua form vao state
         setFormData({field1:record.price, field2:record.note});
+        //Hien bang 
         setModalvisible(true);
       };
-      //
+      //Handle Ok button click
       const handleOk = async () => {
         const {quotationId,requestId } = selectedRecord
         const updatedData = {
           quotationId,
           requestId,
           price: formData.field1,
+          note: formData.field2
         }
         try {     
           const response = await api.post("quotation/updateprice", updatedData);
           if (response.status === 200) {
-              // Có thể thực hiện một số hành động sau khi cập nhật thành công
               console.log('Update successful:', response.data);
           }
       } catch (err) {
@@ -58,9 +62,12 @@ const KoiAssigment = () => {
         setModalvisible(false);
     };
 
+    //Handle Cancel button click
     const handleCancel = () => {
         setModalvisible(false);
     };
+
+    //Config table 
       const columns = [
         {
             title: 'Quotation ID',

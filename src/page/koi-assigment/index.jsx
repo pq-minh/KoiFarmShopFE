@@ -61,24 +61,24 @@ const KoiAssigment =() => {
         origin: values.origin,
         description: values.description,
         gender: values.gender,
-        image: downloadURL, // Sử dụng downloadURL đã lấy
+        image: downloadURL, 
         age: values.age,
         weight: values.weight,
         size: values.size,
         personality: values.personality,
-        status: "Assigment", // Hoặc bất kỳ giá trị nào bạn muốn
-        fishTypeId: values.category, // Thay thế bằng giá trị thực tế
+        status: "Assigment", 
+        fishTypeId: values.category, 
         Packages: [
           {
-            quantity: 1, // Hoặc lấy từ đâu đó nếu cần
+            quantity: 1, 
             batchKoiId: null,
             Requests: [
               {
-                UserId: 2, // Thay thế bằng giá trị thực tế
+                UserId: 2, 
                 User: { Id: 1, Name: "John Doe" },
-                createdDate: values.assigmentdate.toISOString().split('T')[0],
+                createdDate: values.assigmentdate,
                 relationalRequestId: 5,
-                consignmentDate: values.assigmentdate.toISOString().split('T')[0],
+                consignmentDate: values.assigmentdate,
                 endDate: values.enddate.toISOString().split('T')[0],
                 agreementPrice: 0,
                 typeRequest: values.type,
