@@ -1,8 +1,22 @@
+
 .filter-box{
+    
     display: flex;
    position: relative;
    top: 5px;
    left: 70px;
+   border-radius: 15px;
+   h3{
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+   }
+   .filter{
+    background-color: whitesmoke;
+    padding:10px 10px;
+    height: 530px;
+    border-radius: 10px;
+    margin-top: 55px;
+   }
    .name-box{
     margin-bottom: 15px;
    }
@@ -11,6 +25,5 @@
    }
    .category-box{
     margin-bottom: 25px;
-
    }
 }

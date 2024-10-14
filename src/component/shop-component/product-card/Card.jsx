@@ -14,7 +14,7 @@ const CardProduct = ({products}) => {
             
             <Card
             hoverable
-            style={{ width: 240,height:558,marginBottom:30, borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', backgroundColor: '#C7E2FA' }}
+            style={{ width: 240,height:578,marginRight:30,marginBottom:30, borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', backgroundColor: '#C7E2FA' }}
             cover={
                 <div style={{ position: 'relative' }} className='img-content'>
                 <img
@@ -45,7 +45,7 @@ const CardProduct = ({products}) => {
                  {isTruncated ? `${product.description.slice(0, maxLength)}...` : product.description}
              </p>
             </div>
-            <h5 style={{ color: '#ff4d4f', fontSize:"18px " }} className='price'>Giá bán:{product.price}.000 VND</h5>
+            <h5 style={{ color: '#fff', fontSize:"18px " }} className='price-cart'>Giá bán:{product.price}.000 VND</h5>
           </Card>
           )
 

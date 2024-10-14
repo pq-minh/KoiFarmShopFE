@@ -20,6 +20,42 @@ function Header() {
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const items = [
+    {
+      key: '1',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" onClick={() => {
+          navigate("/userinfor  ");
+        }}>
+          Profile Setting
+        </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+          Manager Order
+        </a>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+          Manager Assigments
+        </a>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+          Log out
+        </a>
+      ),
+    },
+  ];
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     setToken(storedToken);
@@ -136,16 +172,16 @@ function Header() {
               Login
             </Button>
             ):( 
-              <Space direction="vertical" size={16}>
-          <Space wrap size={16}>
-            <Avatar  size={64}  
-             onClick={() => {
-            navigate("/userinfor"); // Điều hướng đến trang đăng nhập
-           }}
-          style={{ cursor: 'pointer',display:Flex,right:-190 }} // Thêm con trỏ chuột để báo hiệu có thể nhấp
-             icon={<UserOutlined />}  />
-          </Space>
-        </Space>
+              <Dropdown
+        menu={{
+          items,
+        }}
+        placement="bottomLeft"
+      >
+      <a className="avatar">
+         <Avatar size={50} icon={<UserOutlined />} />  
+         </a>
+      </Dropdown>
             )
           }
            

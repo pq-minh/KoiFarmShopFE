@@ -57,7 +57,7 @@
 .card-container {
     display: flex;
     flex-wrap: wrap; 
-    justify-content: space-between; 
+    justify-content: start; 
   }
 
 .img-content img{
@@ -71,4 +71,14 @@
     display: -webkit-box; // For webkit browsers
     -webkit-line-clamp: 4; // Limit to 3 lines
     -webkit-box-orient: vertical; 
+}
+.price-cart{
+    display: flex;
+    margin-top: 15px;
+    color: #fff;
+    background-color: rgb(236, 84, 84);
+    padding: 3px;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
 }
