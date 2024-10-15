@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card} from 'antd';
-import { ShoppingCartOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, DollarOutlined } from '@ant-design/icons';
 import "./index.scss"
 const { Meta } = Card;
 const CardProduct = ({products}) => {
@@ -14,30 +14,24 @@ const CardProduct = ({products}) => {
             
             <Card
             hoverable
-            style={{ width: 240,height:578,marginRight:30,marginBottom:30, borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', backgroundColor: '#C7E2FA' }}
+            style={{ width: 240,height:440,marginRight:30,marginBottom:30, borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', backgroundColor: 'whitesmoke' }}
             cover={
                 <div style={{ position: 'relative' }} className='img-content'>
                 <img
                   alt="example"
                   src={product.image}
-                  style={{ borderTopLeftRadius: '10px', borderTopRightRadius: '10px', width: '100%' }}
+                  style={{ width: '95%'}}
                 />
                 <div className='detail'>
-                  <p className='size'>Nguồn gốc: Koi Nhật</p>
+                  <p className='size'>Nguồn gốc: {product.origin}</p>
                   <p className='size'>Cân nặng: {product.weight} kg</p>
                   <p className='size'>Tuổi: {product.age} năm</p>
                   <p className='size'>Kích thước: {product.size} cm</p>
                 </div>
                 </div>                         
             }
-            
-            actions={[
-                <div className='button-add'>
-                <ShoppingCartOutlined key="Add Cart" className='cart-icon'/>
-                <p className='text-cart'>Add to cart</p>
-                </div>,
-                
-            ]}   
+             className='card'
+  
           >
             <Meta title={product.name}  className='title' />
             <div className='description' style={{ height: '100px', overflow: 'hidden' }}> 
@@ -45,7 +39,12 @@ const CardProduct = ({products}) => {
                  {isTruncated ? `${product.description.slice(0, maxLength)}...` : product.description}
              </p>
             </div>
-            <h5 style={{ color: '#fff', fontSize:"18px " }} className='price-cart'>Giá bán:{product.price}.000 VND</h5>
+            <h5 style={{ fontSize:"15px " }} className='price-cart'><DollarOutlined style={{marginRight:5}}/> {product.price}.000 VND</h5>
+            <div className='button-add'>
+               <div className='icon-cn'>
+                <ShoppingCartOutlined key="Add Cart" className='cart-icon' />
+                </div>
+            </div>,    
           </Card>
           )
 

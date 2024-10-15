@@ -17,7 +17,7 @@ const HorizonFilter = () => {
     <p>Sản phẩm: </p>
     <div className='koi-batch'> 
         <Radio.Group onChange={onChange} value={value} style={{fontSize:20}}>
-         <Radio value={koi}>Koi</Radio>
+         <Radio value={1}>Koi</Radio>
          <Radio value={2}>Batch Koi</Radio>
         </Radio.Group>
         </div>

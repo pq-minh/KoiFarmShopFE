@@ -19,7 +19,7 @@ const Shop = () => {
     useEffect(() => {
         const fetchKoiData = async () => {
           try {
-            const response = await api.get("kois/GetAllKoi");
+            const response = await api.get("kois");
             if (response.status === 200) {
               setProducts(response.data);
             }

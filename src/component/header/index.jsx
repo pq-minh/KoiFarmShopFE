@@ -25,7 +25,7 @@ function Header() {
       key: '1',
       label: (
         <a target="_blank" rel="noopener noreferrer" onClick={() => {
-          navigate("/userinfor  ");
+          navigate("/userinfor");
         }}>
           Profile Setting
         </a>
@@ -35,15 +35,15 @@ function Header() {
       key: '2',
       label: (
         <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-          Manager Order
+            Order History
         </a>
       ),
     },
     {
-      key: '3',
+      key: '3', 
       label: (
         <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-          Manager Assigments
+          Assigments History
         </a>
       ),
     },

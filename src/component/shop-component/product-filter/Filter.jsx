@@ -23,7 +23,7 @@ const Filter = ({ setData }) => {
       //
       const onClickHandle = () =>{
         const priceRange = selectedPrice.split("-");
-         const fromPrice = priceRange[0]; 
+        const fromPrice = priceRange[0]; 
         const toPrice = priceRange[1]
         const newData ={
           koiName: selectedKoi,
@@ -38,7 +38,7 @@ const Filter = ({ setData }) => {
         if (filterData) {
             const fetchKoiData = async () => {
                 try {
-                    const response = await api.get("kois/GetAllKoiWithCondition", { params: filterData });
+                    const response = await api.get("Kois/modify", { params: filterData });
                     if (response.status === 200) {
                         setData(response.data); // Cập nhật dữ liệu nhận được
                     }
