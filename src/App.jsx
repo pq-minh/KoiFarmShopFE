@@ -7,13 +7,16 @@ import Login from "./page/login";
 import Dashboard from "./page/admin";
 import PrivateRoute from "./component/private-route";
 import Register from "./page/register";
-import FishMenu from "./page/fish"; 
+import SingleKoi from "./page/fish/Single"; 
 import ServiceMenu from "./page/service"; 
 import UserInfor from "./page/user-infor/user"
 import KoiAssigment from "./page/koi-assigment/index";
 import StaffPage from "./page/staff/staff";
 import Shop from "./page/shop/Shop";
 import Details from "./page/productdetails/Details";
+import BatchKoi from "./page/fish/batch";
+import AllProduct from "./page/fish/allproduct";
+
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -46,7 +49,14 @@ const App = () => {
       path: "shop", 
       element: <Shop />,
     },
-    
+    {
+      path: "/fish/single", 
+      element: <SingleKoi />,
+    },
+    {
+      path: "/fish/batch",
+      element: <BatchKoi/>
+    },
     {
       path: "service/cleaning",
       element: <ServiceMenu />,
@@ -62,7 +72,12 @@ const App = () => {
     {
       path: "koi-assigment",
       element: <KoiAssigment/>
-    },{
+    },
+    {
+      path: "assigment-history",
+      element: <KoiAssigment/>
+    },
+    {
       path: "staff",
       element: <PrivateRoute allowedRoles={['Staff']} />, 
       children: [
@@ -71,7 +86,12 @@ const App = () => {
           element: <StaffPage />,
         }
       ]
-    }
+    },   
+    {
+      path: "allproduct",
+      element: <AllProduct />
+    }    
+      
   ]);
 
   return (

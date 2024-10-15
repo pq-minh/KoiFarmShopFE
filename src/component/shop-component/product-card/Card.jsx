@@ -39,7 +39,7 @@ const CardProduct = ({products}) => {
                  {isTruncated ? `${product.description.slice(0, maxLength)}...` : product.description}
              </p>
             </div>
-            <h5 style={{ fontSize:"15px " }} className='price-cart'><DollarOutlined style={{marginRight:5}}/> {product.price}.000 VND</h5>
+            <h5 style={{ fontSize:"14px " }} className='price-cart'><DollarOutlined style={{marginRight:5}}/> {product.price}.000 VND</h5>
             <div className='button-add'>
                <div className='icon-cn'>
                 <ShoppingCartOutlined key="Add Cart" className='cart-icon' />
