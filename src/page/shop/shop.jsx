@@ -10,16 +10,28 @@ import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 const Shop = () => {
     const [products,setProducts] = useState([])
     const [filter,setFilter] = useState([])
+    const [koiorbatch,setKoiorBatch] = useState("Kois")
+    const [SortBy,setsortBy] = useState('')
     //
     const handleFilterData = (data) => {
       setFilter(data)
       setProducts(data)
     }
+    //
+    const handleFilterKoiOrBatch = (data) => {
+      setKoiorBatch(data);
+      console.log(data)
+    }
+     //
+     const handleShortBy = (data) => {
+      setsortBy(data);
+      console.log(data)
+    }
     //fetching koi 
     useEffect(() => {
         const fetchKoiData = async () => {
           try {
-            const response = await api.get("kois");
+            const response = await api.get(`${koiorbatch}`);
             if (response.status === 200) {
               setProducts(response.data);
             }
@@ -28,7 +40,7 @@ const Shop = () => {
           }
         };   
         fetchKoiData();
-      }, []);
+      }, [koiorbatch]);
       //fetching filter 
       
   return (
@@ -48,12 +60,12 @@ const Shop = () => {
   />
      <div className='row content'>
         <div className='col-md-3 filter-box'>
-            <Filter setData={handleFilterData}/>
+            <Filter setData={handleFilterData} KoiOrBatch={koiorbatch} setsortBy={SortBy}/>
         </div>
         <div className='row col-md-9 card-box'>
             <div className='col'>
             <div className='horizon-filter row'>
-              <HorizonFilter/>
+              <HorizonFilter setValue={handleFilterKoiOrBatch} setsortBy={handleShortBy}/>
             </div>
             <CardProduct products={products}/>   
             </div> 

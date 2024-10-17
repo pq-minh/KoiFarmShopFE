@@ -16,6 +16,8 @@ import Shop from "./page/shop/Shop";
 import Details from "./page/productdetails/Details";
 import BatchKoi from "./page/fish/batch";
 import AllProduct from "./page/fish/allproduct";
+import AssignmentHistory from "./page/assigmentHistory/assigmenthistory";
+import UserCart from "./page/usercart/UserCart";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -75,7 +77,7 @@ const App = () => {
     },
     {
       path: "assigment-history",
-      element: <KoiAssigment/>
+      element: <AssignmentHistory/>
     },
     {
       path: "staff",
@@ -90,7 +92,13 @@ const App = () => {
     {
       path: "allproduct",
       element: <AllProduct />
+    }
+    ,   
+    {
+      path: "cart",
+      element: <UserCart />
     }    
+          
       
   ]);
 

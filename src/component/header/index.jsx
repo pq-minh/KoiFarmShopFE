@@ -41,7 +41,9 @@ function Header() {
     {
       key: '3', 
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+        <a target="_blank" rel="noopener noreferrer" onClick={() => {
+          navigate("/assigment-history");
+        }} >
           Assigments History
         </a>
       ),
@@ -161,7 +163,7 @@ function Header() {
             </Link>
           </li>
           <li>
-            <Link to="/" className="text-blue text-decoration-none">
+            <Link to="/cart" className="text-blue text-decoration-none">
               <ShoppingCartOutlined style={{ fontSize: "24px" }} /> Cart
             </Link>
           </li>

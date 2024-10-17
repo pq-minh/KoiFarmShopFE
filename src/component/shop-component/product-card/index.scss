@@ -140,8 +140,9 @@
     display: -webkit-box; // For webkit browsers
     -webkit-line-clamp: 4; // Limit to 3 lines
     -webkit-box-orient: vertical; 
+    size: 14px;
 }
-.price-cart{
+.price-cart-koi{
     display: flex;
     margin-top: 15px;
     color: #000000;

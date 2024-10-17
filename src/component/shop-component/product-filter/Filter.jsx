@@ -3,15 +3,22 @@ import { Select} from 'antd';
 import "./index.scss"
 import { Input, Radio, Space,Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import { Slider, Switch } from 'antd';
+
 import api from "../../../config/axios";
-const Filter = ({ setData }) => {
+const Filter = ({ setData, KoiOrBatch, setsortBy }) => {
     const listKoiName = ["Onwa","Kohaku","Ogon","Showa","Tancho","Asagi"]
     const listKoiCategory = ["Thuần chủng nhập khẩu", "Lai F1", "Thuần Việt"]
     const [selectedKoi, setSelectedKoi] = useState('');
-    const [selectedPrice, setSelectedPrice] = useState('');
     const [selectedKoiCat, setSelectedKoiCat] = useState('');
     const [position, setPosition] = useState('end');
     const [filterData, setFilterData] = useState(null);
+    const [priceRange, setPriceRange] = useState([0, 2000000]);
+    const [sort,setSort] = useState(null);
+    //);
+    const onChangePrice = (e) =>{
+       setPriceRange(e);
+    }
     //koi change 
     const onChange = (e) => {
       setSelectedKoi(e.target.value);
@@ -22,14 +29,14 @@ const Filter = ({ setData }) => {
       }
       //
       const onClickHandle = () =>{
-        const priceRange = selectedPrice.split("-");
-        const fromPrice = priceRange[0]; 
-        const toPrice = priceRange[1]
+        const fromPrice = priceRange[0]/1000; 
+        const toPrice = priceRange[1]/1000
         const newData ={
           koiName: selectedKoi,
           from: fromPrice, 
           to: toPrice, 
-          koiCategory: selectedKoiCat
+          typefish: selectedKoiCat,
+          SortBy:setsortBy
         };
         setFilterData(newData);
       }
@@ -38,9 +45,11 @@ const Filter = ({ setData }) => {
         if (filterData) {
             const fetchKoiData = async () => {
                 try {
-                    const response = await api.get("Kois/modify", { params: filterData });
-                    if (response.status === 200) {
+                    const response = await api.get(`${KoiOrBatch}/modify`, { params: filterData });
+                    if (response.status === 200) {                      
                         setData(response.data); // Cập nhật dữ liệu nhận được
+                        setSelectedKoiCat(null);
+                        setSelectedKoi(null)
                     }
                 } catch (err) {
                     console.log(err);
@@ -48,7 +57,7 @@ const Filter = ({ setData }) => {
             };   
             fetchKoiData();
         }
-    }, [filterData]);
+    }, [filterData,KoiOrBatch,setsortBy]);
   return (
     <div className='filter'>
     <div className='name-box'>
@@ -65,35 +74,19 @@ const Filter = ({ setData }) => {
     </div>
     <div className='price-box'>
     <h3>Price</h3>
-    <Select
-      style={{
-        width: 180,
-      }}
-      allowClear
-      onChange={(options) => setSelectedPrice(options)}
-      options={[
-        {
-          value: '0-150.000',
-          label: '0-150.000',
-        },
-        {
-          value: '150-300.000',
-          label: '150-300.000',
-        },
-        {
-          value: '300.000-500.000',
-          label: '300.000-500.000',
-        },
-        {
-          value: '500.000-1000.000',
-          label: '500.000-1000.000',
-        },
-      ]}
-      placeholder="Price range"
-    />
+              <Slider
+                range
+                value={priceRange} 
+                min={0}
+                max={2000000}
+                onChange={onChangePrice}
+            />
+             <div>
+                Giá: ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}
+            </div>
     </div>
     <div className='category-box'>
-    <h3>Koi Category</h3>
+    <h3>Koi Category</h3> 
     <Radio.Group onChange={onChangeCat} value={selectedKoiCat}>
       <Space direction="vertical">
         {

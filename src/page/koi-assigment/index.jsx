@@ -66,7 +66,7 @@ const KoiAssigment =() => {
         weight: values.weight,
         size: values.size,
         personality: values.personality,
-        status: "Assigment", 
+        status: "Assigned", 
         fishTypeId: values.category, 
         Packages: [
           {
