@@ -38,7 +38,7 @@ const Filter = ({ setData }) => {
         if (filterData) {
             const fetchKoiData = async () => {
                 try {
-                    const response = await api.get("Kois/modify", { params: filterData });
+                    const response = await api.get("kois/modify", { params: filterData });
                     if (response.status === 200) {
                         setData(response.data); // Cập nhật dữ liệu nhận được
                     }

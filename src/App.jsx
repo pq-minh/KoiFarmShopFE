@@ -12,7 +12,7 @@ import ServiceMenu from "./page/service";
 import UserInfor from "./page/user-infor/user"
 import KoiAssigment from "./page/koi-assigment/index";
 import StaffPage from "./page/staff/staff";
-import Shop from "./page/shop/Shop";
+import Shop from "./page/shop/shop";
 import Details from "./page/productdetails/Details";
 import BatchKoi from "./page/fish/batch";
 import AllProduct from "./page/fish/allproduct";
@@ -30,13 +30,13 @@ const App = () => {
     },
     {
       path: "admin",
-      element: <PrivateRoute />, 
-      children: [
-        {
-          path: "dashboard",
-          element: <Dashboard />, 
-        },
-      ],
+      element: <Dashboard />, 
+      // children: [
+      //   {
+      //     path: "dashboard",
+      //     element: <Dashboard />, 
+      //   },
+      // ],
     },
     {
       path: "userinfor",

@@ -30,7 +30,7 @@ const Shop = () => {
         fetchKoiData();
       }, []);
       //fetching filter 
-      
+          
   return (
 
     <div>

@@ -171,7 +171,7 @@ function Header() {
             </Dropdown>
           </li>
           <li>
-            <Link to="/details" className="text-dark text-decoration-none">
+            <Link to="/admin" className="text-dark text-decoration-none">
               Feedbacks
             </Link>
           </li>
