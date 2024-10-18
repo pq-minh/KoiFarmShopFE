@@ -3,7 +3,7 @@ import { Card} from 'antd';
 import api from "../../../config/axios";
 
 import { ShoppingCartOutlined, DollarOutlined , CheckOutlined} from '@ant-design/icons';
-import "./index.scss"
+import "./index1.scss"
 import Item from 'antd/es/list/Item';
 const { Meta } = Card;
 const CardProduct = ({products}) => {
@@ -20,7 +20,7 @@ const CardProduct = ({products}) => {
   useEffect(() => {
     const fetchKoiData = async () => {
       try {
-        const response = await api.get("Carts");
+        const response = await api.get("carts");
         if (response.status === 200) {
           setCarts(response.data);
         }

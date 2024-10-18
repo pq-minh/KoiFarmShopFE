@@ -1,6 +1,14 @@
 import React from 'react'
 import "./index.scss"
-const CartInfor = ({carts}) => {
+import { Button, Flex } from 'antd';
+import { Link, useNavigate } from "react-router-dom";
+
+const CartInfor = ({carts,setIsChecked}) => {
+    const navigate = useNavigate();
+    const handleCheckOut = () => {
+        setIsChecked(true);
+      };
+
     console.log(carts)
 
     const totalAmount = carts.reduce((sum, cart) => sum + cart.totalPrice, 0);
@@ -22,7 +30,7 @@ const CartInfor = ({carts}) => {
                         {cart.quantity}
                     </span>
                     <span className='cp'>
-                        {cart.totalPrice.toLocaleString('vi-VN') + ".000VND"}
+                    {(cart.totalPrice || 0).toLocaleString('vi-VN') + ".000VND"} 
                     </span>
                 </li>
                 )
@@ -31,11 +39,17 @@ const CartInfor = ({carts}) => {
             <div className='total-cp'>
             <span className='total'>
                 <h5>Total Amount</h5>
-                <p>{totalAmount.toLocaleString('vi-VN') + ".000VND"}</p>
+                <p>{0 || totalAmount.toLocaleString('vi-VN') + ".000VND"}</p>
             </span>
             </div>
             </div>
+            <div>
+           <Button type="primary" block style={{marginTop:15}} onClick={handleCheckOut}>
+                Check out
+            </Button>
+           </div>
     </div>
+    
   )
 }
 

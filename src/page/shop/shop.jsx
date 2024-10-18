@@ -10,7 +10,7 @@ import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 const Shop = () => {
     const [products,setProducts] = useState([])
     const [filter,setFilter] = useState([])
-    const [koiorbatch,setKoiorBatch] = useState("Kois")
+    const [koiorbatch,setKoiorBatch] = useState("kois")
     const [SortBy,setsortBy] = useState('')
     //
     const handleFilterData = (data) => {

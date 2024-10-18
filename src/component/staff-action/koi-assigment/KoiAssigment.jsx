@@ -8,7 +8,9 @@ const KoiAssigment = () => {
     const [isModalVisible, setModalvisible] = useState(false)
     const [selectedRecord,setSelectedRecord] = useState(null)
     const [formData,setFormData] = useState({field1: '', field2 :''});
-
+    const [formReject,setFormReject] = useState({field1: ''});
+    const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
+    const decisionlist = ["agree","reject"];
     //Fetching data from quotations
     useEffect(() => {
         const fetchData = async (url) => {
@@ -49,7 +51,8 @@ const KoiAssigment = () => {
           quotationId,
           requestId,
           price: formData.field1,
-          note: formData.field2
+          note: formData.field2,
+          decision:"agree"
         }
         try {     
           const response = await api.post("quotation/updateprice", updatedData);
@@ -61,11 +64,48 @@ const KoiAssigment = () => {
       }
         setModalvisible(false);
     };
-
+      //từ chối quotation 
+      const DecisionRequest = async (value) => {
+        if (!selectedRecord) return; 
+          const {quotationId, requestId } = selectedRecord
+          const rejectQuotation = {
+            quotationId,
+            requestId,
+            price: 0,
+            note:formReject.field1,
+            decision:value
+          }
+          try {       
+            const response = await api.post("quotation/updateprice", rejectQuotation);
+            if (response.status === 200) {
+              console.log('Update successful:', response.data);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+        setModalvisible(false);
+      }
+  
     //Handle Cancel button click
     const handleCancel = () => {
         setModalvisible(false);
     };
+
+
+    //modal reject 
+    const showModalReject = (record) => { 
+        setSelectedRecord(record);
+        setFormReject({field1:record.note});
+        setIsModalRejectOpen(true);
+    };
+    const handleOkReject = () => {
+        DecisionRequest(decisionlist[1]);
+         setIsModalRejectOpen(false); 
+    }
+    const handleCancelReject = async () =>{
+        setIsModalRejectOpen(false);
+    }
+
 
     //Config table 
       const columns = [
@@ -102,10 +142,34 @@ const KoiAssigment = () => {
             key: 'koiWeight',
         },
         {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-        },
+          title: 'Status',
+          key: 'status',
+          dataIndex: 'status',
+          render: (status) => {
+              let color;
+              if (!status) return null; 
+      
+              switch (status) {
+                  case 'Pending':
+                      color = 'gold';
+                      break;
+                  case 'Confirmed':
+                      color = 'green';
+                      break;
+                  case 'Rejected':
+                      color = 'volcano';
+                      break;
+                  default:
+                      color = 'blue';
+              }
+              
+              return (
+                  <Tag color={color}>
+                      {status.toUpperCase()}
+                  </Tag>
+              );
+          },
+      },
         {
             title: 'Price',
             dataIndex: 'price',
@@ -117,15 +181,35 @@ const KoiAssigment = () => {
             key: 'note',
         },
         {
-            title: 'Action',
-            key: 'action',
-            render: (_, record) => (
-                <Space size="middle">
-                <Button onClick={() => handleUpdate(record)}> <a>Update </a></Button>                
-                    <a>Delete </a>
-                </Space>
-            ),
-        },
+          title: 'Action',
+          key: 'action',
+          render: (_, record) => {
+              const { status } = record; 
+
+              return (
+                  <Space size="middle">
+                      {status === 'Pending' && (
+                        <>
+                              <Button color="primary" variant="solid" onClick={() => handleUpdate(record)} >
+                                  Agree
+                              </Button>
+                              <Button color="danger" variant="solid" onClick={() => showModalReject(record)} >
+                                  Reject
+                              </Button>
+                          </>
+                      )}
+                      {status === 'Confirmed' && (
+                          <>
+                              <Button color="danger" variant="solid" onClick={() => showModalReject(record)} >
+                                  Reject
+                              </Button>
+                          </>
+                      )}
+                  </Space>
+
+              );
+          },
+      },
     ];
     
       const createDataFromQuotations = (quotations) => {
@@ -172,6 +256,16 @@ const KoiAssigment = () => {
                     />
                 </div>
             </Modal>
+            <Modal title="Bạn có muốn từ chối giao dịch này không ?" open={isModalRejectOpen}  onOk={handleOkReject} onCancel={handleCancelReject}>
+            <div>
+                    <label style={{ display: 'block', marginBottom: '8px' }}>Lý do từ chối</label>
+                    <Input
+                        placeholder="Note"
+                        value={formReject.field1}
+                        onChange={(e) => setFormReject({ ...formData, field1: e.target.value })}
+                    />
+                </div>
+          </Modal>
     </div>
   )
 }

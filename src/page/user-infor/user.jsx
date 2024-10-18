@@ -42,8 +42,8 @@ const UserInfor = () => {
     <div>
     <Header />
       {userData ? (
-        <div className="container main-container ">
-          <div className="row">
+        <div className="row main-container ">
+          <div style={{display:"flex"}}>
             <div className="col-6 list-rq">
               <div className="author-card pb-3">
                 <div
@@ -93,7 +93,7 @@ const UserInfor = () => {
             {/* đang ở action nào thì lấy ra form đó  */}
             <div className="col-md-6 update-form ">
                   { wizard === "ProFile" ? (
-                    <Profile userData={userData} />
+                    <Profile userData={userData} className='col-8' />
                     ) :  wizard === "Change Password" ?(
                     <ChangePassword/>
                    ) : wizard === "Shipping Addresses" ?(

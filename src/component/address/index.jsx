@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import "./index.scss";
 import { Button, Form, Input, Row, Col,Select } from "antd";
 import api from "../../config/axios";
-import { useNavigate } from "react-router-dom";
+import { Space, Table, Tag } from 'antd';
+
 import axios from 'axios';
-import Item from "antd/es/list/Item";
 function Address(){
     const [provine, setProvine] = useState([]);
     const [selectedProvinceId, setSelectedProvinceId] = useState(null);
@@ -16,6 +16,39 @@ function Address(){
     const [address, setAddress] = useState([]);
     const [haveAddress, setHaveAddress] = useState(false);
 
+    //setup table 
+    const columns = [
+      {
+        title: 'Tỉnh/Thành Phố',
+        dataIndex: 'address',
+        key: 'address',
+        render: (text) => <a>{text}</a>,
+      },      
+      {
+        title: 'Tags',
+        key: 'tags',
+        dataIndex: 'tags',
+        
+      },
+      {
+        title: 'Action',
+        key: 'action',
+        render: (_, record) => (
+          <Space size="middle">
+            <a>Invite {record.name}</a>
+            <a>Delete</a>
+          </Space>
+        ),
+      },
+    ];
+    //data table 
+    const showAddress = (address) => {
+      return address.map((add) => ({
+          key: add.add, 
+          address: `${add.city}, ${add.dictrict}, ${add.ward}, ${add.streetName}`,
+      }));
+  };
+  const data = showAddress(address);
     //fetching addresses of user to check aviable for address
     useEffect(() => {
       const fetchData = async (url) => {
@@ -42,7 +75,7 @@ function Address(){
           console.error('API call failed:', err);
         }
       };  
-      fetchData('https://localhost:7228/api/address/getAllAddress');
+      fetchData('https://localhost:7228/api/address/getall-address');
     }, []);
     //handle change Provine 
     const handleChange = (value) => {
@@ -60,7 +93,7 @@ function Address(){
     const handleConfirmAddress = async (values) => {
         console.log(values);    
          try {     
-           const response = await api.post("user/createAddress", values);
+           const response = await api.post("address/create-address", values);
           if(response.status === 200) {
             //  localStorage.setItem("token", response.data.token);
             //  window.location.reload();
@@ -133,12 +166,10 @@ function Address(){
         return(
             <div className="cpass-form">
             {haveAddress ? (
-                address.map((item) => (
-                  <div key={item.addressId}> {/* Assuming addressId is unique */}
-           <h3>Address {item.addressId}: {item.city}, {item.dictrict}, {item.ward}, {item.streetName}</h3> 
-          </div>
-            ))
-            ) :  <Form
+  <div className="address-container">
+      <Table columns={columns} dataSource={data} />
+  </div>
+) :  <Form
             className="form"
             labelCol={{
               span: 24,

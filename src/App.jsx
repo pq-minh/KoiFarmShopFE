@@ -18,7 +18,7 @@ import BatchKoi from "./page/fish/batch";
 import AllProduct from "./page/fish/allproduct";
 import AssignmentHistory from "./page/assigmentHistory/assigmenthistory";
 import UserCart from "./page/usercart/UserCart";
-
+import CheckOut from "./page/checkout/CheckOut";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -97,9 +97,7 @@ const App = () => {
     {
       path: "cart",
       element: <UserCart />
-    }    
-          
-      
+    },   
   ]);
 
   return (

@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    top: -10px;
+    top: -20px;
     left: 160px;
     align-items: center;    
     border-radius: 8px;
@@ -144,11 +144,11 @@
 }
 .price-cart-koi{
     display: flex;
-    margin-top: 15px;
+    margin-top: 10px;
+    margin-right: -100px;
+    margin-left: -10px;
     color: #000000;
     font-weight: bold;
     padding: 3px;
     border-radius: 5px;
-    align-items: start;
-    justify-content: start;
 }
