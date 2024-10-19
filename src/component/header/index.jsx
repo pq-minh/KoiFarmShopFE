@@ -58,7 +58,7 @@ function Header() {
     },
   ];
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    const storedToken = sessionStorage.getItem("token");
     setToken(storedToken);
 
     if (storedToken) {

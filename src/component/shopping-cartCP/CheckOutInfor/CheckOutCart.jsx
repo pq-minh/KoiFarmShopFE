@@ -12,7 +12,7 @@ const CheckOutInfor = ({carts}) => {
   useEffect(() => {
     const fetchData = async (url) => {
       try {
-        const token = localStorage.getItem('token')?.replaceAll('"', '');
+        const token = sessionStorage.getItem('token')?.replaceAll('"', '');
         const response = await fetch(url, {
           method: 'GET',
           headers: {
@@ -26,6 +26,7 @@ const CheckOutInfor = ({carts}) => {
         const data = await response.json();
         if (data && Object.keys(data).length > 0) {
           setAddress(data);
+          console.log(address);
         } 
       } catch (err) {
         console.error('API call failed:', err);
@@ -98,7 +99,7 @@ const CheckOutInfor = ({carts}) => {
       />
        
        <Form.Item label="Shipping address:" style={{ display: 'flex', alignItems: 'center',marginTop:10 }}>
-       <Input placeholder="Your Shipping Address" style={{ flex: 1,width:315  }} />
+       <Input placeholder="Your Shipping Address" defaultValue={`${address.city || ''} ${address.dictrict || ''} ${address.ward || ''} ${address.streetName || ''}`} style={{ flex: 1,width:315  }} />
       </Form.Item>
       <Form.Item label="Phone number:" style={{ display: 'flex', alignItems: 'center',marginTop:10 }}>
        <Input placeholder="your phone number" style={{ flex: 1,width:330 }} />

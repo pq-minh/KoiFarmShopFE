@@ -98,6 +98,10 @@ const App = () => {
       path: "cart",
       element: <UserCart />
     },   
+    {
+      path: "checkout",
+      element: <CheckOut />
+    },  
   ]);
 
   return (

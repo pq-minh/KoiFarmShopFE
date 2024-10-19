@@ -60,7 +60,7 @@ const Shop = () => {
   />
      <div className='row content'>
         <div className='col-md-3 filter-box'>
-            <Filter setData={handleFilterData} KoiOrBatch={koiorbatch} setsortBy={SortBy}/>
+            <Filter setData={handleFilterData} KoiOrBatch={koiorbatch} products={products}/>
         </div>
         <div className='row col-md-9 card-box'>
             <div className='col'>

@@ -15,8 +15,8 @@ const Login = () => {
     try {
       const response = await api.post("user/login", values);
       const { token } = response.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(response.data));
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("user", JSON.stringify(response.data));
       navigate("/");
     } catch (err) {
       setError(true);
@@ -29,8 +29,8 @@ const Login = () => {
         token: credentialResponse.credential,
       });
       const { token } = response.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(response.data));
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("user", JSON.stringify(response.data));
       navigate("/");
     } catch (err) {
       console.log(err);

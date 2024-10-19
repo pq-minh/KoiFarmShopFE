@@ -9,7 +9,7 @@ function ProFile({userData}) {
         try {     
           const response = await api.patch("user/update", values);
           if(response.status === 200) {
-            localStorage.setItem("token", response.data.token);
+            sessionStorage.setItem("token", response.data.token);
             window.location.reload();
           }
         } catch (err) {

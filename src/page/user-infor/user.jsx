@@ -24,7 +24,7 @@ const UserInfor = () => {
   const [roleuser,setRole] = useState(null);
   const [userData, setUserData] = useState(null);
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    const storedToken = sessionStorage.getItem("token");
     setToken(storedToken);
     if (storedToken) {
       try {

@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Slider, Switch } from 'antd';
 
 import api from "../../../config/axios";
-const Filter = ({ setData, KoiOrBatch, setsortBy }) => {
+const Filter = ({ setData, KoiOrBatch,products}) => {
     const listKoiName = ["Onwa","Kohaku","Ogon","Showa","Tancho","Asagi"]
     const listKoiCategory = ["Thuần chủng nhập khẩu", "Lai F1", "Thuần Việt"]
     const [selectedKoi, setSelectedKoi] = useState('');
@@ -15,6 +15,9 @@ const Filter = ({ setData, KoiOrBatch, setsortBy }) => {
     const [filterData, setFilterData] = useState(null);
     const [priceRange, setPriceRange] = useState([0, 2000000]);
     const [sort,setSort] = useState(null);
+    //
+    const total = KoiOrBatch.length;
+    console.log(total);
     //);
     const onChangePrice = (e) =>{
        setPriceRange(e);
@@ -27,6 +30,11 @@ const Filter = ({ setData, KoiOrBatch, setsortBy }) => {
     const onChangeCat = (e) => {
         setSelectedKoiCat(e.target.value);
       }
+      //order change
+      const handleChangeOrder = (value) => {
+        setSort(value);
+        console.log(value);
+      }
       //
       const onClickHandle = () =>{
         const fromPrice = priceRange[0]/1000; 
@@ -36,7 +44,8 @@ const Filter = ({ setData, KoiOrBatch, setsortBy }) => {
           from: fromPrice, 
           to: toPrice, 
           typefish: selectedKoiCat,
-          SortBy:setsortBy
+          SortBy:sort,
+          PageSize: products.length || KoiOrBatch.length
         };
         setFilterData(newData);
       }
@@ -47,7 +56,7 @@ const Filter = ({ setData, KoiOrBatch, setsortBy }) => {
                 try {
                     const response = await api.get(`${KoiOrBatch}/modify`, { params: filterData });
                     if (response.status === 200) {                      
-                        setData(response.data); // Cập nhật dữ liệu nhận được
+                        setData(response.data); 
                         setSelectedKoiCat(null);
                         setSelectedKoi(null)
                     }
@@ -57,7 +66,7 @@ const Filter = ({ setData, KoiOrBatch, setsortBy }) => {
             };   
             fetchKoiData();
         }
-    }, [filterData,KoiOrBatch,setsortBy]);
+    }, [filterData,KoiOrBatch]);
   return (
     <div className='filter'>
     <div className='name-box'>
@@ -97,8 +106,32 @@ const Filter = ({ setData, KoiOrBatch, setsortBy }) => {
       </Space>
     </Radio.Group>
     </div>
+    <div className='box-order' style={{display:'flex'}}> 
+    <p>Giá:</p>
+            <div className='price-order'>
+                <Select
+                    defaultValue="Sắp xếp theo"
+                    style={{
+                        marginLeft: 5,
+                        width: 120,
+                        height: 30,
+                    }}
+                    onChange={handleChangeOrder}
+                    options={[
+                        {
+                            value: 'price_asc',
+                            label: 'Tăng dần',
+                        },
+                        {
+                            value: 'price_desc',
+                            label: 'Giảm dần',
+                        },
+                    ]}
+                />
+            </div>
+            </div>
     <div>
-    <Button type="primary" icon={<SearchOutlined />} iconPosition={position} style={{width:250}} onClick={onClickHandle}>
+    <Button type="primary" icon={<SearchOutlined />} iconPosition={position} style={{width:250,marginTop:10}} onClick={onClickHandle}>
             Search Koi
     </Button>
         </div>

@@ -40,7 +40,7 @@ const TableAssigment = () => {
     useEffect(() => {
         const fetchData = async (url) => {
           try {
-            const token = localStorage.getItem('token')?.replaceAll('"', '');
+            const token = sessionStorage.getItem('token')?.replaceAll('"', '');
             const response = await fetch(url, {  
               method: 'GET',
               headers: {

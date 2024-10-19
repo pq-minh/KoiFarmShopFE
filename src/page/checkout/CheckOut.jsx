@@ -1,21 +1,13 @@
 import React,{useEffect,useState} from 'react'
 import KoiCart from '../../component/shopping-cartCP/koicart/KoiCart'
 import Header from "../../component/header";
-import CartInfor from '../../component/shopping-cartCP/InforCart/CartInfor';
 import api from "../../config/axios";
 import CheckOutInfor from '../../component/shopping-cartCP/CheckOutInfor/CheckOutCart';
+import { Breadcrumb } from 'antd';
+import { HomeOutlined} from '@ant-design/icons';
 const UserCart = () => 
   {
     const [carts,setCarts] = useState([])
-    const [quantities, setQuantities] = useState({});
-
-    const updateQuantity = (index, qty) => {
-      setQuantities((prevQuantities) => ({
-        ...prevQuantities,
-        [index]: qty,
-      }));
-    };
-
     useEffect(() => {
       const fetchKoiData = async () => {
         try {
@@ -29,15 +21,37 @@ const UserCart = () =>
       };   
       fetchKoiData();
     }, []);
+
+    const breadcrumbItems = [
+      {
+        href: '/',
+        title: <HomeOutlined />,
+      },
+      {
+        href: '/shop',
+        title: 'Products',
+      },
+      {
+        href: '/cart',
+        title: 'Shopping Carts',
+      },
+      {
+        href: '/checkout',
+        title: 'Checkout',
+      },
+    ];
+
   return (
     <div>
     <Header/>
+    <Breadcrumb style={{ backgroundColor: '#fff', display: 'flex', position: 'relative' }} items={breadcrumbItems} />
+
       <div className='row'>
       <div className='col-8'>
-      <KoiCart carts={carts} setCarts={setCarts} updateQuantity={updateQuantity}/>
+      <KoiCart carts={carts} setCarts={setCarts} isCheckout={true}/>
       </div>
       <div className='col-4'>
-      <CheckOutInfor/>
+      <CheckOutInfor carts={carts}/>
       </div>
       </div>
     </div>

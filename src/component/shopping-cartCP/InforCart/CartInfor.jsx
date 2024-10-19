@@ -3,10 +3,10 @@ import "./index.scss"
 import { Button, Flex } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
 
-const CartInfor = ({carts,setIsChecked}) => {
+const CartInfor = ({carts,setIsChecked,quantities}) => {
     const navigate = useNavigate();
     const handleCheckOut = () => {
-        setIsChecked(true);
+        navigate("/checkout")
       };
 
     console.log(carts)
@@ -27,8 +27,8 @@ const CartInfor = ({carts,setIsChecked}) => {
                         {cart.koiName == null ? cart.batchKoiName : cart.koiName}
                     </span>
                     <span className='cp'>
-                        {cart.quantity}
-                    </span>
+                            {quantities[cart.batchKoiId] || cart.quantity}
+                     </span>
                     <span className='cp'>
                     {(cart.totalPrice || 0).toLocaleString('vi-VN') + ".000VND"} 
                     </span>

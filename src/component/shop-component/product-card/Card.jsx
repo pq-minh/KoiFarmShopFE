@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Card} from 'antd';
+import { Card, message} from 'antd';
 import api from "../../../config/axios";
 
 import { ShoppingCartOutlined, DollarOutlined , CheckOutlined} from '@ant-design/icons';
@@ -12,10 +12,13 @@ const CardProduct = ({products}) => {
     const [carts,setCarts] = useState([]);
     const isTruncated = description.length > maxLength;
     const temp = ["Koi","Lô cá"]
+    const [messageshow,setMessage] = useState(null)
     const [formData, setFormData] = useState({
       koiId: null,
       batchKoiId: null
       });
+      //hàm messgage của antd
+      const [messageApi, contextHolder] = message.useMessage();
   //goi ham get cart de biet koi nao da duoc them vao gio hang 
   useEffect(() => {
     const fetchKoiData = async () => {
@@ -37,6 +40,10 @@ const CardProduct = ({products}) => {
   // xu ly viec add to cart 
   const handleAddToCart = (koiId, name,batchId) => {
     console.log(formData)
+    if (isItemInCart(koiId)) {
+      messageApi.info("Sản phẩm đã có trong giỏ hàng");
+            return;
+    }
       if (name.includes(temp[1])) {
           setFormData(prev => ({ ...prev, batchKoiId: batchId, koiId: null })); 
       } else if (name.includes(temp[0])) {
@@ -48,13 +55,13 @@ const CardProduct = ({products}) => {
       }
   };
   //goi ham post de add
-  useEffect(() => {
+  useEffect(() => { 
       const fetchKoiData = async () => {
           try {
               if (formData.koiId || formData.batchKoiId) { 
                   const response = await api.post("/Carts", formData);
                   if (response.status === 200) {
-                      console.log("Item added to cart successfully!");
+                    messageApi.success("Sản phẩm đã được thêm vào giỏ hàng");
                   }
               }
           } catch (err) {
@@ -66,10 +73,11 @@ const CardProduct = ({products}) => {
   }, [formData]);
   return (
       
-
-
+    <>
+    {contextHolder}
     <div className='card-container'>
     {
+      
         products.map(product =>(
             
             <Card
@@ -119,6 +127,7 @@ const CardProduct = ({products}) => {
         )
     }
     </div>
+    </>
   )
 }
 
