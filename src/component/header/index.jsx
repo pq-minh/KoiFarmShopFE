@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import "./index.scss";
-import { Button, Dropdown, Menu, Avatar, Space, Flex } from "antd";
+import { Button, Dropdown, Menu, Avatar,  } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 import {
@@ -38,12 +38,14 @@ function Header() {
       key: "2",
       label: (
         <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.aliyun.com"
+         target="_blank"
+         rel="noopener noreferrer"
+         onClick={() => {
+            navigate("/orderhistory");
+          }}
         >
           Order History
-        </a>
+          </a>
       ),
     },
     {

@@ -17,6 +17,7 @@ import Details from "./page/productdetails/Details";
 import BatchKoi from "./page/fish/batch";
 import AllProduct from "./page/fish/allproduct";
 import ProductDetails from "./component/shop-component/product-cart-details/ProductDetails";
+import OrderHistoryPage from "./page/orderhistory";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -95,8 +96,11 @@ const App = () => {
     {
       path: "details/:id", 
       element: <ProductDetails />,
-    }
-    
+    },
+    {
+      path: "orderhistory",
+      element: <OrderHistoryPage />,
+    }   
   ]);
 
   return (

@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import "./index.scss";
 import Header from "../../component/header";
@@ -8,7 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import { useEffect } from "react";
 
-import { List } from "antd";
+//import { List } from "antd";
 const UserInfor = () => {
   const ListAction = [
     "ProFile",
@@ -19,7 +20,6 @@ const UserInfor = () => {
   ];
   const [wizard, setWizard] = useState(ListAction[0]);
 
-  /* set token after fetch API */
   const [token, setToken] = useState();
   const [roleuser,setRole] = useState(null);
   const [userData, setUserData] = useState(null);

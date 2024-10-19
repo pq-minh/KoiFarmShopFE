@@ -1,6 +1,6 @@
 import Header from "../../component/header";
 import StaffAction from "../../component/staff-navbar";
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import KoiAssigment from '../../component/staff-action/koi-assigment/KoiAssigment';
 
 import './index.scss';
