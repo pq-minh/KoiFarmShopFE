@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import {
   DesktopOutlined,
   PlusCircleOutlined,
@@ -7,6 +7,7 @@ import {
   UserOutlined,
   UploadOutlined,
   SyncOutlined ,
+  EyeOutlined ,
 } from "@ant-design/icons";
 import {
   Breadcrumb,
@@ -37,6 +38,7 @@ const items = [
   getItem("Option 1", "1", <PieChartOutlined />),
   getItem("Option 2", "2", <DesktopOutlined />),
   getItem("Kois Management", "sub1", <UserOutlined />, [
+    getItem("View All Koi","viewKoi", <EyeOutlined />),
     getItem("Add Koi", "addKoi", <PlusCircleOutlined />),
     getItem("Update Koi", "updateKoi",<SyncOutlined />),
   ]),
@@ -53,7 +55,6 @@ const Dashboard = () => {
   const [form] = Form.useForm(); 
   const [koiId, setKoiId] = useState(null); 
   const [koiData, setKoiData] = useState(null); 
-
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -81,6 +82,55 @@ const Dashboard = () => {
         });
       });
   };
+
+
+  const ViewAllKoi = () => {
+    const [koiList, setKoiList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchKoiData = async () => {
+            try {
+                const response = await api.get("/kois/management");
+                setKoiList(response.data);
+            } catch (err) {
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchKoiData();
+    }, []);
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error fetching koi data: {error.message}</div>;
+
+    return (
+        <div className="koi-list">
+            <h2>Danh sách cá koi</h2>
+            <div className="koi-cards">
+                {koiList.map((koi) => (
+                    <div className="koi-card" key={koi.koiId}>
+                        <img className="koi-image" src={koi.image} alt={koi.name} />
+                        <h3>{koi.name}</h3>
+                        <p>Xuất xứ: {koi.origin}</p>
+                        <p>Giới tính: {koi.gender}</p>
+                        <p>Độ tuổi: {koi.age} năm</p>
+                        <p>Trọng lượng: {koi.weight} kg</p>
+                        <p>Kích thước: {koi.size} cm</p>
+                        <p>Tính cách: {koi.personality}</p>
+                        <p>Giá: ${koi.price}</p>
+                        <p>Trạng thái: {koi.status}</p>
+                        <a href={koi.certificate} target="_blank" rel="noopener noreferrer">Chứng nhận</a>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
   
   const handleKoiSubmit = (values) => {
     const formData = new FormData();
@@ -540,6 +590,7 @@ const Dashboard = () => {
             {selectedKey === "addKoi" && renderAddKoiForm()}
             {selectedKey === "addBatchKoi" && renderAddBatchKoiForm()}
             {selectedKey === "updateKoi" && renderUpdateKoiForm() }
+            {selectedKey === "viewKoi" && <ViewAllKoi />}
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>Koi Management Dashboard ©2024</Footer>

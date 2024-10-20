@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import api from '../../config/axios';
-import Header from '../../component/header';
-import './index.scss'; // Import your CSS for styling
+import { useEffect, useState } from "react";
+import api from "../../config/axios";
+import Header from "../../component/header";
+import "./index.scss"; // Import your CSS for styling
 
 const OrderHistoryPage = () => {
   const [orders, setOrders] = useState([]);
@@ -12,7 +12,7 @@ const OrderHistoryPage = () => {
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
-        const response = await api.get('/orders');
+        const response = await api.get("/orders");
         setOrders(response.data);
       } catch (error) {
         console.error("Error fetching order history:", error);
@@ -45,13 +45,24 @@ const OrderHistoryPage = () => {
             {orders.map((order) => (
               <div
                 key={order.orderId}
-                className={`order-card ${selectedOrderId === order.orderId ? 'active' : ''}`}
-                onClick={() => handleOrderClick(order.orderId)} // Fetch and show details when clicked
+                className={`order-card ${
+                  selectedOrderId === order.orderId ? "active" : ""
+                }`}
+                onClick={() => handleOrderClick(order.orderId)}
               >
-                <p><strong>Order ID:</strong> {order.orderId}</p>
-                <p><strong>Total Amount:</strong> ${order.totalAmount}</p>
-                <p><strong>Status:</strong> {order.orderStatus}</p>
-                <p><strong>Date:</strong> {new Date(order.createDate).toLocaleString()}</p>
+                <p>
+                  <strong>Order ID:</strong> {order.orderId}
+                </p>
+                <p>
+                  <strong>Total Amount:</strong> ${order.totalAmount}
+                </p>
+                <p>
+                  <strong>Status:</strong> {order.orderStatus}
+                </p>
+                <p>
+                  <strong>Date:</strong>{" "}
+                  {new Date(order.createDate).toLocaleString()}
+                </p>
               </div>
             ))}
           </div>
@@ -59,17 +70,31 @@ const OrderHistoryPage = () => {
 
         {/* Display order details when an order is selected */}
         {orderDetails && selectedOrderId && (
-          <div className="order-details">
-            <h3>Order Details for Order ID: {selectedOrderId}</h3>
-            <ul>
-              {orderDetails.map((detail) => (
-                <li key={detail.orderDetailsId}>
-                  <p><strong>Koi ID:</strong> {detail.koiId}</p>
-                  <p><strong>Batch Koi ID:</strong> {detail.batchKoiId ? detail.batchKoiId : 'N/A'}</p>
-                  <p><strong>Total Quantity:</strong> {detail.toTalQuantity}</p>
-                </li>
-              ))}
-            </ul>
+          <div className="order-details-container">
+            <div className="order-details">
+              <h3>Order Details for Order ID: {selectedOrderId}</h3>
+              <div className="details-list">
+                {orderDetails.map((detail) => (
+                  <div key={detail.orderDetailsId} className="detail-card">
+                    <div className="image-container">
+                      <img
+                        src={detail.koiImage}
+                        alt={detail.koiName}
+                        className="koi-image"
+                      />
+                    </div>
+                    <div className="info-container">
+                      <p>
+                        <strong>Koi Name:</strong> {detail.koiName}
+                      </p>
+                      <p>
+                        <strong>Total Quantity:</strong> {detail.toTalQuantity}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>
