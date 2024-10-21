@@ -1,26 +1,25 @@
-import { GoogleLogin } from "@react-oauth/google";
+import React from 'react';
+import { GoogleLogin } from '@react-oauth/google';
 
-const clientId="481272321702-aj712402ov128i3tupa7bd1g55fg9uie.apps.googleusercontent.com";
+function Login() {
+    const onSuccess = (res) => {
+        console.log("Login Success! Current user: ", res);
+        // Xử lý dữ liệu người dùng ở đây (ví dụ: gửi token đến backend)
+    };
 
-// eslint-disable-next-line no-unused-vars
-function login(){
-    const onSuccess =(res) =>{
-        console.log("Login Success! Current user: ", res.profileObj);
-    }
-
-    const onFailure =(res) =>{
+    const onFailure = (res) => {
         console.log("Login Failed! res: ", res);
-    }
-    return(
+    };
+
+    return (
         <div id="signinButton">
             <GoogleLogin
-               clientId={clientId}
-               buttonText="Login"
-               onSuccess={onSuccess}
-               onFailure={onFailure}
-               cookiePolicy={'single_host_origin'}
-               isSignedIn={true}
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                cookiePolicy={'single_host_origin'}
             />
         </div>
-    )
+    );
 }
+
+export default Login;

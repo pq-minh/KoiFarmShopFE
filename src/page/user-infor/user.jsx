@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext,useContext } from "react";
 import "./index.scss";
 import Header from "../../component/header";
 import Profile from "../../component/profile-setting/profile";
@@ -9,13 +9,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 import { List } from "antd";
+
 const UserInfor = () => {
   const ListAction = [
     "ProFile",
     "Shipping Addresses",
-    "My Cart",
-    "Change Password",
-    "Order List",  
+    "Change Password", 
   ];
   const [wizard, setWizard] = useState(ListAction[0]);
 
@@ -37,9 +36,12 @@ const UserInfor = () => {
       }
     }
   }, []);
+  //truyền context 
+  
   /* decode token to user profile */
   return (
     <div>
+   
     <Header />
       {userData ? (
         <div className="row main-container ">
@@ -94,15 +96,16 @@ const UserInfor = () => {
             <div className="col-md-6 update-form ">
                   { wizard === "ProFile" ? (
                     <Profile userData={userData} className='col-8' />
+                    
                     ) :  wizard === "Change Password" ?(
                     <ChangePassword/>
                    ) : wizard === "Shipping Addresses" ?(
                     <Address/>
                    ) : wizard === "Manager Assigment"(
-
+                      
                    )
                   }
-              
+      
             </div>
           </div>
         </div>
@@ -110,6 +113,7 @@ const UserInfor = () => {
         <h1>Some Thing is error, Please login again</h1>
       )}
     </div>
+
   );
 };
 export default UserInfor;

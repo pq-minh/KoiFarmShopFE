@@ -105,7 +105,7 @@ const App = () => {
   ]);
 
   return (
-    <GoogleOAuthProvider clientId="481272321702-aj712402ov128i3tupa7bd1g55fg9uie.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="58740703879-3s8ddc1rno4kavb9neslns90iphlps9g.apps.googleusercontent.com">
       <RouterProvider router={router} />
     </GoogleOAuthProvider>
   );

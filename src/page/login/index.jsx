@@ -1,17 +1,37 @@
-import { Button, ColorPicker, Form, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input } from "antd";
 import "./index.scss";
 import api from "../../config/axios";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import { useState } from "react";
 
 const Login = () => {
-  const [error,setError] = useState(false);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
+  // Load Google API
+  useEffect(() => {
+    const loadGapi = () => {
+      const script = document.createElement("script");
+      script.src = "https://apis.google.com/js/api.js";
+      script.async = true;
+      script.onload = () => {
+        window.gapi.load("client:auth2", initClient);
+      };
+      document.body.appendChild(script);
+    };
+
+    loadGapi();
+  }, []);
+
+  const initClient = () => {
+    window.gapi.client.init({
+      clientId: "58740703879-3s8ddc1rno4kavb9neslns90iphlps9g.apps.googleusercontent.com",
+      scope: "profile email",
+    });
+  };
+
   const handleLogin = async (values) => {
-    console.log(values);
-    
     try {
       const response = await api.post("user/login", values);
       const { token } = response.data;
@@ -25,18 +45,30 @@ const Login = () => {
 
   const handleGoogleLoginSuccess = async (credentialResponse) => {
     try {
-      const response = await api.post("login/google", {
-        token: credentialResponse.credential,
+      const response = await fetch("https://localhost:7228/api/google/external-login-callback", {
+        method: "POST", // Sử dụng POST
+        headers: {
+          "Content-Type": "application/json-patch+json",
+        },
+        body: JSON.stringify({ token: credentialResponse.credential }), // Gửi token trong body
       });
-      const { token } = response.data;
-      sessionStorage.setItem("token", token);
-      sessionStorage.setItem("user", JSON.stringify(response.data));
-      navigate("/");
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Login failed!");
+      }
+  
+      const data = await response.json();
+      const { redirectUrl } = data;
+      sessionStorage.setItem("token", credentialResponse.credential); // Lưu token
+      navigate(redirectUrl);
     } catch (err) {
-      console.log(err);
-      alert("Google Login Failed!");
+      console.error(err);
+      alert(err.message);
     }
   };
+  
+
 
   return (
     <div className="login">
@@ -48,9 +80,7 @@ const Login = () => {
         <div className="form-wrapper">
           <Form
             className="form"
-            labelCol={{
-              span: 24,
-            }}
+            labelCol={{ span: 24 }}
             onFinish={handleLogin}
           >
             <div className="form-header">WELCOME TO KOIFARMSHOP</div>
@@ -58,11 +88,9 @@ const Login = () => {
             <Form.Item
               label="Email"
               name="Email"
-              rules={[
-                { required: true, message: "Vui lòng nhập tên đăng nhập!" },
-              ]}
+              rules={[{ required: true, message: "Vui lòng nhập tên đăng nhập!" }]}
             >
-              <Input type="Email" placeholder="Email" />
+              <Input type="email" placeholder="Email" />
             </Form.Item>
 
             <Form.Item
@@ -72,12 +100,9 @@ const Login = () => {
             >
               <Input type="password" placeholder="Password" />
             </Form.Item>
-            {/* Check if invalid user name or password */}
-            { error == true ? (
-              <p style={{color:"red"}}>Invalid UserName or Password</p>
-            ) :(
-              <p></p>
-            ) }
+
+            {error && <p style={{ color: "red" }}>Invalid Username or Password</p>}
+
             <Form.Item>
               <Button type="primary" htmlType="submit" block>
                 Login
@@ -101,9 +126,8 @@ const Login = () => {
               <div className="custom-google-btn">
                 <GoogleLogin
                   onSuccess={handleGoogleLoginSuccess}
-                  onError={() => {
-                    alert("Google Login Failed!");
-                  }}
+                  onFailure={() => alert("Google Login Failed!")}
+                  cookiePolicy={'single_host_origin'}
                 />
               </div>
             </Form.Item>

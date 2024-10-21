@@ -1,11 +1,12 @@
 
-import React, { useState } from "react";
+import React, { useState,createContext,useContext } from "react";
 import "./index.scss";
 import { Button, Form, Input, Row, Col } from "antd";
 import api from "../../config/axios";
 import { useNavigate } from "react-router-dom";
 function ChangePassword(){
   const navigate = useNavigate();
+  const userInforContext = createContext();
   const [errors, SetErrors] = useState([]);
   const [oldpass,SetOldpass] = useState();
   const addError = (newError) => {
@@ -37,12 +38,14 @@ function ChangePassword(){
           }
       }
       };
+      //xứ lý log out
       const handleLogout = async () => {
         
         try {
           const response = await api.post("user/logout");
           if (response.status === 200) {
               alert("Logged out successfully!");
+              sessionStorage.clear("user");
               navigate("/"); // Redirect đến trang đăng nhập
           } else {
               alert("Unexpected response from server.");
