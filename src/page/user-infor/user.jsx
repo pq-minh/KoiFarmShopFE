@@ -96,7 +96,6 @@ const UserInfor = () => {
             <div className="col-md-6 update-form ">
                   { wizard === "ProFile" ? (
                     <Profile userData={userData} className='col-8' />
-                    
                     ) :  wizard === "Change Password" ?(
                     <ChangePassword/>
                    ) : wizard === "Shipping Addresses" ?(

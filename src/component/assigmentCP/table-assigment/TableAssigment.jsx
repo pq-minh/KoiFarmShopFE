@@ -11,6 +11,9 @@ const TableAssigment = () => {
     const [isModalRequestDecisionOpen, setIsModalRequestDecisonOpen] = useState(false);
     const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
     const decisionlist = ["agree","reject"];
+    const [totalCount, setTotalCount] = useState(0);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(6);
     //
 
     const DecisionRequest = async (value) => {
@@ -30,6 +33,7 @@ const TableAssigment = () => {
                   : request
             );
            setRequests(updatedRequests);
+           
           }
       } catch (err) {
           console.log(err);
@@ -37,11 +41,10 @@ const TableAssigment = () => {
     }
 
     //fetching data reuquest
-    useEffect(() => {
-        const fetchData = async (url) => {
+        const fetchData = async (pageNumber, pageSize) => {
           try {
             const token = sessionStorage.getItem('token')?.replaceAll('"', '');
-            const response = await fetch(url, {  
+            const response = await fetch(`https://localhost:7228/api/request/get-request?pageNumber=${pageNumber}&pageSize=${pageSize}`, {  
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`, 
@@ -52,13 +55,24 @@ const TableAssigment = () => {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }           
             const data = await response.json();
-             setRequests(data);
+             setRequests(data.items);
+             setTotalCount(data.totalCount); 
+            setPageNumber(data.pageNumber); 
+            setPageSize(data.pageSize); 
           } catch (err) {
             console.error('API call failed:', err);
           }
         };       
-        fetchData('https://localhost:7228/api/request/get-request');
-      }, []);   
+
+        useEffect(() => {
+          fetchData(pageNumber, pageSize)
+        },[pageNumber, pageSize])
+        //xử lý change page 
+        const handleChangePage = (page, pageSize) => {
+          setPageNumber(page);
+          setPageSize(pageSize);
+        };
+
       //Modal antd 
 
 
@@ -186,21 +200,27 @@ const TableAssigment = () => {
     
       const createDataFromQuotations = (requests) => {
         return requests.map((request) => ({
-            key: request.requestId, 
-            requestid: request.requestId,
-            createdate: request.createdDate,
-            consignmentdate: request.consignmentDate,
-            enddate: request.endDate,
-            agreementprice: request.agreementPrice == 0 ? (request.agreementPrice+ " VND") : (request.agreementPrice + ".000 VND") ,
-            typerequest: request.typeRequest, 
-            status: request.status
+          key: request.requestId, 
+          requestid: request.requestId,
+          createdate: new Date(request.createDate).toLocaleDateString(), // Format the date
+          consignmentdate: request.consignmentDate || "N/A", // If this data isn't present, provide a fallback
+          enddate: request.endDate || "N/A", // Similar for this field
+          agreementprice: request.agreementPrice ? `${request.agreementPrice}.000 VND` : "Free", // Handle price formatting
+          typerequest: request.typeRequest, // You might want to display koiName or another relevant field
+          status: request.status, 
         }));
     };
     
     const data = createDataFromQuotations(requests);
   return (
     <div>
-        <Table columns={columns} dataSource={data}  />
+        <Table columns={columns} dataSource={data} 
+         pagination={{
+        pageSize: pageSize,
+        current: pageNumber,
+        total: totalCount,
+        onChange: handleChangePage,
+    }}  />
         <Modal title="Action" open={isModalRequestDecisionOpen}  onOk={handleOkRequestDecision} onCancel={handleCancelRequestDecision}>
         <p>Bạn có đồng ý với lựa chọn này không</p>
       </Modal>

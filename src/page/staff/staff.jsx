@@ -2,7 +2,7 @@ import Header from "../../component/header";
 import StaffAction from "../../component/staff-navbar";
 import React, { useState } from 'react';
 import KoiAssigment from '../../component/staff-action/koi-assigment/KoiAssigment';
-
+import Discount from "../../component/staff-action/discount/Discount";
 import './index.scss';
 const StaffPage = () => {
   const [selectedKey, setSelectedKey] = useState('');
@@ -19,7 +19,7 @@ const StaffPage = () => {
       </div>
       <div className="col-10">
           {selectedKey === 'assigment' && <div><KoiAssigment/></div>}
-          {selectedKey === 'staff' && <div>Staff Management Content</div>}
+          {selectedKey === 'discount' && <div><Discount/></div>}
       </div>
       </div>
     </div>

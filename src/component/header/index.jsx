@@ -33,7 +33,9 @@ function Header() {
     {
       key: '2',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+        <a target="_blank" rel="noopener noreferrer" onClick={() => {
+          navigate("/order");
+        }}>
             Order History
         </a>
       ),

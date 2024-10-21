@@ -6,10 +6,7 @@ const AssignmentHistory = () => {
     <div>
      <Header/>
      <div className='row'>
-     <div className='col-2 nav-side'>
-
-     </div>
-     <div className=' col-10 table-assiment'>
+     <div className=' col-12 table-assiment'>
              <TableAssigment/>
       </div>
       </div>

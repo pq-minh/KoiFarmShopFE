@@ -79,10 +79,9 @@ const CardProduct = ({products}) => {
     {
       
         products.map(product =>(
-            
             <Card
             hoverable
-            style={{ width: 240,height:440,marginRight:30,marginBottom:30, borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', backgroundColor: 'whitesmoke' }}
+            style={{ width: 240,height:440,marginRight:30,marginBottom:30, borderRadius: '10px'}}
             cover={
                 <div style={{ position: 'relative' }} className='img-content'>
                 <img
@@ -120,11 +119,14 @@ const CardProduct = ({products}) => {
                 />
                   )}  
                 </div>
-            </div>,    
+            </div>,  
+              
           </Card>
+          
           )
-
+          
         )
+        
     }
     </div>
     </>

@@ -46,11 +46,11 @@ const Login = () => {
   const handleGoogleLoginSuccess = async (credentialResponse) => {
     try {
       const response = await fetch("https://localhost:7228/api/google/external-login-callback", {
-        method: "POST", // Sử dụng POST
+        method: "POST",
         headers: {
-          "Content-Type": "application/json-patch+json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ token: credentialResponse.credential }), // Gửi token trong body
+        body: JSON.stringify({ token: credentialResponse.credential }),
       });
   
       if (!response.ok) {
@@ -59,14 +59,15 @@ const Login = () => {
       }
   
       const data = await response.json();
-      const { redirectUrl } = data;
-      sessionStorage.setItem("token", credentialResponse.credential); // Lưu token
-      navigate(redirectUrl);
+      console.log(data); 
+      sessionStorage.setItem("token", data.token);
+      navigate("/");
     } catch (err) {
       console.error(err);
       alert(err.message);
     }
   };
+  
   
 
 

@@ -107,9 +107,14 @@ const CheckOutInfor = ({carts}) => {
         
       console.log(orderData); 
       try{
-          const respone = await api2.post("orders",orderData);
-          if(respone.status == 200) {
-            console.log(respone);
+          const response = await api2.post("OrderPayment/create-payment");
+          if(response.status == 200) {
+            if (paymentMethod === 'online') {
+              const redirectUrl = response.data.redirectUrl;
+              window.location.href = redirectUrl; 
+            } else {
+              message.success('Đơn hàng đã được tạo thành công');
+            }
           }
       } catch(err){
         console.log(err);

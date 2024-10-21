@@ -11,12 +11,14 @@ const KoiAssigment = () => {
     const [formReject,setFormReject] = useState({field1: ''});
     const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
     const decisionlist = ["agree","reject"];
+    const [totalCount, setTotalCount] = useState(0);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(6);
     //Fetching data from quotations
-    useEffect(() => {
-        const fetchData = async (url) => {
+        const fetchData = async (pageNumber, pageSize) => {
           try {
             const token = sessionStorage.getItem('token')?.replaceAll('"', '');
-            const response = await fetch(url, {  
+            const response = await fetch(`https://localhost:7228/api/quotation/get-quotation?pageNumber=${pageNumber}&pageSize=${pageSize}`, {  
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`, 
@@ -27,14 +29,19 @@ const KoiAssigment = () => {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }           
             const data = await response.json();
-             setQuotations(data);
+            setQuotations(data.items); 
+            setTotalCount(data.totalCount); 
+            setPageNumber(data.pageNumber); 
+            setPageSize(data.pageSize); 
           } catch (err) {
             console.error('API call failed:', err);
           }
         };       
-        fetchData('https://localhost:7228/api/quotation/get-quotation');
-      }, []);
+      //
 
+      useEffect(() => {
+        fetchData(pageNumber, pageSize);
+      }, [pageNumber, pageSize]);
       //
       const handleUpdate =  (record) => {
         //dua record vao state
@@ -79,6 +86,7 @@ const KoiAssigment = () => {
             const response = await api.post("quotation/updateprice", rejectQuotation);
             if (response.status === 200) {
               console.log('Update successful:', response.data);
+              fetchData(pageNumber, pageSize);
             }
         } catch (err) {
             console.log(err);
@@ -105,7 +113,11 @@ const KoiAssigment = () => {
     const handleCancelReject = async () =>{
         setIsModalRejectOpen(false);
     }
-
+    //change page 
+    const handleChangePage = (page, pageSize) => {
+      setPageNumber(page);
+      setPageSize(pageSize);
+  };
 
     //Config table 
       const columns = [
@@ -232,7 +244,12 @@ const KoiAssigment = () => {
 
   return (
     <div>
-        <Table columns={columns} dataSource={data} />
+        <Table columns={columns} dataSource={data}  pagination={{
+                    total: totalCount,
+                    pageSize: pageSize,
+                    current: pageNumber,
+                    onChange: handleChangePage,
+                }} />
         <Modal
                 title="Update Koi Info"
                 open={isModalVisible}

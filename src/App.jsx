@@ -19,6 +19,7 @@ import AllProduct from "./page/fish/allproduct";
 import AssignmentHistory from "./page/assigmentHistory/assigmenthistory";
 import UserCart from "./page/usercart/UserCart";
 import CheckOut from "./page/checkout/CheckOut";
+import OrderHistory from "./page/orderHistoryUser/OrderHistory";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -101,6 +102,10 @@ const App = () => {
     {
       path: "checkout",
       element: <CheckOut />
+    },  
+    {
+      path: "order",
+      element: <OrderHistory />
     },  
   ]);
 
