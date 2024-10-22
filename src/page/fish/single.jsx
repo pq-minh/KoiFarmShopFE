@@ -14,7 +14,7 @@ const SingleKoi = () => {
 
   useEffect(() => {
     api
-      .get("Kois")
+      .get("/kois")
       .then((response) => {
         setFishData(response.data);
         setLoading(false);

@@ -112,7 +112,6 @@ const UserInfor = () => {
         <h1>Some Thing is error, Please login again</h1>
       )}
     </div>
-
   );
 };
 export default UserInfor;

@@ -10,7 +10,7 @@ import {
   DownOutlined,
   ShoppingCartOutlined,
   SearchOutlined,
-  BellOutlined
+  BellOutlined,
 } from "@ant-design/icons";
 
 function Header() {
@@ -21,39 +21,55 @@ function Header() {
 
   const items = [
     {
-      key: '1',
+      key: "1",
       label: (
-        <a target="_blank" rel="noopener noreferrer" onClick={() => {
-          navigate("/userinfor");
-        }}>
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => {
+            navigate("/userinfor");
+          }}
+        >
           Profile Setting
         </a>
       ),
     },
     {
-      key: '2',
+      key: "2",
       label: (
-        <a target="_blank" rel="noopener noreferrer" onClick={() => {
-          navigate("/order");
-        }}>
-            Order History
-        </a>
+        <a
+         target="_blank"
+         rel="noopener noreferrer"
+         onClick={() => {
+            navigate("/orderhistory");
+          }}
+        >
+          Order History
+          </a>
       ),
     },
     {
-      key: '3', 
+      key: "3",
       label: (
-        <a target="_blank" rel="noopener noreferrer" onClick={() => {
-          navigate("/assigment-history");
-        }} >
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => {
+            navigate("/assigment-history");
+          }}
+        >
           Assigments History
         </a>
       ),
     },
     {
-      key: '3',
+      key: "3",
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.luohanacademy.com"
+        >
           Log out
         </a>
       ),
@@ -126,20 +142,20 @@ function Header() {
               Home
             </Link>
           </li>
-          {
-            role == "Staff" && (
-              <li>
-            <Link to="/staff" className="text-dark text-decoration-none " >
-              Manage User
-            </Link>
-          </li>
-            )
-          }
+          {role == "Staff" && (
+            <li>
+              <Link to="/staff" className="text-dark text-decoration-none ">
+                Manage User
+              </Link>
+            </li>
+          )}
 
           <li>
-          <Link to="/shop" className="text-dark text-decoration-none">
+            <Link to="/shop" className="text-dark text-decoration-none">
               Koi Shop
             </Link>
+          </li>
+          <li>
             <Dropdown overlay={FishOption}>
               <a
                 className="ant-dropdown-link text-dark text-decoration-none"
@@ -160,7 +176,7 @@ function Header() {
             </Dropdown>
           </li>
           <li>
-            <Link to="/details" className="text-dark text-decoration-none">
+            <Link to="/admin" className="text-dark text-decoration-none">
               Feedbacks
             </Link>
           </li>
@@ -180,31 +196,28 @@ function Header() {
             </Link>
           </li>
           <li>
-          {
-            token == null ? (
+            {token == null ? (
               <Button
-              type="primary"
-              className="login-button"
-              onClick={() => {
-                navigate("/login");
-              }}
-            >
-              Login
-            </Button>
-            ):( 
+                type="primary"
+                className="login-button"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Login
+              </Button>
+            ) : (
               <Dropdown
-        menu={{
-          items,
-        }}
-        placement="bottomLeft"
-      >
-      <a className="avatar">
-         <Avatar size={50} icon={<UserOutlined />} />  
-         </a>
-      </Dropdown>
-            )
-          }
-           
+                menu={{
+                  items,
+                }}
+                placement="bottomLeft"
+              >
+                <a className="avatar">
+                  <Avatar size={50} icon={<UserOutlined />} />
+                </a>
+              </Dropdown>
+            )}
           </li>
         </ul>
       </nav>

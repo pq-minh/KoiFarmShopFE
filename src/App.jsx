@@ -13,13 +13,16 @@ import UserInfor from "./page/user-infor/user"
 import KoiAssigment from "./page/koi-assigment/index";
 import StaffPage from "./page/staff/staff";
 import Shop from "./page/shop/Shop";
-import Details from "./page/productdetails/Details";
 import BatchKoi from "./page/fish/batch";
 import AllProduct from "./page/fish/allproduct";
 import AssignmentHistory from "./page/assigmentHistory/assigmenthistory";
 import UserCart from "./page/usercart/UserCart";
 import CheckOut from "./page/checkout/CheckOut";
 import OrderHistory from "./page/orderHistoryUser/OrderHistory";
+import Details from "./page/productdetails/Details";
+import ProductDetails from "./component/shop-component/product-cart-details/ProductDetails";
+import OrderHistoryPage from "./page/orderhistory";
+
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -107,8 +110,15 @@ const App = () => {
       path: "order",
       element: <OrderHistory />
     },  
-  ]);
-
+    {
+      path: "details/:id", 
+      element: <ProductDetails />,
+    },
+    {
+      path: "orderhistory",
+      element: <OrderHistoryPage />,
+    }   
+  ]);      
   return (
     <GoogleOAuthProvider clientId="58740703879-3s8ddc1rno4kavb9neslns90iphlps9g.apps.googleusercontent.com">
       <RouterProvider router={router} />

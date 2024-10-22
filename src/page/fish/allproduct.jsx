@@ -92,7 +92,7 @@ const AllProduct = () => {
           {displayedKoi.length > 0 ? (
             displayedKoi.map((koi) => (
               <div key={koi.koiId} className="koi-card">
-                <img src={koi.image} alt={koi.name} className="koi-image" />
+                <img src={koi.image} alt={koi.name} className="koi-image1" />
                 <h3>{koi.name}</h3>
                 <p>
                   <strong>Description:</strong> {koi.description}
