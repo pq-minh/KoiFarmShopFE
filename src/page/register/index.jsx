@@ -120,7 +120,7 @@ const Register = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please enter a username!",
+                      message: "Please enter a email!",
                     },
                   ]}
                 >

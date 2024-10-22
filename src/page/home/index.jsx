@@ -222,6 +222,42 @@ const Home = () => {
         </div>
       </div>
 
+      <div className="koi-fish-section">
+        <div className="koi-info">
+          <img
+            src="/koishusui.jpg"
+            alt="Koi Shusui"
+            className="koi-image"
+          />
+          <div className="koi-video">
+            <iframe
+              src="https://www.youtube.com/embed/14UZaw8_QyM"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div className="koi-fish-section">
+        <div className="koi-info">
+          <img
+            src="/tancho.jpg"
+            alt="Koi Tancho"
+            className="koi-image"
+          />
+          <div className="koi-video-1">
+            <iframe
+              src="https://www.youtube.com/embed/-19JeL4LAIY"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
       <div>       
         <footer className="bg-dark text-white py-4">
           <div className="container text-center">
