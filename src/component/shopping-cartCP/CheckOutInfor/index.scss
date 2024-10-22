@@ -1,0 +1,37 @@
+
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h5 {
+    margin-bottom: 20px;
+    margin-left: 120px;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .ant-form-item {
+    margin-bottom: 15px;
+  }
+  
+  .ant-radio-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ant-table {
+    margin-top: 20px;
+  }
+  
+  .ant-table th,
+  .ant-table td {
+    text-align: center;
+  }
+  
+  .ant-btn {
+    width: 100%;
+  }
+  
