@@ -202,7 +202,7 @@ const TableAssigment = () => {
         return requests.map((request) => ({
           key: request.requestId, 
           requestid: request.requestId,
-          createdate: new Date(request.createDate).toLocaleDateString(), // Format the date
+          createdate: new Date(request.createdDate).toLocaleDateString(), // Format the date
           consignmentdate: request.consignmentDate || "N/A", // If this data isn't present, provide a fallback
           enddate: request.endDate || "N/A", // Similar for this field
           agreementprice: request.agreementPrice ? `${request.agreementPrice}.000 VND` : "Free", // Handle price formatting

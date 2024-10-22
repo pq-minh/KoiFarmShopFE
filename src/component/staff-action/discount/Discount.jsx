@@ -7,6 +7,9 @@ const Discount = () => {
   const [discounts, setDiscounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRecord,setSelectedRecord] = useState(null)
+  const [isModalUpdateVisible, setIsModalUpdateVisible] = useState(false)
+
   const [form] = Form.useForm();
 
   //format ngày và giờ 
@@ -40,7 +43,7 @@ const Discount = () => {
       key: 'description',
     },
     {
-      title: 'Discount Rate',
+      title: 'Discount Rate(%)',
       dataIndex: 'discountRate',
       key: 'discountrate',
     },
@@ -96,7 +99,7 @@ const Discount = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a><button className='update-btn'> Update</button></a>
+          <a><button className='update-btn' onClick={() => handleUpdateClick(record)}> Update</button></a>
         </Space>
       ),
     },
@@ -118,6 +121,23 @@ const Discount = () => {
 
     fetchDiscounts();
   }, []);
+  //handleupdate click
+
+  const handleUpdateClick = (record) => {
+    setSelectedRecord(record);
+    setIsModalUpdateVisible({
+        isVisible:true,
+    })
+    const formattedStartDate = new Date(record.startDate).toISOString().slice(0, 16);
+    const formattedEndDate = new Date(record.endDate).toISOString().slice(0, 16);
+    form.setFieldsValue({
+      discountRate: record.discountRate,
+      totalQuantity: record.totalQuantity,
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+    });
+  }
+
   //handle create new discout 
   const handleCreate = async (values) => {
     try {
@@ -131,6 +151,24 @@ const Discount = () => {
       console.error("Error creating discount:", error);
     }
   };
+  //handle update discount
+  const handleUpdate = async (values) => {
+    try{
+        const response = await api2.post("discounts/update-discount",{
+          ...values,
+          discountId: selectedRecord.discountId,
+        });
+        if (response.status == 200){
+          setDiscounts(discounts.map(discount => 
+            discount.discountId === selectedRecord.discountId ? { ...discount, ...values } : discount
+        ));
+        form.resetFields(); 
+        setIsModalUpdateVisible(false); 
+        }
+    } catch (e){
+      console.error(e)
+    }
+  }
   return (
     <div>
     <div className='create-button'>
@@ -144,7 +182,7 @@ const Discount = () => {
 
       <Modal
         title="Create New Discount"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >
@@ -198,7 +236,48 @@ const Discount = () => {
           </Form.Item>
         </Form>
       </Modal>
-
+      <Modal 
+       title="Update Discount"
+        open={isModalUpdateVisible}
+        onCancel={() => setIsModalUpdateVisible(false)}
+        footer={null}
+        >
+         <Form form={form} onFinish={handleUpdate} initialValues={setIsModalUpdateVisible.record}>
+          <Form.Item
+            name="discountRate"
+            label="Discount Rate"
+            rules={[{ required: true, message: 'Please input the discount rate!' }]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            name="totalQuantity"
+            label="Total Quantity"
+            rules={[{ required: true, message: 'Please input the total quantity!' }]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            name="startDate"
+            label="Start Date"
+            rules={[{ required: true, message: 'Please select the start date!' }]}
+          >
+            <Input type="datetime-local" />
+          </Form.Item>
+          <Form.Item
+            name="endDate"
+            label="End Date"
+            rules={[{ required: true, message: 'Please select the end date!' }]}
+          >
+            <Input type="datetime-local" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Update
+          </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

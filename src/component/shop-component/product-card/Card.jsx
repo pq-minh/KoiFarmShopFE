@@ -1,11 +1,10 @@
 import React, { useState,useEffect } from 'react';
 import { Card, message} from 'antd';
 import api from "../../../config/axios";
-
+import { Link } from 'react-router-dom';
 import { ShoppingCartOutlined, DollarOutlined , CheckOutlined} from '@ant-design/icons';
 import "./index1.scss"
 import Item from 'antd/es/list/Item';
-import { Link } from 'react-router-dom';
 const { Meta } = Card;
 const CardProduct = ({products}) => {
     const maxLength = 100; 
@@ -60,7 +59,7 @@ const CardProduct = ({products}) => {
       const fetchKoiData = async () => {
           try {
               if (formData.koiId || formData.batchKoiId) { 
-                  const response = await api.post("/carts", formData);
+                  const response = await api.post("/Carts", formData);
                   if (response.status === 200) {
                     messageApi.success("Sản phẩm đã được thêm vào giỏ hàng");
                   }
@@ -72,7 +71,8 @@ const CardProduct = ({products}) => {
 
       fetchKoiData();
   }, [formData]);
-  return (    
+  return (
+      
     <>
     {contextHolder}
     <div className='card-container'>
@@ -81,22 +81,24 @@ const CardProduct = ({products}) => {
         products.map(product =>(
             <Card
             hoverable
+            key={product.koiId}
             style={{ width: 240,height:440,marginRight:30,marginBottom:30, borderRadius: '10px'}}
             cover={
                 <div style={{ position: 'relative' }} className='img-content'>
-                  <Link to={`/details/${product.koiId}`}>
-                <img
-                  alt="example"
-                  src={product.image}
-                  style={{ width: '95%'}}
-                />
+                <Link to={`/details/${product.koiId}`}>
+                  <img
+                    alt={product.name}
+                    src={product.image}
+                    style={{ width: '95%' }}
+                  />
+                </Link>
+                
                 <div className='detail'>
                   <p className='size'>Nguồn gốc: {product.origin}</p>
                   <p className='size'>Cân nặng: {product.weight} kg</p>
                   <p className='size'>Tuổi: {product.age} năm</p>
                   <p className='size'>Kích thước: {product.size} cm</p>
                 </div>
-                </Link>
                 </div>                         
             }
              className='card'

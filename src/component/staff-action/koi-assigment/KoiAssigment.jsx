@@ -231,11 +231,11 @@ const KoiAssigment = () => {
             requestId: quotation.requestId,
             koiname: quotation.koiName || 'N/A', 
             koiImage: quotation.koiImage || '', 
-            koiAge: quotation.koiAge || 'N/A', 
-            koiSize: quotation.koiSize || 'N/A', 
-            koiWeight: quotation.koiWeight || 'N/A', 
+            koiAge: quotation.koiAge +" Year" || 'N/A', 
+            koiSize: quotation.koiSize + " cm" || 'N/A', 
+            koiWeight: quotation.koiWeight + " kg" || 'N/A', 
             status: quotation.status || 'N/A', 
-            price: quotation.price || 0, 
+            price: quotation.price +".000VND" || 0, 
             note: quotation.note || 'N/A', 
         }));
     };
