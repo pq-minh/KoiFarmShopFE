@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../../config/axios";
 import "./index.scss";
 import Header from "../../header";
 import { Breadcrumb, Flex } from "antd";
-import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
 
 const ProductDetails = () => {
   const { id } = useParams();
