@@ -33,15 +33,19 @@ const App = () => {
       path: "login",
       element: <Login />,
     },
+    // {
+    //   path: "admin",
+    //   element: <PrivateRoute />, 
+    //   children: [
+    //     {
+    //       path: "dashboard",
+    //       element: <Dashboard />, 
+    //     },
+    //   ],
+    // },
     {
-      path: "admin",
-      element: <PrivateRoute />, 
-      children: [
-        {
-          path: "dashboard",
-          element: <Dashboard />, 
-        },
-      ],
+          path: "admin",
+          element: <Dashboard />,
     },
     {
       path: "userinfor",

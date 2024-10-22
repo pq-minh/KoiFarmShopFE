@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { Card, message} from 'antd';
 import api from "../../../config/axios";
-
+import { Link } from 'react-router-dom';
 import { ShoppingCartOutlined, DollarOutlined , CheckOutlined} from '@ant-design/icons';
 import "./index1.scss"
 import Item from 'antd/es/list/Item';
@@ -81,14 +81,18 @@ const CardProduct = ({products}) => {
         products.map(product =>(
             <Card
             hoverable
+            key={product.koiId}
             style={{ width: 240,height:440,marginRight:30,marginBottom:30, borderRadius: '10px'}}
             cover={
                 <div style={{ position: 'relative' }} className='img-content'>
-                <img
-                  alt="example"
-                  src={product.image}
-                  style={{ width: '95%'}}
-                />
+                <Link to={`/details/${product.koiId}`}>
+                  <img
+                    alt={product.name}
+                    src={product.image}
+                    style={{ width: '95%' }}
+                  />
+                </Link>
+                
                 <div className='detail'>
                   <p className='size'>Nguồn gốc: {product.origin}</p>
                   <p className='size'>Cân nặng: {product.weight} kg</p>

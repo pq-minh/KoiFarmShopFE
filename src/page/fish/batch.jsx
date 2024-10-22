@@ -14,7 +14,7 @@ const BatchKoi = () => {
 
   useEffect(() => {
     api
-      .get("/BatchKoi/GetBatchKoi") 
+      .get("/batchkois") 
       .then((response) => {
         setBatchKoiData(response.data);
         setLoading(false);
