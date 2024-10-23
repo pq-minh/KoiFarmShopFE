@@ -5,12 +5,9 @@ const MenuList = ({darkTheme, onMenuClick}) => {
 
     return (
     <div>
-            <Menu theme={ darkTheme ? 'dark' : 'light'} defaultSelectedKeys={['Home']} mode='inline' className='menu-bar' 
+            <Menu theme={ darkTheme ? 'dark' : 'light'} defaultSelectedKeys={['assigment']} mode='inline' className='menu-bar' 
                 onClick={(e) => onMenuClick(e.key)}
             >
-                <Menu.Item key="Home" icon={<HomeOutlined />}>
-                    Home
-                </Menu.Item>
                 <Menu.SubMenu key="manage" icon={<BarsOutlined />} title="Manage">
                     <Menu.Item key="assigment" >
                         Manage Assigment

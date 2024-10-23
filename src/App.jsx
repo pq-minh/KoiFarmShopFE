@@ -22,7 +22,7 @@ import OrderHistory from "./page/orderHistoryUser/OrderHistory";
 import Details from "./page/productdetails/Details";
 import ProductDetails from "./component/shop-component/product-cart-details/ProductDetails";
 import OrderHistoryPage from "./page/orderhistory";
-
+import CheckOutComplete from "./component/shopping-cartCP/CheckoutComplete/CheckoutComplete"
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -121,6 +121,10 @@ const App = () => {
     {
       path: "orderhistory",
       element: <OrderHistoryPage />,
+    },
+    {
+      path: "checkoutcomplete",
+      element: <CheckOutComplete />
     }   
   ]);      
   return (

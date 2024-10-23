@@ -5,15 +5,24 @@ import api from "../../config/axios";
 import CheckOutInfor from '../../component/shopping-cartCP/CheckOutInfor/CheckOutCart';
 import { Breadcrumb } from 'antd';
 import { HomeOutlined} from '@ant-design/icons';
+import CheckoutComplete from '../../component/shopping-cartCP/CheckoutComplete/CheckoutComplete';
 const UserCart = () => 
   {
     const [carts,setCarts] = useState([])
+    const [orderData, setOrderData] = useState(null);
+
+    //
+    const handleSetOrderData = (data) => {
+      setOrderData(data); 
+      console.log("Order Data Set:", data); 
+    };
     useEffect(() => {
       const fetchKoiData = async () => {
         try {
           const response = await api.get("carts");
           if (response.status === 200) {
             setCarts(response.data);
+            
           }
         } catch (err) {
           console.log(err);
@@ -51,7 +60,7 @@ const UserCart = () =>
       <KoiCart carts={carts} setCarts={setCarts} isCheckout={true}/>
       </div>
       <div className='col-4'>
-      <CheckOutInfor carts={carts}/>
+      <CheckOutInfor carts={carts} setOrderData={handleSetOrderData}/>
       </div>
       </div>
     </div>

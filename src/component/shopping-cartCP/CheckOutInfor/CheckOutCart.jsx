@@ -3,7 +3,7 @@ import { Table, Input, Form, Radio, Button , message} from 'antd';
 import "./index.scss"
 import api2 from '../../../config/axios2';
 import api from '../../../config/axios';
-const CheckOutInfor = ({carts}) => {
+const CheckOutInfor = ({carts,setOrderData}) => {
   const [discount, setDiscount] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState('online');
   const [address, setAddress] = useState([]);
@@ -92,33 +92,50 @@ const CheckOutInfor = ({carts}) => {
       }
     },[errorMessage]);
     // xứ lý add to order
-    const handleAddToOrder =async () => {
+    const handleAddToOrder = async () => {
+      // Validate input data
+      if (!carts.length) {
+        message.error('Giỏ hàng không có sản phẩm.');
+        return;
+      }
+    
       const orderData = {
-        carts: carts.map((cart) =>({
+        carts: carts.map(cart => ({
           koiId: cart.koiId || null,
           batchKoiId: cart.batchKoiId || null,
           quantity: cart.quantity,
-          })), 
+        })),
         method: paymentMethod,
-        discountId: discountId || 0, 
-        phoneNumber: phoneNumber || null, 
-        address: `${address.city || ''}, ${address.dictrict || ''}, ${address.ward || ''}, ${address.streetName || ''}`, // Địa chỉ
-        }
-        
-      console.log(orderData); 
-      try{
-          const response = await api2.post("OrderPayment/create-payment");
-          if(response.status == 200) {
-            if (paymentMethod === 'online') {
-              const redirectUrl = response.data.redirectUrl;
-              window.location.href = redirectUrl; 
-            } else {
-              message.success('Đơn hàng đã được tạo thành công');
-            }
+        discountId: discountId || 0,
+        phoneNumber: phoneNumber || null,
+        address: `${address.city || ''}, ${address.district || ''}, ${address.ward || ''}, ${address.streetName || ''}`,
+      };
+     setOrderData(orderData)
+      console.log(orderData);
+      localStorage.setItem('carts', JSON.stringify(orderData));
+      try {
+        const response = await api.post("orders/createpayment", {
+          amount: 10000, // Replace with actual calculation
+          createdDate: new Date().toISOString(),
+        });
+    
+        if (response.status === 200) {
+          if (paymentMethod === 'online') {
+            const redirectUrl = response.data.paymentUrl;
+            localStorage.setItem("payment", JSON.stringify(redirectUrl));
+            console.log(redirectUrl);
+            window.location.href = redirectUrl;
+          } else {
+            message.success('Đơn hàng đã được tạo thành công');
           }
-      } catch(err){
-        console.log(err);
+        }
+      } catch (err) {
+        console.error(err);
+        message.error('Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại.');
       }
+    };
+    const calculateTotalAmount = (carts) => {
+      return carts.reduce((total, cart) => total + (cart.price * cart.quantity), 0);
     };
 
   return (

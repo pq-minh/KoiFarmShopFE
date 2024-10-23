@@ -1,5 +1,7 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useRef} from 'react'
 import axios from 'axios';
+import { SearchOutlined } from '@ant-design/icons';
+import Highlighter from 'react-highlight-words';
 import api from "../../../config/axios";
 import { Space, Table, Tag ,Button,Modal,Input } from 'antd';
 const KoiAssigment = () => {
@@ -14,6 +16,113 @@ const KoiAssigment = () => {
     const [totalCount, setTotalCount] = useState(0);
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(6);
+    //filter and search 
+    const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef(null);
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText('');
+  };
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+      <div
+        style={{
+          padding: 8,
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: 'block',
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({
+                closeDropdown: false,
+              });
+              setSearchText(selectedKeys[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? '#1677ff' : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{
+            backgroundColor: '#ffc069',
+            padding: 0,
+          }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ''}
+        />
+      ) : (
+        text
+      ),
+  });
     //Fetching data from quotations
         const fetchData = async (pageNumber, pageSize) => {
           try {
@@ -131,6 +240,7 @@ const KoiAssigment = () => {
             title: 'Koi Name',
             dataIndex: 'koiname', 
             key: 'koiname',
+            ...getColumnSearchProps('koiname'),
         },
         {
             title: 'Koi Image',
@@ -139,19 +249,30 @@ const KoiAssigment = () => {
             render: (text) => <img src={text} alt="Koi" style={{ width: '50px' }} />, 
         },
         {
-            title: 'Age',
+            title: 'Age(years)',
             dataIndex: 'koiAge', 
             key: 'koiAge',
+            sorter: (a, b) => a.koiAge - b.koiAge,
         },
         {
             title: 'Size',
             dataIndex: 'koiSize', 
             key: 'koiSize',
+            sorter: (a, b) => {
+              const sizeA = parseInt(a.koiSize); 
+              const sizeB = parseInt(b.koiSize); 
+              return sizeA - sizeB; 
+          },
         },
         {
             title: 'Weight',
             dataIndex: 'koiWeight', 
             key: 'koiWeight',
+            sorter: (a, b) => {
+              const sizeA = parseInt(a.koiWeight); 
+              const sizeB = parseInt(b.koiWeight); 
+              return sizeA - sizeB; 
+          },
         },
         {
           title: 'Status',
@@ -186,6 +307,11 @@ const KoiAssigment = () => {
             title: 'Price',
             dataIndex: 'price',
             key: 'price',
+            sorter: (a, b) => {
+              const sizeA = parseInt(a.price); 
+              const sizeB = parseInt(b.price); 
+              return sizeA - sizeB; 
+          },
         },
         {
             title: 'Note',
@@ -231,7 +357,7 @@ const KoiAssigment = () => {
             requestId: quotation.requestId,
             koiname: quotation.koiName || 'N/A', 
             koiImage: quotation.koiImage || '', 
-            koiAge: quotation.koiAge +" Year" || 'N/A', 
+            koiAge: quotation.koiAge  || 'N/A', 
             koiSize: quotation.koiSize + " cm" || 'N/A', 
             koiWeight: quotation.koiWeight + " kg" || 'N/A', 
             status: quotation.status || 'N/A', 

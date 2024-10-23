@@ -127,7 +127,7 @@ const KoiAssigment =() => {
       >
       <div className=" row">
       <div className="col">
-        <Form.Item label="Image" valuePropName="fileList" getValueFromEvent={normFile} name="image" >
+        <Form.Item label="Ảnh cá" valuePropName="fileList" getValueFromEvent={normFile} name="image" >
           <Upload  onChange={handleFileChange}
           listType="picture-card"
           beforeUpload={() => false} >
@@ -149,67 +149,68 @@ const KoiAssigment =() => {
             </button>
           </Upload>
         </Form.Item>
-        <Form.Item label="Gender" name="gender">
+        <Form.Item label="Giới tính" name="gender">
           <Radio.Group>
-            <Radio value="male"> Name </Radio>
-            <Radio value="female"> Nữ </Radio>
+            <Radio value="male"> Đực </Radio>
+            <Radio value="female"> Cái </Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Name" 
+        <Form.Item label="Tên" 
             name="name"
         >
-          <Input />
+          <Input placeholder="VD: Koi Onwa" />
           
         </Form.Item>
         
-        <Form.Item label="Origin" 
+        <Form.Item label="Nguồn gốc" 
             name="origin"
+           
         >
-          <Input />         
+          <Input   placeholder="Daichi Koi" />         
         </Form.Item>
 
-        <Form.Item label="Personality" 
+        <Form.Item label="Tính cách" 
             name="personality"
         >
-          <Input />         
+          <Input placeholder='Hiền' />         
         </Form.Item>
 
-        <Form.Item label="Description"
+        <Form.Item label="Mô tả"
             name="description"
         >
           <TextArea rows={4} /> 
         </Form.Item>
         </div>
         <div className="col">
-        <Form.Item label="Age" name="age" >
+        <Form.Item label="Tuổi" name="age" >
           <InputNumber />
         </Form.Item>
 
-        <Form.Item label="Weight" name="weight" 
+        <Form.Item label="Cân nặng" name="weight" 
              
         >
           <Input placeholder='kg' />
         </Form.Item>
 
-        <Form.Item label="Size" name="size" >
+        <Form.Item label="Kích thước" name="size" >
           <Input placeholder='cm' />
         </Form.Item>
          
-        <Form.Item label="Assigment Date" name="assigmentdate">
+        <Form.Item label="Ngày kí gửi" name="assigmentdate">
           <DatePicker />
         </Form.Item>
 
-        <Form.Item label="End Date" name="enddate">
+        <Form.Item label="Ngày kết thúc" name="enddate">
           <DatePicker />
         </Form.Item>
 
-        <Form.Item label="Type" name="type">
+        <Form.Item label="Loại kí gửi" name="type">
           <Radio.Group>
             <Radio value="online" name='online'> Onlline </Radio>
             <Radio value="offline" name='offline'> Offline </Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Select" name="category">
+        <Form.Item label="Loại cá" name="category">
           <Select>
             <Select.Option value="1">Gốc Việt</Select.Option>
             <Select.Option value="2">Gốc Nhật </Select.Option>
