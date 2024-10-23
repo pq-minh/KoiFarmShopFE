@@ -48,6 +48,18 @@
   color: #555;
 }
 
+.status{
+  font-size: 1rem;
+  font-weight: bold;
+}
+.status.Pending{
+  color: green;
+}
+
+.status.Completed{
+  color: red;
+}
+
 
 .order-details-container {
   display: flex;

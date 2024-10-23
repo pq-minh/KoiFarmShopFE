@@ -59,7 +59,7 @@ const CardProduct = ({products}) => {
       const fetchKoiData = async () => {
           try {
               if (formData.koiId || formData.batchKoiId) { 
-                  const response = await api.post("/Carts", formData);
+                  const response = await api.post("/carts", formData);
                   if (response.status === 200) {
                     messageApi.success("Sản phẩm đã được thêm vào giỏ hàng");
                   }

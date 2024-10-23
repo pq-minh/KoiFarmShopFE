@@ -1,13 +1,14 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import updateKoi from "./updatekoi";
 import {
   DesktopOutlined,
   PlusCircleOutlined,
   PieChartOutlined,
   UserOutlined,
   UploadOutlined,
-  SyncOutlined ,
-  EyeOutlined ,
+  SyncOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import {
   Breadcrumb,
@@ -22,6 +23,7 @@ import {
   Select
 } from "antd";
 import api from "../../config/axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -33,14 +35,14 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-
+//const navigate = useNavigate();
 const items = [
   getItem("Option 1", "1", <PieChartOutlined />),
   getItem("Option 2", "2", <DesktopOutlined />),
   getItem("Kois Management", "sub1", <UserOutlined />, [
-    getItem("View All Koi","viewKoi", <EyeOutlined />),
+    getItem("View All Koi", "viewKoi", <EyeOutlined />),
     getItem("Add Koi", "addKoi", <PlusCircleOutlined />),
-    getItem("Update Koi", "updateKoi",<SyncOutlined />),
+    getItem("Update Koi", "updateKoi", <SyncOutlined />),
   ]),
   getItem("Batch Koi Management", "sub2", <UserOutlined />, [
     getItem("Add Batch Koi", "addBatchKoi", <PlusCircleOutlined />),
@@ -52,9 +54,8 @@ const items = [
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState("1");
-  const [form] = Form.useForm(); 
-  const [koiId, setKoiId] = useState(null); 
-  const [koiData, setKoiData] = useState(null); 
+  const [form] = Form.useForm();
+  
 
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -62,81 +63,80 @@ const Dashboard = () => {
 
   const onMenuClick = (e) => {
     setSelectedKey(e.key);
-    form.resetFields(); 
+    form.resetFields();
     if (e.key === 'Update') {
       setKoiId(null);
       setKoiData(null);
-    }  
+    }
   };
 
-  const fetchKoiById = async(koiId) => {
-    api.get(`kois/management/${koiId}`)
-      .then(response => {
-        setKoiData(response.data); 
-        form.setFieldsValue(response.data); 
-      })
-      .catch(() => {
-        notification.error({
-          message: "Error",
-          description: "Koi fish not found!",
-        });
-      });
-  };
+  
 
 
   const ViewAllKoi = () => {
     const [koiList, setKoiList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [koiId, setKoiId] = useState(null);
+//Get handle koi id
+const handleKoiId= (id)=>{
+console.log("koiid", id);
+}
     useEffect(() => {
-        const fetchKoiData = async () => {
-            try {
-                const response = await api.get("/kois/management");
-                setKoiList(response.data);
-            } catch (err) {
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
+      const fetchKoiData = async () => {
+        try {
+          const response = await api.get("/kois/management");
+          setKoiList(response.data);
+          
+          
+        } catch (err) {
+          setError(err);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-        fetchKoiData();
+      fetchKoiData();
     }, []);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error fetching koi data: {error.message}</div>;
 
     return (
-        <div className="koi-list">
-            <h2>Danh sách cá koi</h2>
-            <div className="koi-cards">
-                {koiList.map((koi) => (
-                    <div className="koi-card" key={koi.koiId}>
-                        <img className="koi-image" src={koi.image} alt={koi.name} />
-                        <h3>{koi.name}</h3>
-                        <p>Xuất xứ: {koi.origin}</p>
-                        <p>Giới tính: {koi.gender}</p>
-                        <p>Độ tuổi: {koi.age} năm</p>
-                        <p>Trọng lượng: {koi.weight} kg</p>
-                        <p>Kích thước: {koi.size} cm</p>
-                        <p>Tính cách: {koi.personality}</p>
-                        <p>Giá: ${koi.price}</p>
-                        <p>Trạng thái: {koi.status}</p>
-                        <a href={koi.certificate} target="_blank" rel="noopener noreferrer">Chứng nhận</a>
-                    </div>
-                ))}
+      <div className="koi-list">
+        <h2>Danh sách cá koi</h2>
+        <div className="koi-cards">
+          {koiList.map((koi) => (
+            <div className="koi-card" key={koi.koiId}>
+              <img className="koi-image" src={koi.image} alt={koi.name} />
+              <h3>{koi.name}</h3>
+              <p>Xuất xứ: {koi.origin}</p>
+              <p>Giới tính: {koi.gender}</p>
+              <p>Độ tuổi: {koi.age} năm</p>
+              <p>Trọng lượng: {koi.weight} kg</p>
+              <p>Kích thước: {koi.size} cm</p>
+              <p>Tính cách: {koi.personality}</p>
+              <p>Giá: ${koi.price}</p>
+              <p>Trạng thái: {koi.status}</p>
+              <Button
+          
+                onClick={() => handleKoiId(koi.koiId, setSelectedKey("updatekoi"))}
+              >
+                Update
+              </Button>
             </div>
+          ))}
         </div>
+      </div>
     );
-};
+  };
 
-  
+
   const handleKoiSubmit = (values) => {
     const formData = new FormData();
     Object.keys(values).forEach((key) => {
       if (key === "ImageFile" && values[key] && values[key].length > 0) {
-        formData.append(key, values[key][0].originFileObj); 
+        formData.append(key, values[key][0].originFileObj);
       } else {
         formData.append(key, values[key]);
       }
@@ -152,7 +152,7 @@ const Dashboard = () => {
           message: "Success",
           description: "Koi fish added successfully!",
         });
-        form.resetFields(); 
+        form.resetFields();
       })
       .catch((error) => {
         if (
@@ -176,52 +176,23 @@ const Dashboard = () => {
       });
   };
 
-  const handleUpdateKoiSubmit = (values) => {
-    const formData = new FormData();
-    Object.keys(values).forEach((key) => {
-      if (key === "ImageFile" && values[key] && values[key].length > 0) {
-        formData.append(key, values[key][0].originFileObj); 
-      } else {
-        formData.append(key, values[key]);
-      }
-    });
   
-    api.put(`/kois/management/${koiId}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then(() => {
-      notification.success({
-        message: "Success",
-        description: "Koi fish updated successfully!",
-      });
-      form.resetFields();
-      setKoiData(null); 
-    })
-    .catch(() => {
-      notification.error({
-        message: "Error",
-        description: "An error occurred during the update.",
-      });
-    });
-  };
-  
+
   const handleBatchKoiSubmit = (values) => {
     const formData = new FormData();
     Object.keys(values).forEach((key) => {
       if (key === "ImageFile" && values[key] && values[key].length > 0) {
-        formData.append(key, values[key][0].originFileObj); 
+        formData.append(key, values[key][0].originFileObj);
       } else {
         formData.append(key, values[key]);
       }
     });
-  
+
     api.post("/batchkois/management", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
       .then(() => {
         notification.success({
           message: "Success",
@@ -250,7 +221,7 @@ const Dashboard = () => {
         }
       });
   };
-  
+
   const renderAddKoiForm = () => (
     <Form form={form} layout="vertical" onFinish={handleKoiSubmit}>
       <Form.Item
@@ -261,9 +232,9 @@ const Dashboard = () => {
         <Upload
           name="ImageFile"
           listType="picture"
-          beforeUpload={() => false} 
-          onChange={({ fileList }) => {           
-            form.setFieldsValue({ ImageFile: fileList }); 
+          beforeUpload={() => false}
+          onChange={({ fileList }) => {
+            form.setFieldsValue({ ImageFile: fileList });
           }}
         >
           <Button icon={<UploadOutlined />}>Click to Upload</Button>
@@ -277,12 +248,12 @@ const Dashboard = () => {
         <Input type="number" />
       </Form.Item>
       <Form.Item
-            name="Name"  
-            label="Name"
-            rules={[{ required: true, message: "Please input the koi fish name!" }]}
-        >
-            <Input />
-        </Form.Item>
+        name="Name"
+        label="Name"
+        rules={[{ required: true, message: "Please input the koi fish name!" }]}
+      >
+        <Input />
+      </Form.Item>
       <Form.Item
         name="Origin"
         label="Origin"
@@ -359,90 +330,8 @@ const Dashboard = () => {
     </Form>
   );
 
-  const renderUpdateKoiForm = () => (
-    <div>
-      <Form layout="inline" onFinish={(values) => fetchKoiById(values.koiId)}>
-        <Form.Item name="koiId" label="Koi ID" rules={[{ required: true, message: "Please input Koi ID!" }]}>
-          <Input />
-        </Form.Item>
-        <Button type="primary" htmlType="submit">Tìm kiếm</Button>
-      </Form>
   
-      {koiData && (
-        <Form form={form} layout="vertical" onFinish={handleUpdateKoiSubmit}>
-          <Form.Item name="FishTypeId" label="Fish Type ID" rules={[{ required: true }]}>
-            <Input type="number" />
-          </Form.Item>
-  
-          <Form.Item name="KoiName" label="Koi Name" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-  
-          <Form.Item name="Origin" label="Origin" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
-  
-          <Form.Item name="Description" label="Description" rules={[{ required: true }]}>
-            <Input.TextArea />
-          </Form.Item>
-  
-          <Form.Item name="Gender" label="Gender" rules={[{ required: true }]}>
-            <Select>
-              <Select.Option value="Male">Male</Select.Option>
-              <Select.Option value="Female">Female</Select.Option>
-            </Select>
-          </Form.Item>
-  
-          <Form.Item name="ImageFile" label="Image">
-            <Upload
-              name="ImageFile"
-              listType="picture"
-              beforeUpload={() => false} 
-              onChange={({ fileList }) => {
-                form.setFieldsValue({ ImageFile: fileList });
-              }}
-            >
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
-          </Form.Item>
-  
-          <Form.Item name="Age" label="Age" rules={[{ required: true }]}>
-            <Input type="number" />
-          </Form.Item>
-  
-          <Form.Item name="Weight" label="Weight" rules={[{ required: true }]}>
-            <Input type="number" step="0.01" />
-          </Form.Item>
-  
-          <Form.Item name="Size" label="Size" rules={[{ required: true }]}>
-            <Input type="number" step="0.01" />
-          </Form.Item>
-  
-          <Form.Item name="Personality" label="Personality">
-            <Input />
-          </Form.Item>
-  
-          <Form.Item name="Status" label="Status">
-            <Select>
-              <Select.Option value="Active">Active</Select.Option>
-              <Select.Option value="Inactive">Inactive</Select.Option>
-            </Select>
-          </Form.Item>
-  
-          <Form.Item name="Price" label="Price" rules={[{ required: true }]}>
-            <Input type="number" step="0.01" />
-          </Form.Item>
-  
-          <Form.Item name="Certificate" label="Certificate">
-            <Input />
-          </Form.Item>
-  
-          <Button type="primary" htmlType="submit">Update</Button>
-        </Form>
-      )}
-    </div>
-  );
-  
+
 
   const renderAddBatchKoiForm = () => (
     <Form form={form} layout="vertical" onFinish={handleBatchKoiSubmit}>
@@ -454,15 +343,15 @@ const Dashboard = () => {
         <Upload
           name="ImageFile"
           listType="picture"
-          beforeUpload={() => false} 
+          beforeUpload={() => false}
           onChange={({ fileList }) => {
-            form.setFieldsValue({ ImageFile: fileList }); 
+            form.setFieldsValue({ ImageFile: fileList });
           }}
         >
           <Button icon={<UploadOutlined />}>Click to Upload</Button>
         </Upload>
       </Form.Item>
-  
+
       <Form.Item
         name="BatchTypeId"
         label="Batch Type ID"
@@ -470,7 +359,7 @@ const Dashboard = () => {
       >
         <Input type="number" />
       </Form.Item>
-  
+
       <Form.Item
         name="Name"
         label="Name"
@@ -478,7 +367,7 @@ const Dashboard = () => {
       >
         <Input />
       </Form.Item>
-  
+
       <Form.Item
         name="Description"
         label="Description"
@@ -486,7 +375,7 @@ const Dashboard = () => {
       >
         <Input.TextArea />
       </Form.Item>
-  
+
       <Form.Item
         name="Age"
         label="Age"
@@ -494,7 +383,7 @@ const Dashboard = () => {
       >
         <Input />
       </Form.Item>
-  
+
       <Form.Item
         name="Quantity"
         label="Quantity"
@@ -502,7 +391,7 @@ const Dashboard = () => {
       >
         <Input type="number" />
       </Form.Item>
-  
+
       <Form.Item
         name="Weight"
         label="Weight (kg)"
@@ -510,7 +399,7 @@ const Dashboard = () => {
       >
         <Input type="number" />
       </Form.Item>
-  
+
       <Form.Item
         name="Size"
         label="Size (cm)"
@@ -518,7 +407,7 @@ const Dashboard = () => {
       >
         <Input type="number" />
       </Form.Item>
-  
+
       <Form.Item
         name="Origin"
         label="Origin"
@@ -526,7 +415,7 @@ const Dashboard = () => {
       >
         <Input />
       </Form.Item>
-  
+
       <Form.Item
         name="Gender"
         label="Gender"
@@ -534,7 +423,7 @@ const Dashboard = () => {
       >
         <Input />
       </Form.Item>
-  
+
       <Form.Item
         name="Certificate"
         label="Certificate"
@@ -542,7 +431,7 @@ const Dashboard = () => {
       >
         <Input />
       </Form.Item>
-  
+
       <Form.Item
         name="Price"
         label="Price (VND)"
@@ -550,7 +439,7 @@ const Dashboard = () => {
       >
         <Input type="number" />
       </Form.Item>
-  
+
       <Form.Item
         name="Status"
         label="Status"
@@ -558,7 +447,7 @@ const Dashboard = () => {
       >
         <Input />
       </Form.Item>
-  
+
       <Button type="primary" htmlType="submit">
         Submit
       </Button>
@@ -589,7 +478,7 @@ const Dashboard = () => {
           <div style={{ padding: 24, minHeight: 360, background: colorBgContainer, borderRadius: borderRadiusLG }}>
             {selectedKey === "addKoi" && renderAddKoiForm()}
             {selectedKey === "addBatchKoi" && renderAddBatchKoiForm()}
-            {selectedKey === "updateKoi" && renderUpdateKoiForm() }
+            {selectedKey === "updateKoi" && <Link to={`/updatekoi/:${id}`}>Update</Link>}
             {selectedKey === "viewKoi" && <ViewAllKoi />}
           </div>
         </Content>

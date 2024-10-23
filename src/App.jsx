@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google"; 
 import Home from "./page/home";
 import Login from "./page/login";
-import Dashboard from "./page/admin";
+// import Dashboard from "./page/admin";
 import PrivateRoute from "./component/private-route";
 import Register from "./page/register";
 import SingleKoi from "./page/fish/single"; 
@@ -21,6 +21,11 @@ import CheckOut from "./page/checkout/CheckOut";
 import Details from "./page/productdetails/Details";
 import ProductDetails from "./component/shop-component/product-cart-details/ProductDetails";
 import OrderHistoryPage from "./page/orderhistory";
+import Dashboard from "./page/Dashboard";
+import ViewKoi from "./page/Dashboard/Viewkoi";
+import UpdateKoi from "./page/Dashboard/Viewkoi/UpdateKoi";
+import AddKoi from "./page/Dashboard/Viewkoi/AddKoi";
+
 
 const App = () => {
   const router = createBrowserRouter([
@@ -44,7 +49,21 @@ const App = () => {
     // },
     {
       path: "admin",
-      element: <Dashboard />
+      element: <Dashboard />,
+      children: [
+            {
+              path: "/admin/viewkoi",
+              element: <ViewKoi />, 
+            },
+            {
+              path: "/admin/updatekoi/:id",
+              element: <UpdateKoi />, 
+            },
+            {
+              path: "/admin/addkoi",
+              element: <AddKoi/>,
+            }
+          ],
     },
     {
       path: "userinfor",
@@ -116,12 +135,15 @@ const App = () => {
     {
       path: "orderhistory",
       element: <OrderHistoryPage />,
-    }   
+    },
+  
+    
   ]);      
   return (
     <GoogleOAuthProvider clientId="58740703879-3s8ddc1rno4kavb9neslns90iphlps9g.apps.googleusercontent.com">
-      <RouterProvider router={router} />
+      <RouterProvider router={router} />     
     </GoogleOAuthProvider>
+    
   );
 };
 

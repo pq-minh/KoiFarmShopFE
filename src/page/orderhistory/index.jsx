@@ -41,7 +41,7 @@ const OrderHistoryPage = () => {
         {orders.length === 0 ? (
           <p>No orders found.</p>
         ) : (
-          <div className="order-list">
+          <div className=" order-list">
             {orders.map((order) => (
               <div
                 key={order.orderId}
@@ -56,11 +56,11 @@ const OrderHistoryPage = () => {
                 <p>
                   <strong>Total Amount:</strong> ${order.totalAmount}
                 </p>
-                <p>
+                <p className={`status ${order.orderStatus === "Pending" ? "Completed" : ""}`}>
                   <strong>Status:</strong> {order.orderStatus}
                 </p>
                 <p>
-                  <strong>Date:</strong>{" "}
+                  <strong>Date:</strong>{""}
                   {new Date(order.createDate).toLocaleString()}
                 </p>
               </div>
