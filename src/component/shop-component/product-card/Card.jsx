@@ -6,7 +6,7 @@ import { ShoppingCartOutlined, DollarOutlined , CheckOutlined} from '@ant-design
 import "./index1.scss"
 import Item from 'antd/es/list/Item';
 const { Meta } = Card;
-const CardProduct = ({products}) => {
+const CardProduct = ({products,setProductOne,setProductTwo}) => {
     const maxLength = 100; 
     const description = products.description || ""; 
     const [carts,setCarts] = useState([]);
@@ -71,6 +71,16 @@ const CardProduct = ({products}) => {
 
       fetchKoiData();
   }, [formData]);
+  //
+  const handleCompare = (product) => {
+    setProductOne((prev) => {
+        if (!prev) {
+            return product; 
+        }
+        setProductTwo(product); 
+        return prev; 
+    });
+};
   return (
       
     <>
@@ -98,6 +108,10 @@ const CardProduct = ({products}) => {
                   <p className='size'>Cân nặng: {product.weight} kg</p>
                   <p className='size'>Tuổi: {product.age} năm</p>
                   <p className='size'>Kích thước: {product.size} cm</p>
+                  <button type="button" class="button-cp" onClick={() => handleCompare(product)}>
+  <span class="button__text">Compare</span>
+  <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+</button>
                 </div>
                 </div>                         
             }

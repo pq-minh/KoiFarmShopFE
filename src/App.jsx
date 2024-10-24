@@ -23,6 +23,7 @@ import Details from "./page/productdetails/Details";
 import ProductDetails from "./component/shop-component/product-cart-details/ProductDetails";
 import OrderHistoryPage from "./page/orderhistory";
 import CheckOutComplete from "./component/shopping-cartCP/CheckoutComplete/CheckoutComplete"
+import Comparison from "./component/comparison/Comparison";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -125,7 +126,11 @@ const App = () => {
     {
       path: "checkoutcomplete",
       element: <CheckOutComplete />
-    }   
+    },   
+    {
+      path: "comparison",
+      element: <Comparison/>
+    }  
   ]);      
   return (
     <GoogleOAuthProvider clientId="58740703879-3s8ddc1rno4kavb9neslns90iphlps9g.apps.googleusercontent.com">

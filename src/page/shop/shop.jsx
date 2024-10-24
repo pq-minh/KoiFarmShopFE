@@ -5,13 +5,25 @@ import Filter from '../../component/shop-component/product-filter/Filter';
 import api from "../../config/axios";
 import HorizonFilter from '../../component/shop-component/product-filter/HorizonFilter';
 import "./index.scss"
-import { Breadcrumb, Flex } from 'antd';
+import { Breadcrumb, Flex,Button } from 'antd';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import Comparison from '../../component/comparison/Comparison';
+import Draggable from 'react-draggable';
 const Shop = () => {
     const [products,setProducts] = useState([])
     const [filter,setFilter] = useState([])
     const [koiorbatch,setKoiorBatch] = useState("kois")
     const [SortBy,setsortBy] = useState('')
+    const [isComparisonVisible, setComparisonVisible] = useState(false); // State để điều khiển modal
+    const [productone,setProductOne] = useState([]);
+    const [producttwo,setProductTwo] = useState([]);
+    //
+    const handleProductOne = (data) =>{
+        setProductOne(data)
+    }
+    const handleProductTwo = (data) =>{
+      setProductTwo(data)
+    }
     //
     const handleFilterData = (data) => {
       setFilter(data)
@@ -67,11 +79,18 @@ const Shop = () => {
             <div className='horizon-filter row'>
               <HorizonFilter setValue={handleFilterKoiOrBatch} setsortBy={handleShortBy}/>
             </div>
-            <CardProduct products={products}/>   
+            <CardProduct products={products} setProductOne={handleProductOne} setProductTwo={handleProductTwo}/>   
             </div> 
         </div>
+        <div className='row  comparison-box'>
+                    <Button onClick={() => setComparisonVisible(true)}>So Sánh Sản Phẩm</Button>
+                    <Comparison visible={isComparisonVisible} onClose={() => setComparisonVisible(false)} setProductOne={setProductOne} 
+    setProductTwo={setProductTwo}  productone={productone} producttwo = {producttwo} />
+        </div>
      </div>
+    
     </div>
+    
   )
 }
 
