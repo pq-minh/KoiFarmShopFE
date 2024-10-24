@@ -91,7 +91,7 @@ const CardProduct = ({products,setProductOne,setProductTwo}) => {
         products.map(product =>(
             <Card
             hoverable
-            key={product.koiId}
+            key={product.koiId || product.batchKoiId}
             style={{ width: 240,height:440,marginRight:30,marginBottom:30, borderRadius: '10px'}}
             cover={
                 <div style={{ position: 'relative' }} className='img-content'>

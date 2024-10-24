@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../../config/axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Alert, Flex, Spin } from 'antd';
 
 const CheckoutComplete = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    
     useEffect(() => {
         const orderData = JSON.parse(localStorage.getItem('carts'));
         if (!orderData) {
@@ -56,12 +57,16 @@ const CheckoutComplete = () => {
         const sendDataToBackend = async () => {
             setLoading(true);
             try {
-                const response = await api.post('https://localhost:7228/api/orders', payload);
-                if (response.status === 204) {
-                    localStorage.removeItem('carts');
-                    navigate('/'); 
-                } else {
-                    setError('Failed to process your order. Please try again.');
+                // const response = await api.post('https://localhost:7228/api/orders', payload);
+                if (payload.request.transactionStatus == "02" 
+                    || payload.request.transactionStatus == "01" ){
+                    navigate('/errorpayment');
+                } else if (payload.request.transactionStatus == "00"){
+                    const response = await api.post('https://localhost:7228/api/orders', payload);
+                    if (response.status == 204){
+                        localStorage.removeItem('carts');  
+                        navigate('/completepayment');
+                    }
                 }
             } catch (error) {
                 console.error('Error sending data to backend:', error);
@@ -78,6 +83,13 @@ const CheckoutComplete = () => {
         <div className='checkoutcomplete-cp'>
             {loading && <p>Processing your order...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
+            <Spin tip="Loading...">
+      <Alert
+        message="Alert message title"
+        description="Further details about the context of this alert."
+        type="info"
+      />
+    </Spin>
         </div>
     );
 }

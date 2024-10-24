@@ -11,7 +11,12 @@
       object-fit: cover; 
     }
   }
-
+  .forgot-pass{
+    cursor: pointer;
+  }
+  .forgot-pass:hover{
+    color: #4285f4;
+  }
   .login__form {
     flex: 1; 
     display: flex;

@@ -24,6 +24,8 @@ import ProductDetails from "./component/shop-component/product-cart-details/Prod
 import OrderHistoryPage from "./page/orderhistory";
 import CheckOutComplete from "./component/shopping-cartCP/CheckoutComplete/CheckoutComplete"
 import Comparison from "./component/comparison/Comparison";
+import ErrorPayment from "./page/errorPayment/ErrorPayment";
+import CompletePayment from "./page/completePayment/CompletePayment";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -130,7 +132,15 @@ const App = () => {
     {
       path: "comparison",
       element: <Comparison/>
-    }  
+    },
+    {
+      path: "errorpayment",
+      element: <ErrorPayment/>
+    },
+    {
+      path: "completepayment",
+      element: <CompletePayment/>
+    },
   ]);      
   return (
     <GoogleOAuthProvider clientId="58740703879-3s8ddc1rno4kavb9neslns90iphlps9g.apps.googleusercontent.com">

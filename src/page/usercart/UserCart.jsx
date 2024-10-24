@@ -58,7 +58,6 @@ const UserCart = () =>
     <div>
     <Header/>
     <Breadcrumb style={{ backgroundColor: '#fff', display: 'flex', position: 'relative' }} items={breadcrumbItems} />
-    
       <div className='row'>
       <div className='col-8'>
       <KoiCart carts={carts} setCarts={setCarts} updateQuantity={updateQuantity} updateCarts={handleUpdateCarts} isCheckout={false}/>

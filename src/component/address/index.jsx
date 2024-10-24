@@ -28,12 +28,12 @@ function Address(){
         render: (text) => <a>{text}</a>,
       },      
       {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
+        title: 'Status',
+        key: 'status',
+        dataIndex: 'status',
         
       },
-      {
+      { 
         title: 'Action',
         key: 'action',
         render: (_, record) => (

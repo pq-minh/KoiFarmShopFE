@@ -101,6 +101,7 @@ const Login = () => {
             >
               <Input type="password" placeholder="Password" />
             </Form.Item>
+            <p className="forgot-pass" style={{marginLeft:180,fontSize:13}}><a href="/forgot-password">Forgot password?</a></p>
 
             {error && <p style={{ color: "red" }}>Invalid Username or Password</p>}
 
@@ -108,6 +109,7 @@ const Login = () => {
               <Button type="primary" htmlType="submit" block>
                 Login
               </Button>
+              
             </Form.Item>
 
             <div className="form-divider">

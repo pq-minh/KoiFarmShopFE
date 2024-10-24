@@ -1,6 +1,5 @@
 import React from 'react';
 import { CloseOutlined } from '@ant-design/icons';
-import Draggable from 'react-draggable';
 import "./index.scss";
 import { Button, Flex } from 'antd';
 
@@ -19,7 +18,7 @@ const Comparison = ({ visible, onClose,productone,producttwo ,setProductOne, set
     return (
             <div className="comparison-modal">
                 <CloseOutlined className="close-icon" onClick={onClose} />
-                <div className='row'>
+                <div className='row product-box'>
                 {productone ? (
                     <div className='col product-1'>
                         <img className='product-img1' src={productone.image} alt='Tên sản phẩm 1' />

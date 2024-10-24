@@ -63,13 +63,21 @@ function Header() {
       ),
     },
     {
-      key: "3",
+      key: "4",
       label: (
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href="https://www.luohanacademy.com"
+          onClick={(e) => {
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+        if (window.confirm("Are you sure you want to log out?")) {
+          sessionStorage.removeItem("user");
+          sessionStorage.removeItem("token"); // Xóa token
+          navigate("/login"); // Điều hướng đến trang đăng nhập
+        }
+      }}
         >
+        
           Log out
         </a>
       ),

@@ -82,10 +82,10 @@ const Shop = () => {
             <CardProduct products={products} setProductOne={handleProductOne} setProductTwo={handleProductTwo}/>   
             </div> 
         </div>
-        <div className='row  comparison-box'>
+        <div className='comparison-box'>
                     <Button onClick={() => setComparisonVisible(true)}>So Sánh Sản Phẩm</Button>
                     <Comparison visible={isComparisonVisible} onClose={() => setComparisonVisible(false)} setProductOne={setProductOne} 
-    setProductTwo={setProductTwo}  productone={productone} producttwo = {producttwo} />
+          setProductTwo={setProductTwo}  productone={productone} producttwo = {producttwo} />
         </div>
      </div>
     

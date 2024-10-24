@@ -111,7 +111,7 @@ const KoiAssigment =() => {
       };
     return (
             <div className=" container koi-assigment">     
-                      
+           <h2 >Ký gửi cá koi</h2>           
       <Form
         labelCol={{
           span: 4,

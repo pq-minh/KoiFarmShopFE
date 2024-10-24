@@ -14,11 +14,11 @@ const CartInfor = ({carts,setIsChecked,quantities}) => {
     const totalAmount = carts.reduce((sum, cart) => sum + cart.totalPrice, 0);
     return (
     <div className='Infor-box'>
-            <div className='title'><h4>Infor Carts</h4></div>
+            <div className='title'><h4>Thông tin giỏ hàng</h4></div>
             <div className='infor'>
-                    <li className='cp'>Name product</li>
-                    <li className='cp'>Quantity</li>
-                    <li className='cp'>Total price</li>
+                    <li className='cp'>Tên sản phẩm</li>
+                    <li className='cp'>Số lượng</li>
+                    <li className='cp'>Tổng tiền</li>
             </div>
             <div className='infor-cart'>    
             {carts.map((cart, index) => (
@@ -38,7 +38,7 @@ const CartInfor = ({carts,setIsChecked,quantities}) => {
             }
             <div className='total-cp'>
             <span className='total'>
-                <h5>Total Amount</h5>
+                <h5>Tổng sản phẩm</h5>
                 <p>{0 || totalAmount.toLocaleString('vi-VN') + ".000VND"}</p>
             </span>
             </div>

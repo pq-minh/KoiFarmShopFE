@@ -36,7 +36,7 @@ const CheckOutInfor = ({carts,setOrderData}) => {
     setPaymentMethod(e.target.value);
   };
   //chuyển thành vnd 
-  const formattedAmount = `$${totalAmount.toLocaleString('vi-VN')}.000 VND`
+  const formattedAmount = `${totalAmount.toLocaleString('vi-VN')}.000 VND`
 
   const finalAmount = (totalAmount - (totalAmount * (discountValue / 100)));
 
@@ -50,12 +50,12 @@ const CheckOutInfor = ({carts,setOrderData}) => {
     { 
       key: '2',
       description: 'Giảm giá',
-      amount: `-$${(totalAmount * (discountValue  / 100)).toFixed(3)}`,
+      amount: `-${(totalAmount * (discountValue  / 100)).toFixed(3)}`,
     },
     {
       key: '3',
       description: 'Số tiền cuối',
-      amount: `$${formattedFinalAmount}`,
+      amount: `${formattedFinalAmount}`,
     },
     {
       key: '4',
@@ -115,7 +115,7 @@ const CheckOutInfor = ({carts,setOrderData}) => {
       localStorage.setItem('carts', JSON.stringify(orderData));
       try {
         const response = await api.post("orders/createpayment", {
-          amount: 10000, // Replace with actual calculation
+          amount: Math.round(finalAmount)*1000, 
           createdDate: new Date().toISOString(),
         });
     
@@ -137,12 +137,11 @@ const CheckOutInfor = ({carts,setOrderData}) => {
     const calculateTotalAmount = (carts) => {
       return carts.reduce((total, cart) => total + (cart.price * cart.quantity), 0);
     };
-
   return (
     <div className='checkout-infor-cp'>
       <Form layout="inline" onFinish={handleAddToOrder}>
       <Form.Item label="" style={{display:"flex",justifyContent:"center" , alignItems:"center"}}>
-          <h5>Thong tin thanh toan</h5>
+          <h5>Thông tin thanh toán</h5>
         </Form.Item>
         <Form.Item label="Nhập giảm giá (%)">
           <Input
