@@ -42,7 +42,7 @@ function UpdateKoi() {
     }
   }, [dataKoi]); 
 
-console.log("file", fileList);
+ console.log("file", fileList);
 
   const handleUpdate = async (values) => {
       const update ={
