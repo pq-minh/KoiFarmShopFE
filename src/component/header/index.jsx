@@ -134,6 +134,10 @@ function Header() {
         </Link>
         <div className="fs-4 fw-bold text-primary ms-3">KoiFarmShop</div>
       </div>
+      { role == "Admin" && (
+        <Link to="/admin"></Link>
+      )
+      }
 
       <nav>
         <ul className="menu">
