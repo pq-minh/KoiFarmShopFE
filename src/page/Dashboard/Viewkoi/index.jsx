@@ -1,7 +1,8 @@
-import { Button } from 'antd'
+import { Button ,Breadcrumb} from 'antd'
 import React, { useEffect, useState } from 'react'
 import api from '../../../config/axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Dashboard from '..';
 
 function ViewKoi() {
     const [koiList, setKoiList] = useState([]); 
@@ -26,7 +27,11 @@ function ViewKoi() {
   return (
 
     <>
-    <div className="koi-list">
+  <div className="koi-list">
+  <Breadcrumb style={{ margin: '16px 0' }}>
+        <Breadcrumb.Item><Link to="/admin">Dashboard</Link></Breadcrumb.Item>
+        <Breadcrumb.Item>ViewKoi</Breadcrumb.Item>
+    </Breadcrumb>
   <h2>Danh sách cá koi</h2>
   <div className="d-flex flex-wrap koi-cards ">
     {koiList.map((koi) => (
@@ -44,7 +49,7 @@ function ViewKoi() {
         <Button
           onClick={() => handleKoiId(koi.koiId)}
         >
-          Update
+          Cập nhật
         </Button>
       </div>
     ))}

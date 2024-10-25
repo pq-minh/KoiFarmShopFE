@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import api from '../../../config/axios';
 import { UploadOutlined } from '@ant-design/icons';
 import { Form, Input, Select, Button, Upload, message, Image } from 'antd';
 
 function UpdateKoi() {
   const { id } = useParams();
+  const navigate = useNavigate(); // Initialize navigate
   const [form] = Form.useForm();
-  const [dataKoi, setDataKoi] = useState(null); // Initialize as null
-  const [fileList, setFileList] = useState(null);
+  const [dataKoi, setDataKoi] = useState(null);
+  const [imageFileList, setImageFileList] = useState([]);
+  const [certificateFileList, setCertificateFileList] = useState([]);
 
-  // Call Koi Detail
+  // Fetch Koi Data by ID
   const fetchKoiById = async (koiId) => {
     try {
       const response = await api.get(`kois/management/${koiId}`);
-      console.log("response", response);
-      setDataKoi(response.data); // Set fetched data
+      setDataKoi(response.data);
+      setImageFileList([{ url: response.data.image }]);
+      setCertificateFileList([{ url: response.data.certificate }]);
     } catch (error) {
       console.error(error);
       message.error('Failed to fetch koi data');
     }
   };
 
-  // Update form values when dataKoi changes
   useEffect(() => {
     if (dataKoi) {
       form.setFieldsValue({
@@ -30,74 +32,74 @@ function UpdateKoi() {
         KoiName: dataKoi.name,
         Origin: dataKoi.origin,
         Description: dataKoi.description,
-        Gender: dataKoi.gender, 
-        Age: dataKoi.age, 
-        Weight: dataKoi.weight, 
-        Size: dataKoi.size, 
-        Personality: dataKoi.personality, 
-        Status: dataKoi.status, 
-        Price: dataKoi.price, 
-        Certificate: dataKoi.certificate 
+        Gender: dataKoi.gender,
+        Age: dataKoi.age,
+        Weight: dataKoi.weight,
+        Size: dataKoi.size,
+        Personality: dataKoi.personality,
+        Status: dataKoi.status,
+        Price: dataKoi.price,
       });
     }
-  }, [dataKoi]); 
-
- console.log("file", fileList);
+  }, [dataKoi]);
 
   const handleUpdate = async (values) => {
-      const update ={
-        KoiImage: fileList[0].originFileObj,
-        FishTypeId: values.fishTypeId,
-        KoiName: values.name,
-        Origin: values.origin,
-        Description: values.description,
-        Gender: values.gender, 
-        Age: values.age, 
-        Weight: values.weight, 
-        Size: values.size, 
-        Personality: values.personality, 
-        Status: values.status, 
-        Price: values.price, 
-        Certificate: values.certificate,
-      }
-      api.put(`/kois/management/${id}`, update, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then(() => {
-        message.success("successfully");
-        fetchKoiById(id);
-      })
-      .catch((error) => {
-        message.error("error",error)
-      })
+    const formData = new FormData();
+    formData.append("KoiImage", imageFileList[0]?.originFileObj || imageFileList[0]?.url);
+    formData.append("Certificate", certificateFileList[0]?.originFileObj || certificateFileList[0]?.url);
+
+    // Append the rest of the fields
+    Object.keys(values).forEach((key) => {
+      formData.append(key, values[key]);
+    });
+
+    try {
+      await api.put(`/kois/management/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      message.success("Koi updated successfully");
+      navigate('/admin/viewkoi'); // Redirect after successful update
+    } catch (error) {
+      message.error("Failed to update koi");
+      console.error("Update Error:", error);
+    }
   };
 
-  const handleChange = ({ fileList }) => {
-    setFileList(fileList);
-  };
+  const handleImageChange = ({ fileList }) => setImageFileList(fileList);
+  const handleCertificateChange = ({ fileList }) => setCertificateFileList(fileList);
 
   useEffect(() => {
     fetchKoiById(id);
-  }, [id]); // Fetch data when component mounts or id changes
-
+  }, [id]);
   return (
     <>
-     <Image
-      width={200}
-      src={dataKoi?.image}
-    />
+      <Image width={200} src={dataKoi?.image} />
       <Form form={form} layout="vertical" onFinish={handleUpdate}>
-        <Form.Item name="ImageFile" label="Image">
+        <Form.Item name="KoiImage" label="Image">
           <Upload
-            name="ImageFile"
+            name="KoiImage"
             listType="picture"
-            fileList={fileList}
-            onChange={handleChange}
+            fileList={imageFileList}
+            onChange={handleImageChange}
+            beforeUpload={() => false} // Prevent automatic upload
           >
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+            <Button icon={<UploadOutlined />}>Click to Upload Image</Button>
           </Upload>
         </Form.Item>
+
+        <Form.Item name="Certificate" label="Certificate">
+          <Upload
+            name="Certificate"
+            listType="picture"
+            fileList={certificateFileList}
+            onChange={handleCertificateChange}
+            beforeUpload={() => false} // Prevent automatic upload
+          >
+            <Button icon={<UploadOutlined />}>Click to Upload Certificate</Button>
+          </Upload>
+        </Form.Item>
+
+        {/* Remaining Form Fields */}
         <Form.Item name="FishTypeId" label="Fish Type ID" rules={[{ required: true }]}>
           <Input type="number" />
         </Form.Item>
@@ -130,16 +132,14 @@ function UpdateKoi() {
         </Form.Item>
         <Form.Item name="Status" label="Status">
           <Select>
-            <Select.Option value="Active">Active</Select.Option>
-            <Select.Option value="Inactive">Inactive</Select.Option>
+            <Select.Option value="OnSale">OnSale</Select.Option>
+            <Select.Option value="Sold">Sold</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item name="Price" label="Price" rules={[{ required: true }]}>
           <Input type="number" step="0.01" />
         </Form.Item>
-        <Form.Item name="Certificate" label="Certificate">
-          <Input />
-        </Form.Item>
+
         <Button type="primary" htmlType="submit">Update</Button>
       </Form>
     </>
