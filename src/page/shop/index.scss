@@ -4,13 +4,12 @@
     align-items: center;
 }
 .comparison-box {
-    position: fixed; // Đặt vị trí cố định
-    bottom: 20px; // Khoảng cách từ dưới
-    right: 20px; // Khoảng cách từ phải
-    z-index: 1000; // Đảm bảo nằm trên các phần tử khác
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 1000; 
 }
 
 .comparison-box Button {
-    // Tùy chỉnh thêm cho nút nếu cần
-    padding: 10px 20px; // Kích thước nút
+    padding: 10px 20px; 
 }

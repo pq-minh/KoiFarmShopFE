@@ -1,11 +1,12 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
-import { Button, Form, Input, Row, Col } from "antd";
+import React, { useState } from "react";
+import { Button, Form, Input, Row, Col,Modal } from "antd";
 import "./index.scss";
 import api from "../../config/axios";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const [error,setErrorMessage] = useState();
   const navigate = useNavigate();
 
   const handleRegister = async (values) => {
@@ -16,14 +17,53 @@ const Register = () => {
       const { token } = response.data;
       sessionStorage.setItem("token", token);
       sessionStorage.setItem("user", JSON.stringify(response.data));
-      alert("Registration successful!");
-      navigate("/login"); 
+      Modal.success({
+        title: "Registration Successful!",
+        content: (
+          <div>
+            <p>You have registered successfully.</p>
+            <p>Click the button below to go to the login page.</p>
+          </div>
+        ),
+        onOk: () => navigate("/login"), 
+      }); 
     } catch (err) {
       console.log(err);
-      alert(err.response.data);
+      const errorMessage = err.response?.data 
+      if (errorMessage.includes("Email already exists")) { 
+        Modal.error({
+            title: "Error",
+            content: (
+                <div>
+                    <p>Email already exists.</p>
+                </div>
+            ),
+        });
     }
   };
-
+}
+  const validatePassword = (_, value) => {
+    if (!value) {
+      return Promise.reject(new Error("Please enter your password!"));
+    }
+    
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNonAlphanumeric = /[^\w]/.test(value); // This checks for non-alphanumeric characters
+    const isLengthValid = value.length >= 6;
+  
+    const errors = [];
+    if (!hasUpperCase) errors.push("at least one uppercase letter ('A'-'Z')");
+    if (!hasLowerCase) errors.push("at least one lowercase letter ('a'-'z')");
+    if (!hasNonAlphanumeric) errors.push("at least one non-alphanumeric character");
+    if (!isLengthValid) errors.push("at least 6 characters long");
+  
+    if (errors.length) {
+      return Promise.reject(new Error("Passwords must have " + errors.join(", ") + "."));
+    }
+    
+    return Promise.resolve();
+  };
   return (
     <div
       style={{
@@ -149,12 +189,7 @@ const Register = () => {
                 <Form.Item
                   label="Password"
                   name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your password!",
-                    },
-                  ]}
+                  rules={[{ validator: validatePassword }]}
                 >
                   <Input type="password" placeholder="Password" />
                 </Form.Item>
@@ -182,10 +217,15 @@ const Register = () => {
                   label="Confirm Password"
                   name="Confirmpassword"
                   rules={[
-                    {
-                      required: true,
-                      message: "Please enter Confirm Password!",
-                    },
+                    { required: true, message: "Please confirm your password!" },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue('password') === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(new Error('The two passwords do not match!'));
+                      },
+                    }),
                   ]}
                 >
                   <Input type="password" placeholder="Confirm password" />

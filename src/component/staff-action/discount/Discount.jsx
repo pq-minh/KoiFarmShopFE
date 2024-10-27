@@ -3,6 +3,8 @@ import { Space, Table, Tag, Modal, Form, Input, Button } from 'antd';
 import api from '../../../config/axios';
 import api2 from '../../../config/axios';
 import { SearchOutlined } from '@ant-design/icons';
+import { motion } from 'framer-motion';
+
 import Highlighter from 'react-highlight-words';
 import './index.scss'
 const Discount = () => {
@@ -16,6 +18,13 @@ const Discount = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
+  //
+  const tableVariants = {
+    hidden: { opacity: 0, y: 20 },  
+    visible: { opacity: 1, y: 0 }    
+  };
+
+  //  
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -283,6 +292,12 @@ const Discount = () => {
   }
   return (
     <div>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={tableVariants}
+      transition={{ duration: 0.5 }}  
+      >
     <div className='create-button'>
     <button class="button" onClick={() => setIsModalVisible(true)}>
     Create New
@@ -390,6 +405,7 @@ const Discount = () => {
           </Form.Item>
         </Form>
       </Modal>
+      </motion.div>
     </div>
   );
 };

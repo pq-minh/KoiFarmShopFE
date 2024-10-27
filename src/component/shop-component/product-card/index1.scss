@@ -212,3 +212,17 @@
   .button-cp:active {
     border: 1px solid #2e8644;
   }
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 60px; 
+  }
+  
+  .card-motion {
+    background-color: #fff; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    width: calc(19.80%); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  

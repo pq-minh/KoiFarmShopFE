@@ -9,14 +9,15 @@ import { Breadcrumb, Flex,Button } from 'antd';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import Comparison from '../../component/comparison/Comparison';
 import Draggable from 'react-draggable';
+import { motion } from 'framer-motion';
 const Shop = () => {
     const [products,setProducts] = useState([])
     const [filter,setFilter] = useState([])
     const [koiorbatch,setKoiorBatch] = useState("kois")
     const [SortBy,setsortBy] = useState('')
     const [isComparisonVisible, setComparisonVisible] = useState(false); // State để điều khiển modal
-    const [productone,setProductOne] = useState([]);
-    const [producttwo,setProductTwo] = useState([]);
+    const [productone,setProductOne] = useState(null);
+    const [producttwo,setProductTwo] = useState(null);
     //
     const handleProductOne = (data) =>{
         setProductOne(data)
@@ -72,7 +73,13 @@ const Shop = () => {
   />
      <div className='row content'>
         <div className='col-md-3 filter-box'>
+        <motion.div
+          initial={{ opacity: 0, translateY: 20 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.5 }}
+        >
             <Filter setData={handleFilterData} KoiOrBatch={koiorbatch} products={products}/>
+            </motion.div>
         </div>
         <div className='row col-md-9 card-box'>
             <div className='col'>
@@ -80,6 +87,7 @@ const Shop = () => {
               <HorizonFilter setValue={handleFilterKoiOrBatch} setsortBy={handleShortBy}/>
             </div>
             <CardProduct products={products} setProductOne={handleProductOne} setProductTwo={handleProductTwo}/>   
+            
             </div> 
         </div>
         <div className='comparison-box'>

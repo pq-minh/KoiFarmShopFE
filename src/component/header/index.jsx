@@ -3,7 +3,7 @@ import React, { useState }from "react";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import "./index.scss";
-import { Button, Dropdown, Menu  , Avatar, Space, Flex} from "antd";
+import { Button, Dropdown, Menu  , Avatar, Space, Flex,Modal} from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { UserOutlined } from '@ant-design/icons';
 import {
@@ -69,19 +69,22 @@ function Header() {
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => {
-        e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
-        if (window.confirm("Are you sure you want to log out?")) {
-          sessionStorage.removeItem("user");
-          sessionStorage.removeItem("token"); // Xóa token
-          navigate("/login"); // Điều hướng đến trang đăng nhập
-        }
-      }}
+            e.preventDefault();
+            Modal.confirm({
+              title: "Confirm Logout",
+              content: "Are you sure you want to log out?",
+              onOk: () => {
+                sessionStorage.removeItem("user");
+                sessionStorage.removeItem("token");
+                navigate("/login");
+              },
+            });
+          }}
         >
-        
-          Log out
+          Log Out
         </a>
-      ),
-    },
+      )
+    }
   ];
   useEffect(() => {
     const storedToken = sessionStorage.getItem("token");

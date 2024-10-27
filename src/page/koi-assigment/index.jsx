@@ -4,6 +4,8 @@ import { message } from 'antd';
 import "./index.scss";
 import { storage } from "../../firebase/firebase";
 import api from "../../config/axios";
+import { motion } from 'framer-motion';
+
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
   Button,
@@ -110,7 +112,12 @@ const KoiAssigment =() => {
   }
       };
     return (
-            <div className=" container koi-assigment">     
+            <div className=" container koi-assigment">  
+             <motion.div
+          initial={{ opacity: 0, translateY: 20 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.5 }}
+        > 
            <h2 >Ký gửi cá koi</h2>           
       <Form
         labelCol={{
@@ -227,6 +234,7 @@ const KoiAssigment =() => {
         </div>
         </div>
       </Form>
+      </motion.div>  
             </div>
     )
 }

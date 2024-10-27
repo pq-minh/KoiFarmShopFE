@@ -3,6 +3,7 @@ import axios from 'axios';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import api from "../../../config/axios";
+import { motion } from 'framer-motion';
 import { Space, Table, Tag ,Button,Modal,Input } from 'antd';
 const KoiAssigment = () => {
 
@@ -361,15 +362,26 @@ const KoiAssigment = () => {
             koiSize: quotation.koiSize + " cm" || 'N/A', 
             koiWeight: quotation.koiWeight + " kg" || 'N/A', 
             status: quotation.status || 'N/A', 
-            price: quotation.price +".000VND" || 0, 
+            price: quotation.price !=0 ? (quotation.price +".000VND") : (quotation.price), 
             note: quotation.note || 'N/A', 
         }));
     };
 
     const data = createDataFromQuotations(quotations);
-
+    //
+    const tableVariants = {
+      hidden: { opacity: 0, y: 20 },  
+      visible: { opacity: 1, y: 0 }    
+    };
+  
   return (
     <div>
+        <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={tableVariants}
+      transition={{ duration: 0.5 }}  
+      >
         <Table columns={columns} dataSource={data}  pagination={{
                     total: totalCount,
                     pageSize: pageSize,
@@ -409,6 +421,7 @@ const KoiAssigment = () => {
                     />
                 </div>
           </Modal>
+          </motion.div>
     </div>
   )
 }

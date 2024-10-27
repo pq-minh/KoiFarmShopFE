@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { ShoppingCartOutlined, DollarOutlined , CheckOutlined} from '@ant-design/icons';
 import "./index1.scss"
 import Item from 'antd/es/list/Item';
+import { motion } from 'framer-motion';
+
 const { Meta } = Card;
 const CardProduct = ({products,setProductOne,setProductTwo}) => {
     const maxLength = 100; 
@@ -88,11 +90,18 @@ const CardProduct = ({products,setProductOne,setProductTwo}) => {
     <div className='card-container'>
     {
       
-        products.map(product =>(
+        products.map((product,index) =>(
+          <motion.div
+          className="card-motion"
+          key={product.id}
+          initial={{ opacity: 0, translateY: 20 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }} // Thêm độ trễ cho từng card
+        >
             <Card
             hoverable
             key={product.koiId || product.batchKoiId}
-            style={{ width: 240,height:440,marginRight:30,marginBottom:30, borderRadius: '10px'}}
+            style={{ width: 240,height:440,marginLeft:0,marginBottom:0, borderRadius: '10px'}}
             cover={
                 <div style={{ position: 'relative' }} className='img-content'>
                 <Link to={`/details/${product.koiId}`}>
@@ -140,7 +149,7 @@ const CardProduct = ({products,setProductOne,setProductTwo}) => {
             </div>,  
               
           </Card>
-          
+          </motion.div>
           )
           
         )
