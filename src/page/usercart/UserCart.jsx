@@ -36,7 +36,9 @@ const UserCart = () =>
     }, [quantities]);
     //hàm để render lại carts 
     const handleUpdateCarts =(batchId,koiId) =>{
-      setCarts(preCarts => preCarts.filter(cart => !(cart.batchKoiId ===batchId && cart.koiId === koiId )))
+      setCarts(prevCarts => 
+        prevCarts.filter(cart => !(cart.batchKoiId === batchId && cart.koiId === koiId))
+    );
     }
     // breadcumItems setup
     const breadcrumbItems = [

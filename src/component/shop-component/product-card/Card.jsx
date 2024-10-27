@@ -28,6 +28,7 @@ const CardProduct = ({products,setProductOne,setProductTwo}) => {
         const response = await api.get("carts");
         if (response.status === 200) {
           setCarts(response.data);
+          console.log(carts);
         }
       } catch (err) {
         console.log(err);
@@ -36,25 +37,32 @@ const CardProduct = ({products,setProductOne,setProductTwo}) => {
     fetchKoiData();
   }, []);
   //check koi da co trong gio hang
-  const isItemInCart = (koiId) => {
-    return carts.some(cartItem => cartItem.koiId === koiId);
-    };
-  // xu ly viec add to cart 
-  const handleAddToCart = (koiId, name,batchId) => {
-    console.log(formData)
-    if (isItemInCart(koiId)) {
-      messageApi.info("Sản phẩm đã có trong giỏ hàng");
-            return;
-    }
-      if (name.includes(temp[1])) {
-          setFormData(prev => ({ ...prev, batchKoiId: batchId, koiId: null })); 
-      } else if (name.includes(temp[0])) {
-          setFormData(prev => ({ ...prev, koiId: koiId, batchKoiId: null })); 
+  const isItemInCart = (koiId, batchId) => {
+    return carts.some(cartItem => 
+      (cartItem.koiId === koiId) || (cartItem.batchKoiId === batchId)
+    );
+  };  
+  const handleAddToCart = (koiId, name, batchId) => {
+
+    if (!isItemInCart(koiId, batchId)) {
+      if (name.includes("Lô cá")) {
+          setFormData({ batchKoiId: batchId, koiId: null });
           setCarts(prevCarts => [
-            ...prevCarts,
-            { koiId }
-        ]);
+              ...prevCarts,
+              { koiId: null, batchKoiId: batchId }
+          ]);
+      } else if (name.includes("Koi")) {
+          setFormData({ koiId, batchKoiId: null });
+          setCarts(prevCarts => [
+              ...prevCarts,
+              { koiId: koiId, batchKoiId: null }
+          ]);
       }
+      
+      messageApi.success("Sản phẩm đã được thêm vào giỏ hàng");
+  } else {
+      messageApi.info("Sản phẩm đã có trong giỏ hàng");
+  }
   };
   //goi ham post de add
   useEffect(() => { 
@@ -63,7 +71,6 @@ const CardProduct = ({products,setProductOne,setProductTwo}) => {
               if (formData.koiId || formData.batchKoiId) { 
                   const response = await api.post("/Carts", formData);
                   if (response.status === 200) {
-                    messageApi.success("Sản phẩm đã được thêm vào giỏ hàng");
                   }
               }
           } catch (err) {
@@ -136,11 +143,10 @@ const CardProduct = ({products,setProductOne,setProductTwo}) => {
             <h5 style={{ fontSize:"15px " }} className='price-cart-koi'><DollarOutlined style={{marginRight:5}}/> {product.price}.000 VND</h5>
             <div className='button-add'>
                <div className='icon-cn'>
-               {isItemInCart(product.koiId) ? (
+               {isItemInCart(product.koiId,product.batchKoiId)  ? (
                 <CheckOutlined className='cart-icon' />
                ) : (
                 <ShoppingCartOutlined
-                    key={product.koiId}
                     className='cart-icon'
                  onClick={() => handleAddToCart(product.koiId, product.name, product.batchKoiId)}
                 />

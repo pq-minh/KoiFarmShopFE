@@ -9,15 +9,19 @@ const KoiCart = ({ carts, updateQuantity,updateCarts, isCheckout }) => {
     const [quantities, setQuantities] = useState({});
     const [formDataAdd, setFormDataAdd] = useState({});
     const [formDataRemove, setFormDataRemove] = useState({});
-
+    const [localCarts, setLocalCarts] = useState(carts);
+    //
+    useEffect(() => {
+        setLocalCarts(carts); // Update localCarts whenever carts change
+    }, [carts]);
     // Khởi tạo số lượng khi carts thay đổi
     useEffect(() => {
         const initialQuantities = {};
-        carts.forEach(cart => {
+        localCarts.forEach(cart => {
             initialQuantities[cart.batchKoiId] = cart.quantity; 
         });
         setQuantities(initialQuantities);
-    }, [carts]);
+    }, [localCarts]);
 
     // Hàm gọi API để cập nhật số lượng
     useEffect(() => {
@@ -39,6 +43,7 @@ const KoiCart = ({ carts, updateQuantity,updateCarts, isCheckout }) => {
 
                 const data = await response.json();
                 console.log('Response data:', data);
+                return data;
             } catch (err) {
                 console.error('API call failed:', err);
             }
@@ -65,14 +70,21 @@ const KoiCart = ({ carts, updateQuantity,updateCarts, isCheckout }) => {
     };
 
     // Hàm xóa item khỏi giỏ hàng
-    const handleRemoveCart = (batchId, koiId) => {
+    const handleRemoveCart = async (batchId, koiId) => {
         const formDataRemove = {
             batchKoiId: batchId || null,
             koiId: koiId || null,
         };
-        setFormDataRemove(formDataRemove);
-        fetchData('https://localhost:7228/api/carts/deleteitem', 'DELETE', formDataRemove);
-        updateCarts(batchId, koiId);
+        
+        try {
+            await fetchData('https://localhost:7228/api/carts/deleteitem', 'DELETE', formDataRemove);
+            setLocalCarts(prevCarts => 
+                prevCarts.filter(cart => !(cart.batchKoiId === batchId && cart.koiId === koiId))
+            );
+            updateCarts(batchId, koiId);
+        } catch (err) {
+            console.error('Failed to remove item from cart:', err);
+        }
     };
 
     // Hàm chung để gọi API
@@ -87,23 +99,38 @@ const KoiCart = ({ carts, updateQuantity,updateCarts, isCheckout }) => {
                 },
                 body: JSON.stringify(body),
             });
-
+    
+            // Check if the response is not OK
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-
-            const data = await response.json();
+    
+            // Try to parse the response as JSON
+            const contentType = response.headers.get('Content-Type');
+            let data;
+            if (contentType && contentType.includes('application/json')) {
+                data = await response.json();
+            } else {
+                // Handle non-JSON response
+                const text = await response.text();
+                console.log('Response text:', text); // Log the text response
+                return text; // You can return the text or handle it as needed
+            }
+    
             console.log('Response data:', data);
+            return data; // Return parsed JSON data
         } catch (err) {
             console.error('API call failed:', err);
+            throw err; // Re-throw the error to handle it in the calling function if needed
         }
     };
+    
 
     return (
         <div className='shopping-cart'>
             {carts.map((cart) => (
                 <Card
-                    key={cart.batchKoiId}
+                    key={`${cart.batchKoiId}-${cart.koiId}`}
                     hoverable
                     style={{
                         width: 940,
@@ -137,7 +164,7 @@ const KoiCart = ({ carts, updateQuantity,updateCarts, isCheckout }) => {
                                 <div className='cart-quantity'>
                                 <InputNumber
                                     min={1}
-                                    max={cart.koiName ? 1 : 100}
+                                    max={cart.koiName ? 1 : 1}
                                     defaultValue={cart.quantity}
                                     disabled={isCheckout}
                                     onChange={(value) => handleChangeQuantity(cart.batchKoiId, value)}

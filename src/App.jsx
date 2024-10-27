@@ -18,10 +18,11 @@ import AllProduct from "./page/fish/allproduct";
 import AssignmentHistory from "./page/assigmentHistory/assigmenthistory";
 import UserCart from "./page/usercart/UserCart";
 import CheckOut from "./page/checkout/CheckOut";
-import OrderHistory from "./page/orderHistoryUser/OrderHistory";
+// import OrderHistory from "./page/order/OrderHistory";
+import OrderHistory from "./page/order/OrderHistory";
 import Details from "./page/productdetails/Details";
 import ProductDetails from "./component/shop-component/product-cart-details/ProductDetails";
-import OrderHistoryPage from "./page/orderhistory";
+// import OrderHistoryPage from "./page/orderhistory";
 import CheckOutComplete from "./component/shopping-cartCP/CheckoutComplete/CheckoutComplete"
 import Comparison from "./component/comparison/Comparison";
 import ErrorPayment from "./page/errorPayment/ErrorPayment";
@@ -123,7 +124,7 @@ const App = () => {
     },
     {
       path: "orderhistory",
-      element: <OrderHistoryPage />,
+      element: <OrderHistory />,
     },
     {
       path: "checkoutcomplete",
