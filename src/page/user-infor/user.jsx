@@ -19,6 +19,7 @@ const UserInfor = () => {
   const [wizard, setWizard] = useState(ListAction[0]);
 
   /* set token after fetch API */
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState();
   const [roleuser,setRole] = useState(null);
   const [userData, setUserData] = useState(null);
@@ -42,8 +43,8 @@ const UserInfor = () => {
   return (
     <div>
    
-    <Header />
-      {userData ? (
+   <Header setIsLoggedIn={setIsLoggedIn}/>
+   {userData ? (
         <div className="row main-container ">
           <div style={{display:"flex"}}>
             <div className="col-6 list-rq">

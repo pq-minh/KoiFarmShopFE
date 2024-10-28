@@ -135,6 +135,11 @@ const TableAssigment = () => {
             key: 'agreementprice',
         },
         {
+          title: 'Note',
+          dataIndex: 'note',
+          key: 'note',
+      },
+        {
             title: 'Type Request',
             dataIndex: 'typerequest',
             key: 'enddate',
@@ -203,10 +208,11 @@ const TableAssigment = () => {
           key: request.requestId, 
           requestid: request.requestId,
           createdate: new Date(request.createdDate).toLocaleDateString(), // Format the date
-          consignmentdate: request.consignmentDate || "N/A", // If this data isn't present, provide a fallback
+          consignmentdate: request.consignmentDate || "N/A", 
           enddate: request.endDate || "N/A", // Similar for this field
-          agreementprice: request.agreementPrice ? `${request.agreementPrice}.000 VND` : "Free", // Handle price formatting
-          typerequest: request.typeRequest, // You might want to display koiName or another relevant field
+          agreementprice: request.agreementPrice ? `${request.agreementPrice}.000 VND` : "Free", 
+          note: request.quotations.length > 0 ? request.quotations[0].note : "No note",
+          typerequest: request.typeRequest, 
           status: request.status, 
         }));
     };

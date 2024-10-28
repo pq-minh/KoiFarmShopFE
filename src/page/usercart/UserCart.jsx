@@ -12,7 +12,7 @@ const UserCart = () =>
   {
     const [carts,setCarts] = useState([])
     const [quantities, setQuantities] = useState({});
-
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const updateQuantity = (batchKoiId, newQuantity) => {
       setQuantities((prevQuantities) => ({
         ...prevQuantities,
@@ -58,7 +58,7 @@ const UserCart = () =>
     
   return (
     <div>
-    <Header/>
+    <Header setIsLoggedIn={setIsLoggedIn}/>
     <Breadcrumb style={{ backgroundColor: '#fff', display: 'flex', position: 'relative' }} items={breadcrumbItems} />
       <div className='row'>
       <div className='col-8'>

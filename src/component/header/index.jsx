@@ -12,102 +12,53 @@ import {
   SearchOutlined,
   BellOutlined,
 } from "@ant-design/icons";
-
-function Header() {
+const Header = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+//hanldle logout
+const handleLogout = (e) => {
+  e.preventDefault();
+  Modal.confirm({
+      title: "Confirm Logout",
+      content: "Are you sure you want to log out?",
+      onOk: () => {
+          sessionStorage.removeItem("user");
+          sessionStorage.removeItem("token");
+          setIsLoggedIn(false); 
+          navigate("/login");
+      },
+  });
+};
+
   const items = [
-    {
-      key: "1",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate("/userinfor");
-          }}
-        >
-          Profile Setting
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-         target="_blank"
-         rel="noopener noreferrer"
-         onClick={() => {
-            navigate("/orderhistory");
-          }}
-        >
-          Order History
-          </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate("/assigment-history");
-          }}
-        >
-          Assigments History
-        </a>
-      ),
-    },
-    {
-      key: "4",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => {
-            e.preventDefault();
-            Modal.confirm({
-              title: "Confirm Logout",
-              content: "Are you sure you want to log out?",
-              onOk: () => {
-                sessionStorage.removeItem("user");
-                sessionStorage.removeItem("token");
-                navigate("/login");
-              },
-            });
-          }}
-        >
-          Log Out
-        </a>
-      )
-    }
-  ];
+    { key: "1", label: <Link to="/userinfor">Profile Setting</Link> },
+    { key: "2", label: <Link to="/orderhistory">Order History</Link> },
+    { key: "3", label: <Link to="/assigment-history">Assignments History</Link> },
+    { key: "4", label: <Link to="/" onClick={handleLogout}>Log Out</Link> },
+];
+
   useEffect(() => {
     const storedToken = sessionStorage.getItem("token");
     setToken(storedToken);
 
     if (storedToken) {
-      try {
-        const decodedToken = jwtDecode(storedToken);
-        console.log(decodedToken.role);
-        setRole(decodedToken.role); 
-      } catch (error) {
-        console.error("Failed to decode token", error);
-        navigate("/"); 
-      }
-    } else {
-      navigate("/"); // Điều hướng đến trang Home nếu không có token
+        try {
+            const decodedToken = jwtDecode(storedToken);
+            setRole(decodedToken.role);
+            setIsLoggedIn(true);
+        } catch (error) {
+            console.error("Failed to decode token", error);
+            navigate("/");
+        }
     }
-
-    setIsLoading(false); // Kết thúc trạng thái loading
-  }, [navigate]);
+    setIsLoading(false);
+}, [navigate, setIsLoggedIn]);
 
   if (isLoading) {
-    return <div>Loading...</div>; // Hiển thị khi đang xác thực
+    return <div>Loading...</div>; 
   }
 
  

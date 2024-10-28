@@ -10,6 +10,7 @@ const UserCart = () =>
   {
     const [carts,setCarts] = useState([])
     const [orderData, setOrderData] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     //
     const handleSetOrderData = (data) => {
@@ -52,7 +53,8 @@ const UserCart = () =>
 
   return (
     <div>
-    <Header/>
+             <Header setIsLoggedIn={setIsLoggedIn}/>
+
     <Breadcrumb style={{ backgroundColor: '#fff', display: 'flex', position: 'relative' }} items={breadcrumbItems} />
 
       <div className='row'>

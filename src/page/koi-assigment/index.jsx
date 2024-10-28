@@ -20,7 +20,7 @@ import {
 } from 'antd';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
-
+const [form] = Form.useForm();
 const normFile = (e) => {
   if (Array.isArray(e)) {
     return e;
@@ -104,7 +104,8 @@ const KoiAssigment =() => {
     // Gửi formData
     const response = await api.post("request/create-request", formData);
     if (response.status === 200) {
-      message.success('Package created successfully.');
+      message.success('Create request successfully.');
+      form.resetFields();
     }
   } catch (error) {
     console.error('Error uploading file or creating package:', error);

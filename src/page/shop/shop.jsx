@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import Header from "../../component/header";
+import Header from "../../component/header/index";
 import CardProduct from "../../component/shop-component/product-card/Card";
 import Filter from '../../component/shop-component/product-filter/Filter';
 import api from "../../config/axios";
@@ -18,6 +18,8 @@ const Shop = () => {
     const [isComparisonVisible, setComparisonVisible] = useState(false); // State để điều khiển modal
     const [productone,setProductOne] = useState(null);
     const [producttwo,setProductTwo] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     //
     const handleProductOne = (data) =>{
         setProductOne(data)
@@ -54,13 +56,13 @@ const Shop = () => {
         };   
         fetchKoiData();
       }, [koiorbatch]);
-      //fetching filter 
+      //fetching filter     
       
   return (
 
     <div>
-     <Header/>
-     <Breadcrumb style={{backgroundColor:'#fff',display:Flex,position:'relative'}}
+        <Header setIsLoggedIn={setIsLoggedIn} />
+        <Breadcrumb style={{backgroundColor:'#fff',display:Flex,position:'relative'}}
     items={[
       {
         href: '/',
@@ -86,7 +88,7 @@ const Shop = () => {
             <div className='horizon-filter row'>
               <HorizonFilter setValue={handleFilterKoiOrBatch} setsortBy={handleShortBy}/>
             </div>
-            <CardProduct products={products} setProductOne={handleProductOne} setProductTwo={handleProductTwo}/>   
+            <CardProduct products={products} setProductOne={handleProductOne} setProductTwo={handleProductTwo} isLoggedIn={isLoggedIn} />   
             
             </div> 
         </div>

@@ -9,19 +9,21 @@ import { ArrowUpOutlined } from "@ant-design/icons";
 const Home = () => {
   const [koiFishs, setKoiFishs] = useState([]);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const fetchKoiFish = async () => {
-    try {
-      const response = await api.get("product");
-      console.log("API Response:", response.data);
-      setKoiFishs(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
+  // const fetchKoiFish = async () => {
+  //   try {
+  //     const response = await api.get("product");
+  //     console.log("API Response:", response.data);
+  //     setKoiFishs(response.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   useEffect(() => {
-    fetchKoiFish();
+    // fetchKoiFish();
 
     const handleScroll = () => {
       if (window.scrollY > 300) {
@@ -47,7 +49,8 @@ const Home = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <Header />
+             <Header setIsLoggedIn={setIsLoggedIn}/>
+
       {showScrollButton && (
         <button onClick={scrollToTop} className="scroll-to-top">
           <ArrowUpOutlined/>

@@ -6,10 +6,11 @@ const ErrorPayment = () => {
   const handleGoHome = () => {
     window.location.href = '/';
   };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <>
-    <Header />
+             <Header setIsLoggedIn={setIsLoggedIn}/>
     <div className='errorpayment-page'>
      
       <div className='error-notification'>

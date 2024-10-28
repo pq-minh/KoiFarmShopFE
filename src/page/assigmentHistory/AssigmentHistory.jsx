@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import TableAssigment from '../../component/assigmentCP/table-assigment/TableAssigment'
 import Header from '../../component/header'
 import { motion } from 'framer-motion';
@@ -8,10 +8,11 @@ const AssignmentHistory = () => {
     hidden: { opacity: 0, y: 20 },  
     visible: { opacity: 1, y: 0 }    
   };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <div>
-     <Header/>
+      <Header setIsLoggedIn={setIsLoggedIn}/>
      <div className='row'>
      <div className=' col-12 table-assiment'>
      <motion.div

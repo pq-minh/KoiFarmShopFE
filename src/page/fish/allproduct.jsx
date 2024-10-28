@@ -10,6 +10,7 @@ const AllProduct = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [koiPageNumber, setKoiPageNumber] = useState(1);
   const [batchKoiPageNumber, setBatchKoiPageNumber] = useState(1);
@@ -67,7 +68,8 @@ const AllProduct = () => {
 
   return (
     <div>
-      <Header />
+         <Header setIsLoggedIn={setIsLoggedIn}/>
+
       <h1 className="welcome-message">All Koi Products</h1>
       <div className="search-container">
         <input

@@ -35,7 +35,7 @@ const OrderHistoryPage = () => {
 
   return (
     <div>
-      <Header />
+         <Header setIsLoggedIn={setIsLoggedIn}/>
       <div className="order-history-container">
         <h2>Order History</h2>
         {orders.length === 0 ? (

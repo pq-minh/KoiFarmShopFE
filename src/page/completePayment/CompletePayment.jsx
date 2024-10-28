@@ -7,10 +7,11 @@ const CompletePayment = () => {
   const handleGoHome = () => {
     window.location.href = '/';
   };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <>
-    <Header />
+     <Header setIsLoggedIn={setIsLoggedIn}/>
     <div className='complete-payment-page'>
       
       <div className='payment-notification'>

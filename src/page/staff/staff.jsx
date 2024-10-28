@@ -8,6 +8,8 @@ import { motion } from 'framer-motion';
 import UserPoint from "../../component/staff-action/user/UserPoint";
 const StaffPage = () => {
   const [selectedKey, setSelectedKey] = useState('assigment');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const handleMenuClick = (key) => {
     setSelectedKey(key); 
     console.log('Selected key:', key); 
@@ -23,7 +25,7 @@ const sideBar = {
 
   return (
     <div>
-      <Header/>
+         <Header setIsLoggedIn={setIsLoggedIn}/>
       <div className="row content">
       <div className="col-2">
       <motion.div

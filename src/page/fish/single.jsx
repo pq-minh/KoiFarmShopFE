@@ -11,6 +11,7 @@ const SingleKoi = () => {
   const [searchTerm, setSearchTerm] = useState(""); 
   const [searchQuery, setSearchQuery] = useState(""); 
   const [sortOption, setSortOption] = useState(""); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     api
@@ -66,7 +67,8 @@ const SingleKoi = () => {
 
   return (
     <div>
-      <Header />
+         <Header setIsLoggedIn={setIsLoggedIn}/>
+
       <h1 className="welcome-message">LIST OF SINGLE KOI FISH</h1>
       <div className="search-container">
         <input

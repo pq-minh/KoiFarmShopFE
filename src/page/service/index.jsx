@@ -1,14 +1,15 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React,{useState} from "react";
 import Header from "../../component/header";
 import KoiAssigment from "../koi-assigment/index";
 
 const ServiceMenu = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (    
     <div>
-    <Header/>
-    <KoiAssigment/>
-      
+    <Header setIsLoggedIn={setIsLoggedIn}/>
+    <KoiAssigment/>   
     </div>
   );
 };

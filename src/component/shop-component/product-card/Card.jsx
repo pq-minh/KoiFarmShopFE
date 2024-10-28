@@ -8,7 +8,7 @@ import Item from 'antd/es/list/Item';
 import { motion } from 'framer-motion';
 
 const { Meta } = Card;
-const CardProduct = ({products,setProductOne,setProductTwo}) => {
+const CardProduct = ({products,setProductOne,setProductTwo,isLoggedIn}) => {
     const maxLength = 100; 
     const description = products.description || ""; 
     const [carts,setCarts] = useState([]);
@@ -21,21 +21,23 @@ const CardProduct = ({products,setProductOne,setProductTwo}) => {
       });
       //hàm messgage của antd
       const [messageApi, contextHolder] = message.useMessage();
+      console.log(isLoggedIn)
   //goi ham get cart de biet koi nao da duoc them vao gio hang 
   useEffect(() => {
     const fetchKoiData = async () => {
+      if (!isLoggedIn) return; 
       try {
         const response = await api.get("carts");
         if (response.status === 200) {
           setCarts(response.data);
-          console.log(carts);
         }
       } catch (err) {
-        console.log(err);
+        console.error("Error fetching cart data:", err);
+        setCarts([]);
       }
     };   
     fetchKoiData();
-  }, []);
+  }, [isLoggedIn]);
   //check koi da co trong gio hang
   const isItemInCart = (koiId, batchId) => {
     return carts.some(cartItem => 
@@ -43,7 +45,7 @@ const CardProduct = ({products,setProductOne,setProductTwo}) => {
     );
   };  
   const handleAddToCart = (koiId, name, batchId) => {
-
+    if ( isLoggedIn){
     if (!isItemInCart(koiId, batchId)) {
       if (name.includes("Lô cá")) {
           setFormData({ batchKoiId: batchId, koiId: null });
@@ -62,6 +64,8 @@ const CardProduct = ({products,setProductOne,setProductTwo}) => {
       messageApi.success("Sản phẩm đã được thêm vào giỏ hàng");
   } else {
       messageApi.info("Sản phẩm đã có trong giỏ hàng");
+  }} else {
+    messageApi.info("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.");
   }
   };
   //goi ham post de add

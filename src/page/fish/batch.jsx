@@ -11,6 +11,7 @@ const BatchKoi = () => {
   const [searchTerm, setSearchTerm] = useState(""); 
   const [searchQuery, setSearchQuery] = useState(""); 
   const [sortOption, setSortOption] = useState("priceAsc"); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     api
@@ -66,7 +67,8 @@ const BatchKoi = () => {
 
   return (
     <div>
-      <Header />
+         <Header setIsLoggedIn={setIsLoggedIn}/>
+
       <h1 className="welcome-message">LIST OF BATCH KOI FISH</h1>
       <div className="search-container">
         <input
