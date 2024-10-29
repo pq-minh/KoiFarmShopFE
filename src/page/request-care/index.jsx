@@ -51,7 +51,7 @@ function RequestCare() {
     };
 
     return (
-        <div>
+        <div className="request-care">
             <Header />
             <div className="header-container">
                 <h1 className="request-header">
