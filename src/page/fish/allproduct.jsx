@@ -18,7 +18,7 @@ const AllProduct = () => {
 
   useEffect(() => {
     api
-      .get("/KoiAndBatchKoi/GetAllKoiAndBatch")
+      .get("/koisandbatchkois")
       .then((response) => {
         setAllKoiData(response.data);
         setLoading(false);

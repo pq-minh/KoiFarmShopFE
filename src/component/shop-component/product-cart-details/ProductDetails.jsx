@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../../config/axios";
 import "./index.scss";
@@ -30,21 +30,22 @@ const ProductDetails = () => {
   return (
     <div>
       <Header />
-      <Breadcrumb style={{backgroundColor:'#fff',display:Flex,position:'relative'}}
-    items={[
-      {
-        href: '/',
-        title: <HomeOutlined />,
-      },
-      {
-        href:'/shop',
-        title: 'Products',
-      },
-      {
-        title: 'Product Details',
-      },
-    ]}
-  />
+      <Breadcrumb 
+        style={{ backgroundColor: '#fff', display: Flex, position: 'relative' }}
+        items={[
+          {
+            href: '/',
+            title: <HomeOutlined />,
+          },
+          {
+            href: '/shop',
+            title: 'Products',
+          },
+          {
+            title: 'Product Details',
+          },
+        ]}
+      />
       <div className="product-details">
         <div className="image-container">
           <img className="main-image" src={product.image} alt={product.name} />
@@ -81,7 +82,15 @@ const ProductDetails = () => {
                 <strong>Description:</strong> {product.description}
               </li> 
               <li>
-                <strong>Status:</strong> {product.status}
+                <strong>Status:</strong> 
+                <span 
+                  style={{
+                    color: product.status === 'OnSale' ? 'red' : 'black',
+                    fontWeight: product.status === 'OnSale' ? 'bold' : 'normal'
+                  }}
+                >
+                  {product.status}
+                </span>
               </li>
             </ul>
           </div>

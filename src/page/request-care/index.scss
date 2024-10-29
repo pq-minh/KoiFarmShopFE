@@ -1,0 +1,77 @@
+body {
+    background-color: #f0f2f5; 
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+}
+.request-care{
+    background-image: url('https://i.pinimg.com/564x/b7/56/96/b756963624eccf0b61ef5d2ef25ea8b4.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    background-position: center; 
+}
+  
+.header-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100px; 
+}
+  
+.request-header {
+    background-color: rgba(0, 0, 0, 0.5); 
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    display: inline-block; 
+    color: #c8d112; 
+    font-size: 24px;
+    text-align: center; 
+}
+  
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+  
+.order-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; 
+    padding: 20px; 
+}
+  
+.order-card {
+    display: flex; 
+    align-items: center; 
+    width: 350px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.2s; 
+    background-color: #f9f9f9; 
+    padding: 20px; 
+    text-align: center; 
+}
+  
+.order-card img {
+    width: 150px; 
+    height: auto; 
+    border-radius: 10px; 
+    margin-bottom: 10px; 
+}
+  
+.order-card .details {
+    flex-grow: 1; 
+}
+  
+.date-picker-container {
+    margin-top: 10px; 
+}
+  
+.submit-button-container {
+    display: flex; 
+    justify-content: center; 
+    margin-top: 20px; 
+}
+

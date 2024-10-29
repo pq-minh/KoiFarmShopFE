@@ -37,29 +37,47 @@ const handleLogout = (e) => {
     { key: "1", label: <Link to="/userinfor">Profile Setting</Link> },
     { key: "2", label: <Link to="/orderhistory">Order History</Link> },
     { key: "3", label: <Link to="/assigment-history">Assignments History</Link> },
-    { key: "4", label: <Link to="/" onClick={handleLogout}>Log Out</Link> },
+    {
+      key: "4",
+      label: (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => {
+            navigate("/requestcare");
+          }}
+        >
+          Request Care
+        </a>
+      ),
+    },
+    { key: "5", label: <Link to="/" onClick={handleLogout}>Log Out</Link> },
 ];
 
-  useEffect(() => {
-    const storedToken = sessionStorage.getItem("token");
-    setToken(storedToken);
+useEffect(() => {
+  const storedToken = sessionStorage.getItem("token");
+  setToken(storedToken);
 
-    if (storedToken) {
-        try {
-            const decodedToken = jwtDecode(storedToken);
-            setRole(decodedToken.role);
-            setIsLoggedIn(true);
-        } catch (error) {
-            console.error("Failed to decode token", error);
-            navigate("/");
-        }
-    }
-    setIsLoading(false);
+  if (storedToken) {
+      try {
+          const decodedToken = jwtDecode(storedToken);
+          setRole(decodedToken.role);
+          setIsLoggedIn(true);
+          if (decodedToken.role === "Admin") {
+            navigate("/admin");
+          }
+      } catch (error) {
+          console.error("Failed to decode token", error);
+          navigate("/");
+      }
+  }
+  setIsLoading(false);
 }, [navigate, setIsLoggedIn]);
 
-  if (isLoading) {
-    return <div>Loading...</div>; 
-  }
+if (isLoading) {
+  return <div>Loading...</div>; 
+}
+
 
  
   const FishOption = (
@@ -105,7 +123,7 @@ const handleLogout = (e) => {
           />
         </Link>
         <div className="fs-4 fw-bold text-primary ms-3">KoiFarmShop</div>
-      </div>
+      </div>      
 
       <nav>
         <ul className="menu">
@@ -121,7 +139,6 @@ const handleLogout = (e) => {
               </Link>
             </li>
           )}
-
           <li>
             <Link to="/shop" className="text-dark text-decoration-none">
               Koi Shop
@@ -148,7 +165,7 @@ const handleLogout = (e) => {
             </Dropdown>
           </li>
           <li>
-            <Link to="/admin" className="text-dark text-decoration-none">
+            <Link to="/" className="text-dark text-decoration-none">
               Feedbacks
             </Link>
           </li>
