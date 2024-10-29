@@ -11,7 +11,7 @@ function ViewKoi() {
     useEffect(() => {
         const fetchKoiData = async () => {
             try {
-                const response = await api.get("/kois/management");
+                const response = await api.get("kois/management/get");
                 setKoiList(response.data); 
             } catch (err) {
                 console.log(err);

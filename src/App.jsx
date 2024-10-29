@@ -25,6 +25,12 @@ import Dashboard from "./page/Dashboard";
 import ViewKoi from "./page/Dashboard/Viewkoi";
 import UpdateKoi from "./page/Dashboard/Viewkoi/UpdateKoi";
 import AddKoi from "./page/Dashboard/Viewkoi/AddKoi";
+import OrderChart from "./page/Dashboard/Chart/order";
+import ViewBatchKoi from "./page/Dashboard/Batchkoi";
+import UpdateBatchKoi from "./page/Dashboard/Batchkoi/updateBatchKoi";
+import AddBatchKoi from "./page/Dashboard/Batchkoi/addBatchKoi";
+import RequestCare from "./page/request-care";
+import RevenueChart from "./page/Dashboard/Chart/revenue";
 
 
 const App = () => {
@@ -62,7 +68,27 @@ const App = () => {
             {
               path: "/admin/addkoi",
               element: <AddKoi/>,
-            }
+            },
+            {
+              path: "/admin/report",
+              element: <OrderChart/>
+            },
+            {
+              path: "/admin/revenue",
+              element: <RevenueChart />
+            },
+            {
+              path: "/admin/batchkoi",
+              element :<ViewBatchKoi/>
+            },
+            {
+              path: "/admin/updatebatchkoi/:id",
+              element : <UpdateBatchKoi/>
+            },
+            {
+              path: "/admin/addbatchkoi",
+              element: <AddBatchKoi/>
+            },
           ],
     },
     {
@@ -136,6 +162,10 @@ const App = () => {
       path: "orderhistory",
       element: <OrderHistoryPage />,
     },
+    {
+      path: "requestcare",
+      element: <RequestCare />
+    }
   
     
   ]);      
