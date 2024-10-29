@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
-import { EyeOutlined, HomeOutlined, PlusCircleOutlined, UserOutlined,FileTextOutlined,PieChartOutlined } from '@ant-design/icons';
+import { EyeOutlined, HomeOutlined, PlusCircleOutlined, UserOutlined,FileTextOutlined,PieChartOutlined,BarChartOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -33,7 +33,8 @@ function Dashboard() {
       key: 'sub3',
       label: <span><FileTextOutlined /> Report</span>, 
       children :[
-        { key: '6', label: <Link to="/admin/report"><PieChartOutlined />Order Chart</Link>}
+        { key: '6', label: <Link to="/admin/report"><PieChartOutlined />Order Chart</Link>},
+        { key: '7', label: <Link to="/admin/revenue"><BarChartOutlined />Revenue Chart</Link>},
       ]
     },
   ];

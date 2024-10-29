@@ -140,7 +140,7 @@ const App = () => {
           element: <StaffPage />,
         }
       ]
-    },   
+    },    
     {
       path: "allproduct",
       element: <AllProduct />

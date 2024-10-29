@@ -5,6 +5,7 @@ import "./index.scss";
 import api from "../../config/axios";
 import { Link } from "react-router-dom";
 import { ArrowUpOutlined } from "@ant-design/icons";
+import Footer from "../../component/footer";
 
 const Home = () => {
   const [koiFishs, setKoiFishs] = useState([]);
@@ -142,7 +143,7 @@ const Home = () => {
           </h1>
           <p style={{ fontSize: "1.2rem", lineHeight: "1.6", color: "#333" }}>
             Chào Mừng Bạn Đến Với{" "}
-            <span style={{ fontWeight: "bold" }}>Trang Trại Cá Koi XYZ</span>,
+            <span style={{ fontWeight: "bold" }}>Trang Trại Cá Koi SWP391</span>,
             Nơi Chuyên Cung Cấp Và Chăm Sóc Các Giống Cá Koi Chất Lượng Cao.
             Trang Web Của Chúng Tôi Không Chỉ Là Một Nơi Để Mua Bán Cá Koi, Mà
             Còn Cung Cấp Hệ Thống Quản Lý Và Dịch Vụ Chăm Sóc Toàn Diện, Đáp Ứng
@@ -222,15 +223,78 @@ const Home = () => {
         </div>
       </div>
 
-      <div>       
-        <footer className="bg-dark text-white py-4">
-          <div className="container text-center">
-            <p>© 2024 KoiFarmShop. All rights reserved.</p>
-            <p> Privacy Policy</p>
-            <p> Term and Conditions</p>
+      <div className="koi-fish-section">
+        <div className="koi-info">
+          <img
+            src="/shusui.jpg"
+            alt="Koi Shusui"
+            className="koi-image"
+          />
+          <div className="koi-video">
+            <iframe
+              src="https://www.youtube.com/embed/14UZaw8_QyM"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
-        </footer>
+        </div>
       </div>
+
+      <div className="koi-fish-section">
+        <div className="koi-info">
+          <img
+            src="/tanchosake.jpg"
+            alt="Koi Tancho Sanke"
+            className="koi-image"
+          />
+          <div className="koi-video-1">
+            <iframe
+              src="https://www.youtube.com/embed/KnFXeZsRfHg"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div className="koi-fish-section">
+        <div className="koi-info">
+          <img
+            src="/tancho.jpg"
+            alt="Koi Tancho"
+            className="koi-image"
+          />
+          <div className="koi-video">
+            <iframe
+              src="https://www.youtube.com/embed/cqe01Qg34FY"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div className="koi-fish-section">
+        <div className="koi-info">
+          <img
+            src="/shiro.jpg"
+            alt="Koi Shiro UtSuri"
+            className="koi-image"
+          />
+          <div className="koi-video-1">
+            <iframe
+              src="https://www.youtube.com/embed/9HNsjYP8Cfw"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+      <Footer/>
     </div>
   );
 };
