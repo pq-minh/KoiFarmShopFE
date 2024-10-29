@@ -6,7 +6,7 @@ import { Form, Input, Select, Button, Upload, message, Image } from 'antd';
 
 function UpdateKoi() {
   const { id } = useParams();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate(); 
   const [form] = Form.useForm();
   const [dataKoi, setDataKoi] = useState(null);
   const [imageFileList, setImageFileList] = useState([]);
@@ -15,7 +15,7 @@ function UpdateKoi() {
   // Fetch Koi Data by ID
   const fetchKoiById = async (koiId) => {
     try {
-      const response = await api.get(`kois/management/${koiId}`);
+      const response = await api.get(`kois/management/get/${koiId}`);
       setDataKoi(response.data);
       setImageFileList([{ url: response.data.image }]);
       setCertificateFileList([{ url: response.data.certificate }]);
@@ -45,25 +45,27 @@ function UpdateKoi() {
 
   const handleUpdate = async (values) => {
     const formData = new FormData();
+    formData.append("koiId", id); // Add ID to the form data
     formData.append("KoiImage", imageFileList[0]?.originFileObj || imageFileList[0]?.url);
     formData.append("Certificate", certificateFileList[0]?.originFileObj || certificateFileList[0]?.url);
 
     // Append the rest of the fields
     Object.keys(values).forEach((key) => {
-      formData.append(key, values[key]);
+        formData.append(key, values[key]);
     });
 
     try {
-      await api.put(`/kois/management/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      message.success("Koi updated successfully");
-      navigate('/admin/viewkoi'); // Redirect after successful update
+        await api.put(`/kois/management/update`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        message.success("Koi updated successfully");
+        navigate('/admin/viewkoi'); // Redirect after successful update
     } catch (error) {
-      message.error("Failed to update koi");
-      console.error("Update Error:", error);
+        message.error("Failed to update koi");
+        console.error("Update Error:", error);
     }
-  };
+};
+
 
   const handleImageChange = ({ fileList }) => setImageFileList(fileList);
   const handleCertificateChange = ({ fileList }) => setCertificateFileList(fileList);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
-import { EyeOutlined, HomeOutlined, PlusCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { EyeOutlined, HomeOutlined, PlusCircleOutlined, UserOutlined,FileTextOutlined,PieChartOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -11,7 +11,7 @@ function Dashboard() {
   const items = [
     {
       key: '1',
-      label: <span><HomeOutlined /> Home</span>, 
+      label: <Link to="/admin"><HomeOutlined /> Home</Link>, 
     },
     {
       key: 'sub1', 
@@ -20,6 +20,21 @@ function Dashboard() {
         { key: '2', label: <Link to="/admin/viewkoi"><EyeOutlined /> View Koi</Link> }, 
         { key: '3', label: <Link to="/admin/addkoi"><PlusCircleOutlined /> Add Koi</Link> }, 
       ],
+    },
+    {
+      key: 'sub2',
+      label: <span><UserOutlined/> BatchKoi Management</span>,
+      children :[
+        { key: '4',label: <Link to="/admin/batchkoi"><EyeOutlined /> View BatchKoi</Link> },
+        { key: '5' ,label: <Link to="/admin/addbatchkoi"><PlusCircleOutlined/> Add BatchKoi</Link> },
+      ]
+    },
+    {
+      key: 'sub3',
+      label: <span><FileTextOutlined /> Report</span>, 
+      children :[
+        { key: '6', label: <Link to="/admin/report"><PieChartOutlined />Order Chart</Link>}
+      ]
     },
   ];
 
@@ -45,11 +60,9 @@ function Dashboard() {
           <div className="logo" />
         </Header>
         <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-            <Breadcrumb.Item></Breadcrumb.Item>
-          </Breadcrumb>
+          
           {/* Add content here */}
+          Welcome To KOIFARMSHOP Admin DashBoard
           <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
            <Outlet/>
           </div>

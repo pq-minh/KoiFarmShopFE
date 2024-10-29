@@ -11,7 +11,7 @@ function ViewBatchKoi() {
   useEffect(() => {
     const fetchKoiData = async () => {
       try {
-        const response = await api.get("/batchkois/management");
+        const response = await api.get("/batchkois/management/get");
         setKoiList(response.data);
       } catch (err) {
         console.log(err);

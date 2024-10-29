@@ -20,7 +20,7 @@ function AddKoi() {
     });
 
     api
-      .post("/kois/management", formData, {
+      .post("/kois/management/add", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

@@ -15,7 +15,7 @@ function UpdateBatchKoi() {
   // Fetch batch koi details
   const fetchKoiById = async (batchKoiId) => {
     try {
-      const response = await api.get(`batchkois/management/${batchKoiId}`);
+      const response = await api.get(`batchkois/management/get/${batchKoiId}`);
       setDataKoi(response.data);
       if (response.data.image) {
         setFileList([{ url: response.data.image }]);
@@ -49,6 +49,7 @@ function UpdateBatchKoi() {
 
   const handleUpdate = async (values) => {
     const formData = new FormData();
+    formData.append("batchKoiId", id); // Add ID to the form data
     formData.append("BatchKoiName", values.BatchKoiName);
     formData.append("Description", values.Description);
     formData.append("Age", values.Age);
@@ -60,6 +61,7 @@ function UpdateBatchKoi() {
     formData.append("BatchTypeId", values.BatchTypeId);
     formData.append("Price", values.Price);
     formData.append("Status", values.Status);
+
     if (fileList[0]?.originFileObj) {
       formData.append("BatchKoiImage", fileList[0].originFileObj);
     }
@@ -68,7 +70,7 @@ function UpdateBatchKoi() {
     }
 
     try {
-      await api.put(`/batchkois/management/${id}`, formData, {
+      await api.put(`/batchkois/management/update`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       message.success("Koi batch updated successfully");
@@ -76,7 +78,7 @@ function UpdateBatchKoi() {
     } catch (error) {
       message.error("Failed to update koi batch");
     }
-  };
+};
 
   const handleKoiImageChange = ({ fileList }) => setFileList(fileList);
   const handleCertificateChange = ({ fileList }) => setCertificateFileList(fileList);
