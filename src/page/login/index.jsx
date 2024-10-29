@@ -4,6 +4,7 @@ import "./index.scss";
 import api from "../../config/axios";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import { motion } from 'framer-motion';
 
 const Login = () => {
   const [error, setError] = useState(false);
@@ -57,7 +58,6 @@ const Login = () => {
         const errorData = await response.json();
         throw new Error(errorData.error || "Login failed!");
       }
-  
       const data = await response.json();
       console.log(data); 
       sessionStorage.setItem("token", data.token);
@@ -72,6 +72,8 @@ const Login = () => {
 
 
   return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+
     <div className="login">
       <div className="background-image">
         <img src="/login.jpg" alt="Background" />
@@ -138,6 +140,8 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </motion.div>
+
   );
 };
 

@@ -96,7 +96,7 @@ const UserInfor = () => {
             {/* đang ở action nào thì lấy ra form đó  */}
             <div className="col-md-6 update-form ">
                   { wizard === "ProFile" ? (
-                    <Profile userData={userData} className='col-8' />
+                    <Profile userData={userData} />
                     ) :  wizard === "Change Password" ?(
                     <ChangePassword/>
                    ) : wizard === "Shipping Addresses" ?(

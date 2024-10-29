@@ -20,7 +20,6 @@ import {
 } from 'antd';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
-const [form] = Form.useForm();
 const normFile = (e) => {
   if (Array.isArray(e)) {
     return e;
@@ -34,6 +33,8 @@ const KoiAssigment =() => {
     const [file, setFile] = useState(null);
     const [url, setUrl] = useState("");
     const [type,setType] = useState(1);
+    const [form] = Form.useForm();
+
     //
     const handleFileChange = (info) => {
         setFile(info.file);

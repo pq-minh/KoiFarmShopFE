@@ -17,7 +17,7 @@ const Header = ({ setIsLoggedIn }) => {
   const [role, setRole] = useState(null);
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
 //hanldle logout
 const handleLogout = (e) => {
   e.preventDefault();
@@ -83,7 +83,17 @@ const handleLogout = (e) => {
       </Menu.Item>
     </Menu>
   );
-
+  //modal 
+  
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="header">
       <div className="logo-section">
@@ -143,9 +153,20 @@ const handleLogout = (e) => {
             </Link>
           </li>
           <li>
-            <Link to="/cart" className="text-blue text-decoration-none">
+          {token === null ?(
+            <>
+          <Link to="#" onClick={showModal} className="text-blue text-decoration-none">
+            <ShoppingCartOutlined style={{ fontSize: "24px" }} /> Cart
+          </Link>
+          <Modal title="Login" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <p>Vui lòng đăng nhập để có thể truy cập.</p>
+          </Modal>
+        </>
+          ):( <Link to="/cart" className="text-blue text-decoration-none">
               <ShoppingCartOutlined style={{ fontSize: "24px" }} /> Cart
             </Link>
+            ) }
+           
           </li>
           <li>
             <Link to="/allproduct" className="text-blue text-decoration-none">

@@ -10,7 +10,7 @@ const Home = () => {
   const [koiFishs, setKoiFishs] = useState([]);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [tokendecode,setTokenDecode] = useState(false);
 
   // const fetchKoiFish = async () => {
   //   try {
@@ -21,6 +21,7 @@ const Home = () => {
   //     console.log(err);
   //   }
   // };
+ 
 
   useEffect(() => {
     // fetchKoiFish();

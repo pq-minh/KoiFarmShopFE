@@ -10,7 +10,8 @@ import { Breadcrumb } from 'antd';
 const Details = () => {
   return (
     <div >
-        <Header/>
+           <Header setIsLoggedIn={setIsLoggedIn}/>
+
         <Breadcrumb style={{marginLeft:30,marginTop:30}}
     items={[
       {

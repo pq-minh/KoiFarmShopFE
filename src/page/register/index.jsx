@@ -4,6 +4,7 @@ import { Button, Form, Input, Row, Col,Modal } from "antd";
 import "./index.scss";
 import api from "../../config/axios";
 import { useNavigate } from "react-router-dom";
+import { motion } from 'framer-motion';
 
 const Register = () => {
   const [error,setErrorMessage] = useState();
@@ -64,7 +65,15 @@ const Register = () => {
     
     return Promise.resolve();
   };
+  const slideVariants = {
+    initial: { x: '-100%' },
+    enter: { x: 0 },
+    exit: { x: '100%' },
+  };
+  
   return (
+    <motion.div variants={slideVariants} initial="initial" animate="enter" exit="exit">
+
     <div
       style={{
         display: "flex",
@@ -266,6 +275,8 @@ const Register = () => {
         </div>
       </div>
     </div>
+    </motion.div>
+
   );
 };
 
