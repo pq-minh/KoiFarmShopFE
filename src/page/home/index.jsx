@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Header from "../../component/header";
 import ProductCard from "../../component/product-card";
+import { motion } from 'framer-motion';
+
 import "./index.scss";
 import api from "../../config/axios";
 import { Link } from "react-router-dom";
@@ -12,6 +14,11 @@ const Home = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [tokendecode,setTokenDecode] = useState(false);
+  //motion 
+  const tableVariants = {
+    hidden: { opacity: 0, y: 20 },  
+    visible: { opacity: 1, y: 0 }    
+  };
 
   // const fetchKoiFish = async () => {
   //   try {
@@ -50,6 +57,12 @@ const Home = () => {
   };
 
   return (
+    <motion.div
+    initial="hidden"
+    animate="visible"
+    variants={tableVariants}
+    transition={{ duration: 0.5 }}  // Thời gian hiệu ứng
+  >
     <div className="bg-gray-100 min-h-screen">
              <Header setIsLoggedIn={setIsLoggedIn}/>
 
@@ -300,6 +313,7 @@ const Home = () => {
       </div>
       <Footer/>
     </div>
+    </motion.div> 
   );
 };
 

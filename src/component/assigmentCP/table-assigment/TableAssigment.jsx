@@ -13,7 +13,7 @@ const TableAssigment = () => {
     const decisionlist = ["agree","reject"];
     const [totalCount, setTotalCount] = useState(0);
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(6);
+    const [pageSize, setPageSize] = useState(10);
     //
 
     const DecisionRequest = async (value) => {

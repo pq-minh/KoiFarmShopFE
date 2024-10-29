@@ -12,6 +12,7 @@ import Draggable from 'react-draggable';
 import { motion } from 'framer-motion';
 const Shop = () => {
     const [products,setProducts] = useState([])
+    const [originalProducts, setOriginalProducts] = useState([]);
     const [filter,setFilter] = useState([])
     const [koiorbatch,setKoiorBatch] = useState("kois")
     const [SortBy,setsortBy] = useState('')
@@ -49,6 +50,7 @@ const Shop = () => {
             const response = await api.get(`${koiorbatch}`);
             if (response.status === 200) {
               setProducts(response.data);
+              setOriginalProducts(response.data);
             }
           } catch (err) {
             console.log(err);
@@ -58,6 +60,9 @@ const Shop = () => {
       }, [koiorbatch]);
       //fetching filter     
       
+      const onResetHandle = () => {
+        setProducts(originalProducts); // Reset to original products
+    };
   return (
 
     <div>
@@ -80,7 +85,7 @@ const Shop = () => {
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ duration: 0.5 }}
         >
-            <Filter setData={handleFilterData} KoiOrBatch={koiorbatch} products={products}/>
+            <Filter setData={handleFilterData} KoiOrBatch={koiorbatch} products={products} onReset={onResetHandle}/>
             </motion.div>
         </div>
         <div className='row col-md-9 card-box'>

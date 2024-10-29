@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Header from '../../component/header';
 import { Button } from 'antd'; 
 import './ErrorPayment.scss'; 

@@ -2,11 +2,11 @@ import React,{useState , useEffect} from 'react'
 import { Select} from 'antd';
 import "./index.scss"
 import { Input, Radio, Space,Button } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined,ClearOutlined } from '@ant-design/icons';
 import { Slider, Switch } from 'antd';
 
 import api from "../../../config/axios";
-const Filter = ({ setData, KoiOrBatch,products}) => {
+const Filter = ({ setData, KoiOrBatch,products,onReset}) => {
     const listKoiName = ["Onwa","Kohaku","Ogon","Showa","Tancho","Asagi"]
     const listKoiCategory = ["Thuần chủng nhập khẩu", "Lai F1", "Thuần Việt"]
     const [selectedKoi, setSelectedKoi] = useState('');
@@ -49,6 +49,15 @@ const Filter = ({ setData, KoiOrBatch,products}) => {
         };
         setFilterData(newData);
       }
+      // reset handle 
+      const onResetHandle = () => {
+        setSelectedKoi('');
+        setSelectedKoiCat('');
+        setPriceRange([0, 2000000]);
+        setSort(null);
+        setFilterData(null);
+        onReset(); 
+    };
       //
       useEffect(() => {
         if (filterData) {
@@ -57,16 +66,17 @@ const Filter = ({ setData, KoiOrBatch,products}) => {
                     const response = await api.get(`${KoiOrBatch}/modify`, { params: filterData });
                     if (response.status === 200) {                      
                         setData(response.data); 
-                        setSelectedKoiCat(null);
-                        setSelectedKoi(null)
+                        
                     }
                 } catch (err) {
                     console.log(err);
                 }
             };   
             fetchKoiData();
+        } else {
+          setData(products)
         }
-    }, [filterData,KoiOrBatch]);
+    }, [filterData,KoiOrBatch,setData, products]);
   return (
     <div className='filter'>
     <div className='name-box'>
@@ -131,9 +141,16 @@ const Filter = ({ setData, KoiOrBatch,products}) => {
             </div>
             </div>
     <div>
+    <div>
     <Button type="primary" icon={<SearchOutlined />} iconPosition={position} style={{width:250,marginTop:10}} onClick={onClickHandle}>
             Search Koi
     </Button>
+    </div>
+    <div>
+    <Button type="primary" icon={<ClearOutlined />} iconPosition={position} style={{width:250,marginTop:10}} onClick={ onResetHandle }>
+            Reset
+    </Button>
+    </div>  
         </div>
   </div>
   )

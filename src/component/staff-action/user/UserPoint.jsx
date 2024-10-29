@@ -4,13 +4,16 @@ import api2 from "../../../config/axios";
 import "./index.scss"
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import { Space, Table, Tag ,Button,Modal,Input } from 'antd';
+import { Space, Table, Tag ,Button,Modal,Input,Form,Select} from 'antd';
 import { form } from 'framer-motion/client';
+import { motion } from 'framer-motion';
+
 const UserPoint = () => {
     const [listuser,setListuer] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [isModalVisible, setModalvisible] = useState(false)
     const [isModalDeleteVisible, setModalDeleteVisible] = useState(false)
+    const [isModalUnbanVisible, setModalUnbanVisible] = useState(false)
     const [formData,setFormData] = useState({field1: '', field2 :'',field3:''});
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -19,10 +22,16 @@ const UserPoint = () => {
     const [visibleColumns, setVisibleColumns] = useState({
       userId: true,
   });
+  const [reason,setReason] = useState(null);
     //filter 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    //
+    const tableVariants = {
+      hidden: { opacity: 0, y: 20 },  
+      visible: { opacity: 1, y: 0 }    
+    };
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
       confirm();
       setSearchText(selectedKeys[0]);
@@ -193,6 +202,11 @@ const UserPoint = () => {
         },
         },
         {
+          title: 'Note',
+          dataIndex: 'note',
+          key: 'note',
+        },
+        {
           title: 'Action',
           key: 'action',
           render: (_, record) => {
@@ -214,7 +228,7 @@ const UserPoint = () => {
                     )}
                     {status === 'Banned' && (
                         <>
-                            <Button color="primary" variant="solid"  >
+                            <Button color="primary" variant="solid"  onClick={() => handleUnban(record)}>
                                 UnBan
                             </Button>
                         </>
@@ -283,26 +297,58 @@ const UserPoint = () => {
         setSelectedRecord(record)
         setModalDeleteVisible(true);
       }
+      //handle unban user 
+      const handleUnban = (record) => {    
+        setSelectedRecord(record)
+        setModalUnbanVisible(true);
+      }
       //handle ok user
       const handleDeleteOk = async () => {
         const {id} = selectedrecord;
         try {     
-          const response = await api.post("manageruser/deleteuser",{userId:id});
+          const response = await api.post("manageruser/deleteuser",{userId:id,reason:reason});
           if (response.status === 200) {
               console.log('Update successful:', response.data);
-              setListuer((prevlist) => prevlist.map(user => user.id === id ? {...user,status:'Banned'} : user))
+              setListuer((prevlist) => prevlist.map(user => user.id === id ? {...user,status:'Banned',note:reason} : user))
           }
       } catch (err) {
           console.log(err);
       }
         setModalDeleteVisible(false);
       }
+      //handle unban user Ok
+      const handleUnbanOk = async () => {
+        const {id} = selectedrecord;
+        try {     
+          const response = await api.post("manageruser/unbanuser",{userId:id});
+          if (response.status === 200) {
+              console.log('Update successful:', response.data);
+              setListuer((prevlist) => prevlist.map(user => user.id === id ? {...user,status:'IsActived',note:""} : user))
+          }
+      } catch (err) {
+          console.log(err);
+      }
+        setModalUnbanVisible(false);
+      }
       //hanlde delete cancer 
       const handleDeleteCancel = (record) => {
         setModalDeleteVisible(false)
       }
-
+      //
+      const handleUnbanCancel = (record) => {
+        setModalUnbanVisible(false);
+      }
+      //
+      const handleChange = (value) => {
+        setReason(value);
+      };
   return (
+    <motion.div
+    initial="hidden"
+    animate="visible"
+    variants={tableVariants}
+    transition={{ duration: 0.5 }}  
+  >
     <div className='user-point-cp'>
         <Table columns={columns} dataSource={listuser}  pagination={{
                     total: totalCount,
@@ -347,9 +393,44 @@ const UserPoint = () => {
                 onOk={handleDeleteOk}
                 onCancel={handleDeleteCancel}
             >
-                 
+            <Form.Item
+            name="reason"
+            label="Reason"
+            rules={[{ required: true, message: 'Please input the description!' }]}
+          >
+            <Select
+      defaultValue="None"
+      style={{
+        width: 320,
+      }}
+      onChange={handleChange}
+      options={[
+        {
+          value: 'Spam ký gửi cá koi',
+          label: 'Spam ký gửi cá koi',
+        },
+        {
+          value: 'Không theo thỏa thuận',
+          label: 'Không theo thỏa thuận',
+        },
+        {
+          value: 'Có lời lẽ không đúng chuẩn mực',
+          label: 'Có lời lẽ không đúng chuẩn mực',
+        },
+       
+      ]}
+    />
+          </Form.Item> 
+        </Modal>     
+        <Modal
+                title="Do you want unban this user ?"
+                open={isModalUnbanVisible}
+                onOk={handleUnbanOk}
+                onCancel={handleUnbanCancel}
+            >
         </Modal>     
     </div>
+    </motion.div>  
   )
 }
 

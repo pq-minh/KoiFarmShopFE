@@ -5,6 +5,7 @@ import CartInfor from '../../component/shopping-cartCP/InforCart/CartInfor';
 import api from "../../config/axios";
 import { Pagination,Breadcrumb } from 'antd';
 import { HomeOutlined} from '@ant-design/icons';
+import { motion } from 'framer-motion';
 
 import CheckOutInfor from '../../component/shopping-cartCP/CheckOutInfor/CheckOutCart';
 
@@ -55,16 +56,30 @@ const UserCart = () =>
         title: 'Shopping Carts',
       },
     ];
+    //
+    const tableVariants = {
+      hidden: { opacity: 0, y: 20 },  
+      visible: { opacity: 1, y: 0 }    
+    };
+
     
   return (
     <div>
     <Header setIsLoggedIn={setIsLoggedIn}/>
     <Breadcrumb style={{ backgroundColor: '#fff', display: 'flex', position: 'relative' }} items={breadcrumbItems} />
       <div className='row'>
+      <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={tableVariants}
+      transition={{ duration: 0.5 }}  
+    >
       <div className='col-8'>
       <KoiCart carts={carts} setCarts={setCarts} updateQuantity={updateQuantity} updateCarts={handleUpdateCarts} isCheckout={false}/>
       <Pagination defaultCurrent={1} total={50} style={{marginLeft:280,marginTop:25}}/>;
       </div>
+      </motion.div>  
+     
       <div className='col-4'>
           <CartInfor carts={carts} quantities={quantities} />  
       </div>

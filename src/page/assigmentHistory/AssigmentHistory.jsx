@@ -19,7 +19,7 @@ const AssignmentHistory = () => {
       initial="hidden"
       animate="visible"
       variants={tableVariants}
-      transition={{ duration: 0.5 }}  // Thời gian hiệu ứng
+      transition={{ duration: 0.5 }}  
     >
              <TableAssigment/>
              </motion.div>  
