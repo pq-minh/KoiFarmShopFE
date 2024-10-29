@@ -63,7 +63,21 @@ function Header() {
       ),
     },
     {
-      key: "3",
+      key: "4",
+      label: (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => {
+            navigate("/requestcare");
+          }}
+        >
+          Request Care
+        </a>
+      ),
+    },
+    {
+      key: "5",
       label: (
         <a
           target="_blank"
@@ -83,21 +97,22 @@ function Header() {
       try {
         const decodedToken = jwtDecode(storedToken);
         console.log(decodedToken.role);
-        setRole(decodedToken.role); 
+        setRole(decodedToken.role);
+
+        // Redirect to admin page if role is 'Admin'
+        if (decodedToken.role === "Admin") {
+          navigate("/admin");
+        }
       } catch (error) {
         console.error("Failed to decode token", error);
         navigate("/"); 
       }
     } else {
-      navigate("/"); // Điều hướng đến trang Home nếu không có token
+      navigate("/"); // Redirect to Home if no token exists
     }
 
-    setIsLoading(false); // Kết thúc trạng thái loading
-  }, [navigate]);
-
-  if (isLoading) {
-    return <div>Loading...</div>; // Hiển thị khi đang xác thực
-  }
+    setIsLoading(false); // End loading state
+}, [navigate]);
 
  
   const FishOption = (
@@ -133,7 +148,7 @@ function Header() {
           />
         </Link>
         <div className="fs-4 fw-bold text-primary ms-3">KoiFarmShop</div>
-      </div>
+      </div>      
 
       <nav>
         <ul className="menu">
@@ -149,7 +164,6 @@ function Header() {
               </Link>
             </li>
           )}
-
           <li>
             <Link to="/shop" className="text-dark text-decoration-none">
               Koi Shop
@@ -176,7 +190,7 @@ function Header() {
             </Dropdown>
           </li>
           <li>
-            <Link to="/admin" className="text-dark text-decoration-none">
+            <Link to="/" className="text-dark text-decoration-none">
               Feedbacks
             </Link>
           </li>

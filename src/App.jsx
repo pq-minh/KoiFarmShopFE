@@ -4,10 +4,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google"; 
 import Home from "./page/home";
 import Login from "./page/login";
-import Dashboard from "./page/admin";
+// import Dashboard from "./page/admin";
 import PrivateRoute from "./component/private-route";
 import Register from "./page/register";
-import SingleKoi from "./page/fish/Single"; 
+import SingleKoi from "./page/fish/single"; 
 import ServiceMenu from "./page/service"; 
 import UserInfor from "./page/user-infor/user"
 import KoiAssigment from "./page/koi-assigment/index";
@@ -15,14 +15,25 @@ import StaffPage from "./page/staff/staff";
 import Shop from "./page/shop/Shop";
 import BatchKoi from "./page/fish/batch";
 import AllProduct from "./page/fish/allproduct";
-import AssignmentHistory from "./page/assigmentHistory/assigmenthistory";
+import AssignmentHistory from "./page/assigmentHistory/AssigmentHistory";
 import UserCart from "./page/usercart/UserCart";
 import CheckOut from "./page/checkout/CheckOut";
-import OrderHistory from "./page/orderHistoryUser/OrderHistory";
 import Details from "./page/productdetails/Details";
 import ProductDetails from "./component/shop-component/product-cart-details/ProductDetails";
 import OrderHistoryPage from "./page/orderhistory";
 import CheckOutComplete from "./component/shopping-cartCP/CheckoutComplete/CheckoutComplete"
+import Dashboard from "./page/Dashboard";
+import ViewKoi from "./page/Dashboard/Viewkoi";
+import UpdateKoi from "./page/Dashboard/Viewkoi/UpdateKoi";
+import AddKoi from "./page/Dashboard/Viewkoi/AddKoi";
+import OrderChart from "./page/Dashboard/Chart/order";
+import ViewBatchKoi from "./page/Dashboard/Batchkoi";
+import UpdateBatchKoi from "./page/Dashboard/Batchkoi/updateBatchKoi";
+import AddBatchKoi from "./page/Dashboard/Batchkoi/addBatchKoi";
+import RequestCare from "./page/request-care";
+import RevenueChart from "./page/Dashboard/Chart/revenue";
+
+
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -44,8 +55,42 @@ const App = () => {
     //   ],
     // },
     {
-          path: "admin",
-          element: <Dashboard />,
+      path: "admin",
+      element: <Dashboard />,
+      children: [
+            {
+              path: "/admin/viewkoi",
+              element: <ViewKoi />, 
+            },
+            {
+              path: "/admin/updatekoi/:id",
+              element: <UpdateKoi />, 
+            },
+            {
+              path: "/admin/addkoi",
+              element: <AddKoi/>,
+            },
+            {
+              path: "/admin/report",
+              element: <OrderChart/>
+            },
+            {
+              path: "/admin/revenue",
+              element: <RevenueChart />
+            },
+            {
+              path: "/admin/batchkoi",
+              element :<ViewBatchKoi/>
+            },
+            {
+              path: "/admin/updatebatchkoi/:id",
+              element : <UpdateBatchKoi/>
+            },
+            {
+              path: "/admin/addbatchkoi",
+              element: <AddBatchKoi/>
+            },
+          ],
     },
     {
       path: "userinfor",
@@ -96,7 +141,7 @@ const App = () => {
           element: <StaffPage />,
         }
       ]
-    },   
+    },    
     {
       path: "allproduct",
       element: <AllProduct />
@@ -109,11 +154,7 @@ const App = () => {
     {
       path: "checkout",
       element: <CheckOut />
-    },  
-    {
-      path: "order",
-      element: <OrderHistory />
-    },  
+    },     
     {
       path: "details/:id", 
       element: <ProductDetails />,
@@ -125,12 +166,17 @@ const App = () => {
     {
       path: "checkoutcomplete",
       element: <CheckOutComplete />
+    },
+    {   
+      path: "requestcare",
+      element: <RequestCare />
     }   
   ]);      
   return (
     <GoogleOAuthProvider clientId="58740703879-3s8ddc1rno4kavb9neslns90iphlps9g.apps.googleusercontent.com">
-      <RouterProvider router={router} />
+      <RouterProvider router={router} />     
     </GoogleOAuthProvider>
+    
   );
 };
 
