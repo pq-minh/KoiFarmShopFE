@@ -44,7 +44,7 @@ const handleLogout = (e) => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => {
-            navigate("/requestcare");
+            navigate("/viewrequest");
           }}
         >
           Request Care

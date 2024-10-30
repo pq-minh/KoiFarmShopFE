@@ -10,6 +10,7 @@ function RequestCare() {
     const [orders, setOrders] = useState([]);
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [endDates, setEndDates] = useState({});
+    const [submittedOrderIds, setSubmittedOrderIds] = useState([]); // Track submitted order IDs
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
@@ -48,8 +49,16 @@ function RequestCare() {
         try {
             await api.post("/requestcare", requestPayload);
             message.success("Request care successfully submitted");
-            setEndDates(prev => ({ ...prev, [order.orderDetailsId]: null }));
-            navigate("/viewrequest"); // Redirect to the page showing all created request care
+
+            // Add submitted order's ID to submittedOrderIds and reset selectedOrderId
+            setSubmittedOrderIds((prev) => [...prev, order.orderDetailsId]);
+            setSelectedOrderId(null);
+
+            // Delay navigation to ensure state is maintained
+            setTimeout(() => {
+                navigate("/viewrequest");
+            }, 1000); // Adjust delay if needed
+
         } catch (error) {
             console.error("Error creating request care:", error);
         }

@@ -48,19 +48,18 @@
   color: #555;
 }
 
-.status{
+.status {
   font-size: 1rem;
   font-weight: bold;
 }
-.status.Pending{
+
+.status.pending {  /* Use lowercase for CSS classes */
   color: green;
 }
 
-.status.Completed{
+.status.completed {
   color: red;
 }
-
-
 .order-details-container {
   display: flex;
   justify-content: center;
@@ -130,7 +129,7 @@
 
 .info-container p {
   margin: 10px 0;
-  font-size: 1.1rem; /* Tăng kích thước chữ */
+  font-size: 1.1rem; /* Increased font size */
   color: #333;
 }
 
