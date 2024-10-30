@@ -1,0 +1,96 @@
+body {
+    background-color: #f0f2f5; 
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+}
+
+.request-care {
+    background-image: url('https://i.pinimg.com/736x/d5/c5/16/d5c516156cbc80d8d7a985ffa4c98a18.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    background-position: center; 
+}
+
+.header-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100px; 
+}
+
+.request-header {
+    background-color: rgba(0, 0, 0, 0.7); /* Darker background for better contrast */
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    display: inline-block; 
+    color: #FFD700; /* Gold color for better visibility */
+    font-size: 24px;
+    text-align: center; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adding text shadow */
+}
+
+h1 {
+    text-align: center;
+    color: #FFD700; /* Same gold color */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adding text shadow */
+}
+
+.order-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; 
+    padding: 20px; 
+}
+
+.order-card {
+    display: flex; 
+    align-items: center; 
+    width: 350px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.2s; 
+    background-color: #f9f9f9; 
+    padding: 20px; 
+    text-align: center; 
+}
+
+.order-card img {
+    width: 150px; 
+    height: auto; 
+    border-radius: 10px; 
+    margin-bottom: 10px; 
+}
+
+.order-card .details {
+    flex-grow: 1; 
+}
+
+.date-picker-container {
+    margin-top: 10px; 
+}
+
+.submit-button-container {
+    display: flex; 
+    justify-content: center; 
+    margin-top: 20px; 
+}
+
+.ant-breadcrumb {
+    font-size: 16px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.8); /* Light background for contrast */
+    padding: 10px; /* Adding some padding to the breadcrumb */
+    border-radius: 5px; /* Slightly rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adding a subtle shadow */
+}
+
+.ant-breadcrumb .ant-breadcrumb-item {
+    color: #1890ff;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,45 @@
+body {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .register__form {
+    margin: 0 auto;
+    max-width: 900px;    
+  }
+  
+  .form-wrapper {
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .form-wrapper:hover {
+    transform: scale(1.02); 
+  }
+  
+  .ant-form-item-label > label {
+    font-weight: bold; 
+  }
+  
+  .ant-input {
+    border-radius: 5px; 
+  }
+  
+  .ant-btn {
+    font-weight: bold; 
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .ant-btn:hover {
+    transform: translateY(-2px); 
+  }
+  
+  .link {
+    color: #1890ff;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  

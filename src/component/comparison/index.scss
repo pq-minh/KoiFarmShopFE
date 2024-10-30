@@ -1,0 +1,63 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    width: 800px;
+    margin-top: 300px;
+    min-height: 40vh;
+}
+
+.product-box{
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.product-1, .product-2 {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px; 
+}
+
+.product-1 img{
+    
+    width: 200px;
+    height: 200px;
+}
+.product-2 img{
+    width: 200px;
+    height: 200px;
+}
+.close-icon {
+    position: relative; 
+    top: -5px; 
+    right: -740px; 
+    font-size: 24px; 
+    cursor: pointer; 
+}
+.close-icon:hover{
+    color: red  ;
+}
+.comparison-modal {
+    position: fixed; // Đặt modal ở vị trí cố định
+    bottom: 20px; // Cách dưới cùng 20px
+    left: 50%; // Đặt modal vào giữa theo chiều ngang
+    transform: translateX(-50%); // Căn giữa theo chiều ngang
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%; // Điều chỉnh kích thước
+    max-width: 600px; // Kích thước tối đa
+    z-index: 1000; // Đảm bảo nằm trên các phần tử khác
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Đổ bóng để nổi bật
+}
+
+.close-icon {
+    cursor: pointer; // Hiển thị con trỏ khi di chuột
+    position: absolute; // Đặt biểu tượng ở vị trí tuyệt đối
+    top: 10px; // Khoảng cách từ trên
+    right: 10px; // Khoảng cách từ phải
+}
