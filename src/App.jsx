@@ -35,6 +35,8 @@ import AddBatchKoi from "./page/Dashboard/Batchkoi/addBatchKoi";
 import RequestCare from "./page/request-care";
 import RevenueChart from "./page/Dashboard/Chart/revenue";
 import ViewRequests from "./page/request-care/viewrequest";
+import FeedbackPage from "./page/feedback";
+import AllFeedback from "./page/feedback/Allfeedback";
 
 
 const App = () => {
@@ -84,6 +86,7 @@ const App = () => {
               path: "/admin/addbatchkoi",
               element: <AddBatchKoi/>
             },
+            
           ],
     },
     {
@@ -180,6 +183,14 @@ const App = () => {
     {
       path: "viewrequest",
       element: <ViewRequests />
+    },
+    {
+      path: "/feedback",
+      element: <AllFeedback/>
+    },
+    {
+      path: "/submit-feedback",
+      element: <FeedbackPage />
     },
 
   ]);      
