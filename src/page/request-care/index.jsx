@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../config/axios";
-import { Button, Card, DatePicker, message, Breadcrumb } from "antd";
+import { Button, Card, DatePicker, message, Breadcrumb, Empty } from "antd";
 import dayjs from "dayjs";
 import "./index.scss";
 import Header from "../../component/header";
@@ -25,13 +25,13 @@ function RequestCare() {
     const handleRequestCare = async (order) => {
         const endDate = endDates[order.orderDetailsId];
         if (!endDate) {
-            message.error("Please select an end date.");
+            message.error("Vui lòng chọn ngày kết thúc.");
             return;
         }
 
         const today = dayjs();
         if (dayjs(endDate).isAfter(today.add(30, "day"))) {
-            message.error("End date cannot exceed 30 days from today.");
+            message.error("Ngày kết thúc không được vượt quá 30 ngày kể từ hôm nay.");
             return;
         }
 
@@ -48,19 +48,17 @@ function RequestCare() {
 
         try {
             await api.post("/requestcare", requestPayload);
-            message.success("Request care successfully submitted");
+            message.success("Yêu cầu chăm sóc đã được gửi thành công");
 
-            // Add submitted order's ID to submittedOrderIds and reset selectedOrderId
             setSubmittedOrderIds((prev) => [...prev, order.orderDetailsId]);
             setSelectedOrderId(null);
 
-            // Delay navigation to ensure state is maintained
             setTimeout(() => {
                 navigate("/viewrequest");
-            }, 1000); // Adjust delay if needed
+            }, 1000);
 
         } catch (error) {
-            console.error("Error creating request care:", error);
+            console.error("Lỗi khi tạo yêu cầu chăm sóc:", error);
         }
     };
 
@@ -68,57 +66,73 @@ function RequestCare() {
         <div className="request-care">
             <Header setIsLoggedIn={setIsLoggedIn} />
             <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item onClick={() => navigate("/requestcare")}>
-                    Request Care
-                </Breadcrumb.Item>
-                <Breadcrumb.Item onClick={() => navigate("/viewrequest")}>
-                    View Requests
-                </Breadcrumb.Item>
+                <Breadcrumb.Item>Yêu cầu chăm sóc</Breadcrumb.Item>
             </Breadcrumb>
             <div className="header-container">
                 <h1 className="request-header">
-                    Request Care for Your Koi
+                    Yêu cầu chăm sóc cho cá Koi của bạn
                 </h1>
             </div>
+
             <div className="order-cards">
-                {orders.map(order => (
-                    <Card key={order.orderDetailsId} className="order-card">
-                        <img
-                            alt={order.koiName || order.batchKoiName}
-                            src={order.koiImage || order.batchKoiImage}
-                        />
-                        <div className="details">
-                            <h3>{order.koiName || order.batchKoiName || "Unknown"}</h3>
-                            <p><strong>Order ID:</strong> {order.orderId}</p>
-                            <p><strong>Quantity:</strong> {order.toTalQuantity}</p>
+                {orders.length > 0 ? (
+                    orders.map(order => (
+                        <Card key={order.orderDetailsId} className="order-card">
+                            <img
+                                alt={order.koiName || order.batchKoiName}
+                                src={order.koiImage || order.batchKoiImage}
+                            />
+                            <div className="details">
+                                <h3>{order.koiName || order.batchKoiName || "Không xác định"}</h3>
+                                <p><strong>Mã đơn hàng:</strong> {order.orderId}</p>
+                                <p><strong>Số lượng:</strong> {order.toTalQuantity}</p>
+                                <Button
+                                    type="primary"
+                                    onClick={() => setSelectedOrderId(order.orderDetailsId)}
+                                    style={{ 
+                                        marginBottom: 10,
+                                        backgroundColor: selectedOrderId === order.orderDetailsId ? "#007bff" : "#1890ff",
+                                        borderColor: selectedOrderId === order.orderDetailsId ? "#007bff" : "#1890ff"
+                                    }}
+                                >
+                                    {selectedOrderId === order.orderDetailsId ? "Đã chọn" : "Chọn"}
+                                </Button>
+                                <div className="date-picker-container">
+                                    <DatePicker
+                                        onChange={(date) => setEndDates(prev => ({ ...prev, [order.orderDetailsId]: date }))}
+                                        disabledDate={(current) => current && (current < dayjs() || current > dayjs().add(30, "day"))}
+                                        placeholder="Chọn ngày kết thúc"
+                                    />
+                                </div>
+                                <Button
+                                    type="primary"
+                                    onClick={() => handleRequestCare(order)}
+                                    style={{ marginTop: 10 }}
+                                    disabled={selectedOrderId !== order.orderDetailsId}
+                                >
+                                    Gửi yêu cầu chăm sóc
+                                </Button>
+                            </div>
+                        </Card>
+                    ))
+                ) : (
+                    <div>
+                        <Empty description="Hiện tại không có đơn hàng nào." className="empty-container" />
+                        {/* Nút chuyển đến trang xem yêu cầu */}
+                        <div className="view-requests-button-container" style={{ marginTop: 20, textAlign: "center" }}>
                             <Button
                                 type="primary"
-                                onClick={() => setSelectedOrderId(order.orderDetailsId)}
-                                style={{ 
-                                    marginBottom: 10,
-                                    backgroundColor: selectedOrderId === order.orderDetailsId ? "#007bff" : "#1890ff",
-                                    borderColor: selectedOrderId === order.orderDetailsId ? "#007bff" : "#1890ff"
+                                onClick={() => navigate("/viewrequest")}
+                                style={{
+                                    backgroundColor: "#007bff",
+                                    borderColor: "#007bff",
                                 }}
                             >
-                                {selectedOrderId === order.orderDetailsId ? "Selected" : "Select"}
-                            </Button>
-                            <div className="date-picker-container">
-                                <DatePicker
-                                    onChange={(date) => setEndDates(prev => ({ ...prev, [order.orderDetailsId]: date }))}
-                                    disabledDate={(current) => current && (current < dayjs() || current > dayjs().add(30, "day"))}
-                                />
-                            </div>
-                            <Button
-                                type="primary"
-                                onClick={() => handleRequestCare(order)}
-                                style={{ marginTop: 10 }}
-                                disabled={selectedOrderId !== order.orderDetailsId}
-                            >
-                                Submit Request Care
+                                Xem các yêu cầu đã gửi
                             </Button>
                         </div>
-                    </Card>
-                ))}
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../config/axios";
-import { Table, message, Breadcrumb, Spin, Button } from "antd"; // Importing Button
+import { Table, message, Breadcrumb, Spin, Button, Empty } from "antd"; // Importing Empty
 import "./viewrequest.scss";
 import Header from "../../component/header";
 
@@ -37,7 +37,9 @@ function ViewRequests() {
             title: 'Koi Image',
             dataIndex: 'koiImage',
             key: 'koiImage',
-            render: (image) => <img src={image || "default_image.jpg"} alt="Koi" style={{ width: 50, height: 50, borderRadius: '5px' }} />,
+            render: (image) => (
+                <img src={image || "default_image.jpg"} alt="Koi" style={{ width: 50, height: 50, borderRadius: '5px' }} />
+            ),
         },
         {
             title: 'Koi Name',
@@ -74,7 +76,7 @@ function ViewRequests() {
                 <div style={{ textAlign: 'center', margin: '20px 0' }}>
                     <Spin size="large" tip="Loading requests..." />
                 </div>
-            ) : (
+            ) : requests.length > 0 ? (
                 <Table
                     dataSource={requests}
                     columns={columns}
@@ -84,16 +86,18 @@ function ViewRequests() {
                     scroll={{ x: 'max-content' }}
                     className="requests-table"
                 />
+            ) : (
+                <Empty description="No requests have been made yet" />
             )}
-            <Button 
-                type="primary" 
-                onClick={() => navigate("/requestcare")} 
-                style={{ 
-                    position: 'fixed', 
-                    bottom: 20, 
-                    right: 20, 
-                    zIndex: 1000 // Ensure it appears above other elements
-                }} 
+            <Button
+                type="primary"
+                onClick={() => navigate("/requestcare")}
+                style={{
+                    position: 'fixed',
+                    bottom: 20,
+                    right: 20,
+                    zIndex: 1000
+                }}
             >
                 Add Request
             </Button>

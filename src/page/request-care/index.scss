@@ -1,16 +1,17 @@
 body {
-    background-color: #f0f2f5; 
+    background-color: #f5f7fa; /* Sáng hơn một chút để tạo sự thoải mái */
     font-family: 'Arial', sans-serif;
     margin: 0;
 }
 
 .request-care {
-    background-image: url('https://i.pinimg.com/736x/d5/c5/16/d5c516156cbc80d8d7a985ffa4c98a18.jpg'); 
+    background-image: url('https://i.pinimg.com/564x/a1/b7/d3/a1b7d3df9c68f463b5a132fa1dba4808.jpg'); 
     background-size: cover; 
     background-repeat: no-repeat; 
     background-attachment: fixed; 
     background-position: center; 
 }
+
 .header-container {
     display: flex; 
     justify-content: center; 
@@ -19,21 +20,21 @@ body {
 }
 
 .request-header {
-    background-color: rgba(0, 0, 0, 0.7); /* Darker background for better contrast */
+    background-color: rgba(0, 0, 0, 0.8); /* Đen với độ trong suốt */
     padding: 10px 20px; 
     border-radius: 8px; 
     display: inline-block; 
-    color: #FFD700; /* Gold color for better visibility */
+    color: #F7F7F7; /* Màu sáng hơn cho độ tương phản tốt */
     font-size: 24px;
     text-align: center; 
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adding text shadow */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); /* Đổ bóng nhẹ */
 }
 
 h1 {
     text-align: center;
-    color: #FFD700; /* Same gold color */
+    color: #3A3B3C; /* Màu tối với tông xám để nhẹ nhàng hơn */
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adding text shadow */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Giảm đổ bóng */
 }
 
 .order-cards {
@@ -42,18 +43,21 @@ h1 {
     justify-content: center;
     gap: 20px; 
     padding: 20px; 
+    min-height: 60vh;
 }
+
 .order-card {
     display: flex; 
     align-items: center; 
     width: 350px; 
     border-radius: 10px; 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
     transition: transform 0.2s; 
-    background-color: #f9f9f9; 
+    background-color: #ffffff; /* Màu trắng sáng sạch sẽ */
     padding: 20px; 
     text-align: center; 
 }
+
 .order-card img {
     width: 150px; 
     height: auto; 
@@ -78,16 +82,29 @@ h1 {
 .ant-breadcrumb {
     font-size: 16px;
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.8); /* Light background for contrast */
-    padding: 10px; /* Adding some padding to the breadcrumb */
-    border-radius: 5px; /* Slightly rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adding a subtle shadow */
+    background-color: rgba(0, 123, 255, 0.1); /* Xanh dương nhạt cho nền */
+    padding: 10px; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
 .ant-breadcrumb .ant-breadcrumb-item {
-    color: #1890ff;
-
+    color: #007BFF;    
     &:hover {
         text-decoration: underline;
     }
+}
+
+.empty-container .ant-empty-description {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); 
+    background-color: rgba(20, 20, 20, 0.5); 
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block; 
+}
+
+.view-requests-button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
