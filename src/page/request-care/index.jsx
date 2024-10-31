@@ -52,10 +52,7 @@ function RequestCare() {
 
             setSubmittedOrderIds((prev) => [...prev, order.orderDetailsId]);
             setSelectedOrderId(null);
-
-            setTimeout(() => {
-                navigate("/viewrequest");
-            }, 1000);
+            navigate("/viewrequest");       
 
         } catch (error) {
             console.error("Lỗi khi tạo yêu cầu chăm sóc:", error);
@@ -91,8 +88,8 @@ function RequestCare() {
                                     onClick={() => setSelectedOrderId(order.orderDetailsId)}
                                     style={{ 
                                         marginBottom: 10,
-                                        backgroundColor: selectedOrderId === order.orderDetailsId ? "#007bff" : "#1890ff",
-                                        borderColor: selectedOrderId === order.orderDetailsId ? "#007bff" : "#1890ff"
+                                        backgroundColor: selectedOrderId === order.orderDetailsId ? "#28a745" : "#007bff", // Màu xanh lá cho nút đã chọn
+                                        borderColor: selectedOrderId === order.orderDetailsId ? "#28a745" : "#007bff"
                                     }}
                                 >
                                     {selectedOrderId === order.orderDetailsId ? "Đã chọn" : "Chọn"}
@@ -116,23 +113,22 @@ function RequestCare() {
                         </Card>
                     ))
                 ) : (
-                    <div>
-                        <Empty description="Hiện tại không có đơn hàng nào." className="empty-container" />
-                        {/* Nút chuyển đến trang xem yêu cầu */}
-                        <div className="view-requests-button-container" style={{ marginTop: 20, textAlign: "center" }}>
-                            <Button
-                                type="primary"
-                                onClick={() => navigate("/viewrequest")}
-                                style={{
-                                    backgroundColor: "#007bff",
-                                    borderColor: "#007bff",
-                                }}
-                            >
-                                Xem các yêu cầu đã gửi
-                            </Button>
-                        </div>
-                    </div>
+                    <Empty description="Hiện tại không có đơn hàng nào." className="empty-container" />
                 )}
+            </div>
+
+            {/* Nút xem các yêu cầu đã gửi luôn hiển thị */}
+            <div className="view-requests-button-container" style={{ marginTop: 20, textAlign: "center" }}>
+                <Button
+                    type="primary"
+                    onClick={() => navigate("/viewrequest")}
+                    style={{
+                        backgroundColor: "#007bff",
+                        borderColor: "#007bff",
+                    }}
+                >
+                    Xem các yêu cầu đã gửi
+                </Button>
             </div>
         </div>
     );
