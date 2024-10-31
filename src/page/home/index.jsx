@@ -118,7 +118,7 @@ const Home = () => {
               in interior architecture, interior design, and décor that
               redefines laid-back luxury.
             </p>
-            <Link to={"/"}>
+            <Link to={"/shop"}>
               <button 
                 style={{
                   marginTop: "1.5rem",

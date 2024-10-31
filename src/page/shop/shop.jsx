@@ -98,7 +98,7 @@ const Shop = () => {
             </div> 
         </div>
         <div className='comparison-box'>
-                    <Button onClick={() => setComparisonVisible(true)}>So Sánh Sản Phẩm</Button>
+                    <Button onClick={() => setComparisonVisible(true)}>Compare Products</Button>
                     <Comparison visible={isComparisonVisible} onClose={() => setComparisonVisible(false)} setProductOne={setProductOne} 
           setProductTwo={setProductTwo}  productone={productone} producttwo = {producttwo} />
         </div>

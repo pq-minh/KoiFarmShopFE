@@ -10,7 +10,7 @@ const HorizonFilter = ({ setValue}) => {
 
     return (
         <div className='horizon-box'>
-            <p>Sản phẩm:</p>
+            <p>Products:</p>
             <div className='koi-batch'>
                 <Radio.Group onChange={onChangeKoiOrBatch} style={{ fontSize: 20 }} defaultValue={"Kois"}>
                     <Radio value="Kois">Koi</Radio>

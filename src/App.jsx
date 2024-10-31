@@ -19,7 +19,7 @@ import AssignmentHistory from "./page/assigmentHistory/AssigmentHistory";
 import UserCart from "./page/usercart/UserCart";
 import CheckOut from "./page/checkout/CheckOut";
 // import OrderHistory from "./page/order/OrderHistory";
-import OrderHistory from "./page/order/orderHistory";
+import OrderHistoryPage from "./page/orderhistory/index";
 import Details from "./page/productdetails/Details";
 import ProductDetails from "./component/shop-component/product-cart-details/ProductDetails";
 // import OrderHistoryPage from "./page/orderhistory";
@@ -37,8 +37,8 @@ import UpdateBatchKoi from "./page/Dashboard/Batchkoi/updateBatchKoi";
 import AddBatchKoi from "./page/Dashboard/Batchkoi/addBatchKoi";
 import RequestCare from "./page/request-care";
 import RevenueChart from "./page/Dashboard/Chart/revenue";
-
-
+import ForgotPasswordPage from "./page/forgotpassword/Forgot-Password";
+import ConfirmPasswordPage from "./page/confirmpasswordpage/ConfirmPasswordPage";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -166,7 +166,7 @@ const App = () => {
     },
     {
       path: "orderhistory",
-      element: <OrderHistory />,
+      element: <OrderHistoryPage />,
     },
     {
       path: "checkoutcomplete",
@@ -188,6 +188,16 @@ const App = () => {
       path: "requestcare",
       element: <RequestCare />
     }   
+    ,
+    {   
+      path: "forgotpassword",
+      element: <ForgotPasswordPage />
+    } 
+    ,
+    {   
+      path: "confirmpassword",
+      element: <ConfirmPasswordPage />
+    } 
   ]);      
   return (
     <GoogleOAuthProvider clientId="58740703879-3s8ddc1rno4kavb9neslns90iphlps9g.apps.googleusercontent.com">

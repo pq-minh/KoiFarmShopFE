@@ -5,7 +5,7 @@ import "./index.scss";
 import { storage } from "../../firebase/firebase";
 import api from "../../config/axios";
 import { motion } from 'framer-motion';
-
+import dayjs from 'dayjs';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
   Button,
@@ -27,6 +27,7 @@ const normFile = (e) => {
   return e?.fileList;
 };
 
+//h
 
  // handle submumit request 
 const KoiAssigment =() => {
@@ -34,7 +35,22 @@ const KoiAssigment =() => {
     const [url, setUrl] = useState("");
     const [type,setType] = useState(1);
     const [form] = Form.useForm();
+    const [assignmentDate, setAssignmentDate] = useState(null);
 
+    const handleAssignmentDateChange = (date) => {
+      setAssignmentDate(date);
+    };
+    const handleDisabledDate = (current) => {
+      return current && current < dayjs().startOf('day'); 
+    };
+    //
+    const disabledEndDate = (current) => {
+      if (!assignmentDate) return false; 
+      const minEndDate = assignmentDate.clone().add(7, 'days');
+      const maxEndDate = assignmentDate.clone().add(60, 'days');
+      return current && (current < minEndDate || current > maxEndDate);
+
+    };
     //
     const handleFileChange = (info) => {
         setFile(info.file);
@@ -50,7 +66,7 @@ const KoiAssigment =() => {
 
   }
   const storageRef = ref(storage, `images/${file.name}`);
-  
+ 
   try {
     const snapshot = await uploadBytes(storageRef, file);
     const downloadURL = await getDownloadURL(snapshot.ref);
@@ -120,7 +136,7 @@ const KoiAssigment =() => {
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ duration: 0.5 }}
         > 
-           <h2 >Ký gửi cá koi</h2>           
+           <h2 >Koi Assigment</h2>           
       <Form
         labelCol={{
           span: 4,
@@ -136,7 +152,7 @@ const KoiAssigment =() => {
       >
       <div className=" row">
       <div className="col">
-        <Form.Item label="Ảnh cá" valuePropName="fileList" getValueFromEvent={normFile} name="image" >
+        <Form.Item label="Koi image" valuePropName="fileList" getValueFromEvent={normFile} name="image" >
           <Upload  onChange={handleFileChange}
           listType="picture-card"
           beforeUpload={() => false} >
@@ -158,72 +174,72 @@ const KoiAssigment =() => {
             </button>
           </Upload>
         </Form.Item>
-        <Form.Item label="Giới tính" name="gender">
+        <Form.Item label="Sex" name="gender">
           <Radio.Group>
-            <Radio value="male"> Đực </Radio>
-            <Radio value="female"> Cái </Radio>
+            <Radio value="male"> Male </Radio>
+            <Radio value="female"> Female </Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Tên" 
+        <Form.Item label="Name" 
             name="name"
         >
           <Input placeholder="VD: Koi Onwa" />
           
         </Form.Item>
         
-        <Form.Item label="Nguồn gốc" 
+        <Form.Item label="Origin" 
             name="origin"
            
         >
           <Input   placeholder="Daichi Koi" />         
         </Form.Item>
 
-        <Form.Item label="Tính cách" 
+        <Form.Item label="Personality" 
             name="personality"
         >
-          <Input placeholder='Hiền' />         
+          <Input placeholder='Friendly' />         
         </Form.Item>
 
-        <Form.Item label="Mô tả"
+        <Form.Item label="Description"
             name="description"
         >
           <TextArea rows={4} /> 
         </Form.Item>
         </div>
         <div className="col">
-        <Form.Item label="Tuổi" name="age" >
+        <Form.Item label="Age" name="age" >
           <InputNumber />
         </Form.Item>
 
-        <Form.Item label="Cân nặng" name="weight" 
+        <Form.Item label="Weight" name="weight" 
              
         >
           <Input placeholder='kg' />
         </Form.Item>
 
-        <Form.Item label="Kích thước" name="size" >
+        <Form.Item label="Size" name="size" >
           <Input placeholder='cm' />
         </Form.Item>
          
-        <Form.Item label="Ngày kí gửi" name="assigmentdate">
-          <DatePicker />
+        <Form.Item label="Start Date" name="assigmentdate">
+          <DatePicker disabledDate={ handleDisabledDate}  onChange={handleAssignmentDateChange}/>
         </Form.Item>
 
-        <Form.Item label="Ngày kết thúc" name="enddate">
-          <DatePicker />
+        <Form.Item label="End Date" name="enddate">
+          <DatePicker disabledDate={disabledEndDate} />
         </Form.Item>
 
-        <Form.Item label="Loại kí gửi" name="type">
+        <Form.Item label="Type Request" name="type">
           <Radio.Group>
             <Radio value="online" name='online'> Onlline </Radio>
             <Radio value="offline" name='offline'> Offline </Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Loại cá" name="category">
+        <Form.Item label="Category" name="category">
           <Select>
-            <Select.Option value="1">Gốc Việt</Select.Option>
-            <Select.Option value="2">Gốc Nhật </Select.Option>
-            <Select.Option value="3">Việt Lai nhật</Select.Option>
+            <Select.Option value="1">Thuần chủng nhập khẩu </Select.Option>
+            <Select.Option value="2">Lai F1 </Select.Option>
+            <Select.Option value="3">Thuần Việt</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item>

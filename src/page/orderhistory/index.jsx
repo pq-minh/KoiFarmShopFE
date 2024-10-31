@@ -10,6 +10,7 @@ const OrderHistoryPage = () => {
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const [selectedKoiDetail, setSelectedKoiDetail] = useState(null); 
   const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchOrderHistory = async () => {

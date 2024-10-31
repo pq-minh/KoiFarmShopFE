@@ -175,6 +175,7 @@ const KoiAssigment = () => {
           const response = await api.post("quotation/updateprice", updatedData);
           if (response.status === 200) {
               console.log('Update successful:', response.data);
+              fetchData(pageNumber, pageSize);
           }
       } catch (err) {
           console.log(err);
@@ -389,7 +390,7 @@ const KoiAssigment = () => {
                     onChange: handleChangePage,
                 }} />
         <Modal
-                title="Update Koi Info"
+                title="Xác nhận giá"
                 open={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}

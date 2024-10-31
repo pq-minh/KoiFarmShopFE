@@ -8,6 +8,7 @@ import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'antd';
 
 const Details = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <div >
            <Header setIsLoggedIn={setIsLoggedIn}/>

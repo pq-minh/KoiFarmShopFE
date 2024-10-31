@@ -47,7 +47,7 @@ const CardProduct = ({products,setProductOne,setProductTwo,isLoggedIn}) => {
   const handleAddToCart = (koiId, name, batchId) => {
     if ( isLoggedIn){
     if (!isItemInCart(koiId, batchId)) {
-      if (name.includes("Lô cá")) {
+      if (name.includes("Batch Koi")) {
           setFormData({ batchKoiId: batchId, koiId: null });
           setCarts(prevCarts => [
               ...prevCarts,
@@ -61,11 +61,11 @@ const CardProduct = ({products,setProductOne,setProductTwo,isLoggedIn}) => {
           ]);
       }
       
-      messageApi.success("Sản phẩm đã được thêm vào giỏ hàng");
+      messageApi.success("Product has been added to the cart");
   } else {
-      messageApi.info("Sản phẩm đã có trong giỏ hàng");
+      messageApi.info("Product is already in the cart");
   }} else {
-    messageApi.info("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.");
+    messageApi.info("Please log in to add products to the cart.");
   }
   };
   //goi ham post de add
@@ -124,10 +124,10 @@ const CardProduct = ({products,setProductOne,setProductTwo,isLoggedIn}) => {
                 </Link>
                 
                 <div className='detail'>
-                  <p className='size'>Nguồn gốc: {product.origin}</p>
-                  <p className='size'>Cân nặng: {product.weight} kg</p>
-                  <p className='size'>Tuổi: {product.age} năm</p>
-                  <p className='size'>Kích thước: {product.size} cm</p>
+                  <p className='size'>Origin: {product.origin}</p>
+                  <p className='size'>Weight: {product.weight} kg</p>
+                  <p className='size'>Age: {product.age} age</p>
+                  <p className='size'>Size: {product.size} cm</p>
                   <button type="button" class="button-cp" onClick={() => handleCompare(product)}>
   <span class="button__text">Compare</span>
   <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="svg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>

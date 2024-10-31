@@ -9,6 +9,7 @@ import { HomeOutlined } from '@ant-design/icons';
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchKoiDetails = async () => {
@@ -29,7 +30,7 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <Header />
+       <Header setIsLoggedIn={setIsLoggedIn}/>
       <Breadcrumb 
         style={{ backgroundColor: '#fff', display: Flex, position: 'relative' }}
         items={[

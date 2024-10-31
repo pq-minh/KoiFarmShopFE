@@ -117,10 +117,10 @@ const Filter = ({ setData, KoiOrBatch,products,onReset}) => {
     </Radio.Group>
     </div>
     <div className='box-order' style={{display:'flex'}}> 
-    <p>Giá:</p>
+    <p>Price:</p>
             <div className='price-order'>
                 <Select
-                    defaultValue="Sắp xếp theo"
+                    defaultValue="Sort by"
                     style={{
                         marginLeft: 5,
                         width: 120,
@@ -130,11 +130,11 @@ const Filter = ({ setData, KoiOrBatch,products,onReset}) => {
                     options={[
                         {
                             value: 'price_asc',
-                            label: 'Tăng dần',
+                            label: 'Ascending',
                         },
                         {
                             value: 'price_desc',
-                            label: 'Giảm dần',
+                            label: 'Descending',
                         },
                     ]}
                 />
@@ -147,7 +147,7 @@ const Filter = ({ setData, KoiOrBatch,products,onReset}) => {
     </Button>
     </div>
     <div>
-    <Button type="primary" icon={<ClearOutlined />} iconPosition={position} style={{width:250,marginTop:10}} onClick={ onResetHandle }>
+    <Button type="dashed" icon={<ClearOutlined />} iconPosition={position} style={{width:250,marginTop:10}} onClick={ onResetHandle }>
             Reset
     </Button>
     </div>  

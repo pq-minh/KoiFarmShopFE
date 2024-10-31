@@ -34,6 +34,7 @@ const CheckOutInfor = ({carts,setOrderData}) => {
 
   const handlePaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
+    console.log(paymentMethod)
   };
   //chuyển thành vnd 
   const formattedAmount = `${totalAmount.toLocaleString('vi-VN')}.000 VND`
@@ -44,23 +45,23 @@ const CheckOutInfor = ({carts,setOrderData}) => {
   const data = [
     {
       key: '1',
-      description: 'Tổng tiền',
+      description: 'Total amount',
       amount: formattedAmount,
     },
     { 
       key: '2',
-      description: 'Giảm giá',
+      description: 'Discount',
       amount: `-${(totalAmount * (discountValue  / 100)).toFixed(3)}`,
     },
     {
       key: '3',
-      description: 'Số tiền cuối',
+      description: 'Final amount',
       amount: `${formattedFinalAmount}`,
     },
     {
       key: '4',
-      description: 'Phương thức thanh toán',
-      amount: paymentMethod === 'online' ? 'Online' : 'Offline',
+      description: 'Payment method',
+      amount: paymentMethod === 'online' ? 'online' : 'offline',
     },
   ];
   
@@ -74,7 +75,7 @@ const CheckOutInfor = ({carts,setOrderData}) => {
             setDiscountId(response.data.discountId)
             setErrorMessage("Success");
           } else if (response.status === 204) {
-            setErrorMessage("Không tồn tại mã giảm giá này");
+            setErrorMessage("The discount code does not exist or has expired");
             setDiscountValue(null);
           }        
       } catch (err) {
@@ -86,7 +87,7 @@ const CheckOutInfor = ({carts,setOrderData}) => {
 
     useEffect(() => {
       if (errorMessage === "Success") {
-        message.success('Mã giảm giá được áp dụng thành công'); 
+        message.success('Discount code applied successfully'); 
       } else if (errorMessage) {
         message.error(errorMessage); 
       }
@@ -95,7 +96,7 @@ const CheckOutInfor = ({carts,setOrderData}) => {
     const handleAddToOrder = async () => {
       // Validate input data
       if (!carts.length) {
-        message.error('Giỏ hàng không có sản phẩm.');
+        message.error('The cart is empty.');
         return;
       }
     
@@ -126,24 +127,22 @@ const CheckOutInfor = ({carts,setOrderData}) => {
             console.log(redirectUrl);
             window.location.href = redirectUrl;
           } else {
-            message.success('Đơn hàng đã được tạo thành công');
+            message.success('Order created successfully');
           }
         }
       } catch (err) {
         console.error(err);
-        message.error('Đã xảy ra lỗi khi tạo đơn hàng. Vui lòng thử lại.');
+        message.error('An error occurred while creating the order. Please try again.');
       }
     };
-    const calculateTotalAmount = (carts) => {
-      return carts.reduce((total, cart) => total + (cart.price * cart.quantity), 0);
-    };
+
   return (
     <div className='checkout-infor-cp'>
       <Form layout="inline" onFinish={handleAddToOrder}>
-      <Form.Item label="" style={{display:"flex",justifyContent:"center" , alignItems:"center"}}>
-          <h5>Thông tin thanh toán</h5>
+      <Form.Item label="" style={{display:"flex",justifyContent:"center" , alignItems:"center",width:300,marginLeft:100}}>
+          <h5>Payment information</h5>
         </Form.Item>
-        <Form.Item label="Nhập giảm giá (%)">
+        <Form.Item label="Enter discount(%)">
           <Input
             onChange={(e) => setDiscount(e.target.value)} 
             placeholder="Giảm giá"
@@ -155,12 +154,12 @@ const CheckOutInfor = ({carts,setOrderData}) => {
         <Table
         columns={[
           {
-            title: 'Mô tả',
+            title: 'Description',
             dataIndex: 'description',
             key: 'description',
           },
           {
-            title: 'Số tiền',
+            title: 'Amount',
             dataIndex: 'amount',
             key: 'amount',
           },
@@ -170,19 +169,19 @@ const CheckOutInfor = ({carts,setOrderData}) => {
         pagination={false}
       />
        
-       <Form.Item label="Shipping address:" style={{ display: 'flex', alignItems: 'center',marginTop:10 }}>
+       <Form.Item label="Shipping address:" style={{ display: 'flex', alignItems: 'center',marginTop:20 }}>
        <Input placeholder="Your Shipping Address"  value={`${address.city || ''}, ${address.dictrict || ''}, ${address.ward || ''}, ${address.streetName || ''}`} style={{ flex: 1,width:315  }} />
       </Form.Item>
       <Form.Item label="Phone number:" style={{ display: 'flex', alignItems: 'center',marginTop:10 }}>
        <Input placeholder="your phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ flex: 1,width:330 }} />
       </Form.Item>
-        <Form.Item label="Phương thức thanh toán" value={"123456"} style={{marginTop:10,marginRight:200}}>
+        <Form.Item label="Payment Method" value={paymentMethod} style={{marginTop:10,marginRight:200}}>
           <Radio.Group onChange={handlePaymentMethodChange} value={paymentMethod}>
             <Radio value="online">Online</Radio>
             <Radio value="offline">Offline</Radio>
           </Radio.Group>
         </Form.Item>
-          <Button type="primary" htmlType="submit">Xác nhận</Button>
+          <Button type="primary" htmlType="submit" style={{width:500}}>Xác nhận</Button>
         </Form>
     </div>
   );

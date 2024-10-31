@@ -1,0 +1,14 @@
+import React,{useState} from 'react'
+import ForgotPassword from '../../component/forgot-password/ForgotPassword'
+import Header from "../../component/header";
+import "./index.scss"
+const ForgotPasswordPage = () => {
+  return (
+    
+    <div className='forgot-password-page'>
+        <ForgotPassword/>
+    </div>
+  )
+}
+
+export default ForgotPasswordPage
