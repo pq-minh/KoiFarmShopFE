@@ -56,7 +56,7 @@ function ViewRequests() {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render: (text) => text || 'Complete',
+            render: (text) => text || 'Pending',
         },
     ];
 
