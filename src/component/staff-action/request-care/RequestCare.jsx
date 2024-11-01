@@ -11,7 +11,7 @@ const RequestCare = () => {
     const [requestList, setRequestList] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [isModalVisible, setModalVisible] = useState(false);
-    const [confirmRefuse, setConfirmRefuse] = useState(false); // New state for confirmation modal
+    const [confirmRefuse, setConfirmRefuse] = useState(false); 
     const [formData, setFormData] = useState({ requestId: '', status: '' });
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(10);

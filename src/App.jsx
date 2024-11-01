@@ -37,6 +37,7 @@ import RevenueChart from "./page/Dashboard/Chart/revenue";
 import ViewRequests from "./page/request-care/viewrequest";
 import FeedbackPage from "./page/feedback";
 import AllFeedback from "./page/feedback/Allfeedback";
+import UpdateUserRole from "./page/Dashboard/UpdateRole/UpdateRole";
 
 
 const App = () => {
@@ -86,7 +87,10 @@ const App = () => {
               path: "/admin/addbatchkoi",
               element: <AddBatchKoi/>
             },
-            
+            {
+              path: "/admin/updaterole",
+              element: <UpdateUserRole/>
+            },           
           ],
     },
     {

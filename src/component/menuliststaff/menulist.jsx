@@ -20,7 +20,10 @@ const MenuList = ({darkTheme, onMenuClick}) => {
                     </Menu.Item>
                     <Menu.Item key="request-care" >
                         Manage RequestCare
-                    </Menu.Item>                   
+                    </Menu.Item>        
+                    <Menu.Item key="order-detail" >
+                        Manage OrderDetail
+                    </Menu.Item>            
                 </Menu.SubMenu>
                 <Menu.Item key="Dasboard" icon={<AreaChartOutlined />}>
                     Dasboard

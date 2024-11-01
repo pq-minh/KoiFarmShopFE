@@ -80,7 +80,11 @@ function AddKoi() {
           label="Fish Type ID"
           rules={[{ required: true, message: "Please input the fish type ID!" }]}
         >
-          <Input type="number" />
+          <Select>
+            <Select.Option value="1">F1</Select.Option>
+            <Select.Option value="2">Thuần chủng</Select.Option>
+            <Select.Option value="3">Lai</Select.Option>
+          </Select>
         </Form.Item>
 
         <Form.Item
