@@ -11,6 +11,7 @@ const RequestCare = () => {
     const [requestList, setRequestList] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [isModalVisible, setModalVisible] = useState(false);
+    const [confirmRefuse, setConfirmRefuse] = useState(false); // New state for confirmation modal
     const [formData, setFormData] = useState({ requestId: '', status: '' });
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -135,18 +136,15 @@ const RequestCare = () => {
                 if (!status) return null;
 
                 switch (status) {
-                    case 'accepted':
-                        color = 'green';
+                    case 'UnderCare':
+                        color = 'green'; 
                         break;
-                        case 'UnderCare':
-                            color = 'green'; 
-                            break;
-                        case 'CompletedCare':
-                            color = 'blue'; 
-                            break;
-                        case 'RefusedCare':
-                            color = 'red'; 
-                            break;
+                    case 'CompletedCare':
+                        color = 'blue'; 
+                        break;
+                    case 'RefusedCare':
+                        color = 'red'; 
+                        break;
                     default:
                         color = 'blue';
                 }
@@ -200,7 +198,20 @@ const RequestCare = () => {
         setModalVisible(true);
     };
 
-    const handleOk = async () => {
+    const handleOk = () => {
+        if (formData.status === 'RefusedCare') {
+            setConfirmRefuse(true); // Show confirmation modal
+        } else {
+            updateStatus();
+        }
+    };
+
+    const handleConfirmRefuse = async () => {
+        setConfirmRefuse(false);
+        await updateStatus();
+    };
+
+    const updateStatus = async () => {
         try {
             const statusMapping = {
                 'UnderCare': 1,
@@ -210,7 +221,7 @@ const RequestCare = () => {
 
             const response = await api.patch("requestcare/request", {
                 id: formData.requestId,
-                status: statusMapping[formData.status] // Map the selected status to the corresponding number
+                status: statusMapping[formData.status]
             });
 
             if (response.status === 204) {
@@ -259,7 +270,7 @@ const RequestCare = () => {
             />
             <Modal
                 title="Update Request Status"
-                open={isModalVisible} // Change from visible to open
+                open={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
@@ -276,6 +287,14 @@ const RequestCare = () => {
                         <Option value="RefusedCare">RefusedCare</Option>
                     </Select>
                 </div>
+            </Modal>
+            <Modal
+                title="Confirm Refusal"
+                open={confirmRefuse}
+                onOk={handleConfirmRefuse}
+                onCancel={() => setConfirmRefuse(false)}
+            >
+                <p>Are you sure you want to refuse this request?</p>
             </Modal>
         </div>
     );
