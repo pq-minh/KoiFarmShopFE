@@ -50,7 +50,7 @@ const Register = () => {
     
     const hasUpperCase = /[A-Z]/.test(value);
     const hasLowerCase = /[a-z]/.test(value);
-    const hasNonAlphanumeric = /[^\w]/.test(value); // This checks for non-alphanumeric characters
+    const hasNonAlphanumeric = /[^\w]/.test(value); 
     const isLengthValid = value.length >= 6;
   
     const errors = [];

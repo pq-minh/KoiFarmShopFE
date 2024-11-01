@@ -37,9 +37,14 @@ const ConfirmPassword = () => {
         });
         if ( response.status == 200){
             Modal.success({
-                content: "Reset password successfully",
-            });
-            redirect("/login")
+               content: (
+          <div>
+            <p>Your password have change successfully.</p>
+            <p>Click the button below to go to the login page.</p>
+          </div>
+        ),
+        onOk: () => navigate("/login"), 
+            });            
         } else {
             Modal.error({
                 content: "An error occurred"

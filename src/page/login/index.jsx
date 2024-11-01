@@ -103,7 +103,7 @@ const Login = () => {
             >
               <Input type="password" placeholder="Password" />
             </Form.Item>
-            <p className="forgot-pass" style={{marginLeft:180,fontSize:13}}><a href="/forgot-password">Forgot password?</a></p>
+            <p className="forgot-pass" style={{marginLeft:180,fontSize:13}}><a href="/forgotpassword">Forgot password?</a></p>
 
             {error && <p style={{ color: "red" }}>Invalid Username or Password</p>}
 

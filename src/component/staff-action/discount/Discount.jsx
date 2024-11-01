@@ -17,6 +17,7 @@ const Discount = () => {
   //antd search and filter 
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
+  const [errorMessage, setErrorMessage] = useState([])
   const searchInput = useRef(null);
   //
   const tableVariants = {
@@ -150,7 +151,7 @@ const Discount = () => {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Name',
+      title: 'Code',
       dataIndex: 'name',
       key: 'name',
       ...getColumnSearchProps('name'),
@@ -201,7 +202,7 @@ const Discount = () => {
           case 'Active':
             color = 'green';
             break;
-          case 'Inactive':
+          case 'InActive':
             color = 'red';
             break;
           default:
@@ -262,27 +263,59 @@ const Discount = () => {
   //handle create new discout 
   const handleCreate = async (values) => {
     try {
-      const response = await api2.post("discounts/create-discount", values);
+      const response = await api2.post("discounts/creatediscount", values);
       if (response.status === 200) {
         setDiscounts([...discounts, response.data]); 
         form.resetFields(); 
         setIsModalVisible(false); 
-      }
-    } catch (error) {
-      console.error("Error creating discount:", error);
+      } 
+    } catch (err) {
+      if (err.response && err.response.data) {
+        let messages = [];
+        messages = [
+          ...(err.response.data.errors.StartDate || []),
+          ...(err.response.data.errors.TotalQuantity || []),
+          ...(err.response.data.errors.DiscountRate || []),
+        ];
+        Modal.error({
+          width: 600,
+            title: "Error create discount",
+            content: (
+                <div>
+                   {messages.length > 0 ? (
+            messages.map((msg, index) => (
+              <div key={index}>{msg}</div>
+            ))
+           ) : (
+             <div>An unexpected error occurred. Please try again.</div>
+           )}
+                </div>
+            ),
+        });
+    } else {
+        Modal.error({
+            content: "An unexpected error occurred. Please try again.",
+        });
+    }
     }
   };
   //handle update discount
   const handleUpdate = async (values) => {
     try{
-        const response = await api2.post("discounts/update-discount",{
+        const response = await api2.post("discounts/updatediscount",{
           ...values,
           discountId: selectedRecord.discountId,
         });
         if (response.status == 200){
+          Modal.success({
+            title: "Discount updated",
+            content: "Discount updated successfully "
+          })
           setDiscounts(discounts.map(discount => 
-            discount.discountId === selectedRecord.discountId ? { ...discount, ...values } : discount
-        ));
+            discount.discountId === selectedRecord.discountId 
+              ? { ...discount, ...values, status: response.data.status } 
+              : discount
+          ));
         form.resetFields(); 
         setIsModalUpdateVisible(false); 
         }
@@ -316,7 +349,7 @@ const Discount = () => {
         <Form form={form} onFinish={handleCreate}>
           <Form.Item
             name="name"
-            label="Name"
+            label="Code"
             rules={[{ required: true, message: 'Please input the name!' }]}
           >
             <Input />
