@@ -14,6 +14,7 @@ function Address() {
     const [ward, SetWard] = useState([]);
     const [error, setError] = useState(null);
     const [address, setAddress] = useState([]);
+    const [addressId,setAddressId] = useState(null);
     const [haveAddress, setHaveAddress] = useState(false);
     const [editingAddress, setEditingAddress] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -38,7 +39,7 @@ function Address() {
 
     const showAddress = (address) => {
         return address.map((add) => ({
-            key: add.add,
+            addressId: add.addressId,
             address: `${add.city}, ${add.dictrict}, ${add.ward}, ${add.streetName}`,
         }));
     };
@@ -63,6 +64,7 @@ function Address() {
                 if (data && Object.keys(data).length > 0) {
                     setHaveAddress(true);
                     setAddress(data);
+                    setAddressId(data.addressId);
                 } else {
                     setHaveAddress(false);
                 }
@@ -153,19 +155,40 @@ function Address() {
         }
     }, [selectedDistrictId]);
 
+ 
     const handleEdit = (record) => {
-        const [city, district, ward, streetName] = record.address.split(', ');
-        setEditingAddress({
-            city,
-            district,
-            ward,
-            streetName
-        });
+        const { addressId, city, dictrict, ward, streetName } = record;
+        const newAddress = { addressId, city, dictrict, ward, streetName };
+        setEditingAddress(newAddress);
         setSelectedProvinceId(record.key); 
-        console.log(editingAddress)
         setIsModalVisible(true); 
     };
-
+    useEffect(() => {
+        console.log("Editing Address:", editingAddress);
+    }, [editingAddress]);
+    const handleChangeAddress = async (record) => {
+        try {
+            const response = await api.post('address/updateaddress', {
+                id: editingAddress.addressId, 
+                city: record.city,
+                 district: record.dictrict,
+                 ward: record.ward,
+                   streetName: record.streetName,
+            });
+    
+            if (response.status == 200) {
+                console.log('Address updated successfully:', editingAddress);
+                window.location.reload();
+                setIsModalVisible(false);
+            } else {
+                console.error('Failed to update address:', response.data.message);
+            }
+        } catch (error) {
+            console.error('Error updating address:', error);
+        } finally{
+            setIsModalVisible(false);
+        }
+    };
     return (
         <div className="address-form">
             {haveAddress ? (
@@ -217,7 +240,7 @@ function Address() {
                         <Col span={20}>
                             <Form.Item
                                 label="Quận/Huyện"
-                                name="district"
+                                name="dictrict"
                                 rules={[{ required: true, message: "Please select a district" }]}
                             >
                                 <Select
@@ -284,7 +307,7 @@ function Address() {
                 <Form
                     className="address-form"
                     labelCol={{ span: 24 }}
-                    onFinish={handleConfirmAddress}
+                    onFinish={handleChangeAddress}
                     initialValues={editingAddress}
                 >
                     <Row gutter={20}>
@@ -312,7 +335,7 @@ function Address() {
                         <Col span={20}>
                             <Form.Item
                                 label="Quận/Huyện"
-                                name="district"
+                                name="dictrict"
                                 rules={[{ required: true, message: "Please select a district" }]}
                             >
                                 <Select

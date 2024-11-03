@@ -139,6 +139,12 @@ const TableAssigment = () => {
           dataIndex: 'note',
           key: 'note',
       },
+      {
+        title: 'Image',
+        dataIndex: 'image',
+        key: 'image',
+        render: (text) => <img src={text} alt="Koi" style={{ width: '50px' }} />, 
+    },
         {
             title: 'Type Request',
             dataIndex: 'typerequest',
@@ -207,11 +213,12 @@ const TableAssigment = () => {
         return requests.map((request) => ({
           key: request.requestId, 
           requestid: request.requestId,
-          createdate: new Date(request.createdDate).toLocaleDateString(), // Format the date
+          createdate: new Date(request.createdDate).toLocaleDateString(), 
           consignmentdate: request.consignmentDate || "N/A", 
-          enddate: request.endDate || "N/A", // Similar for this field
+          enddate: request.endDate || "N/A", 
           agreementprice: request.agreementPrice ? `${request.agreementPrice}.000 VND` : "Free", 
           note: request.quotations.length > 0 ? request.quotations[0].note : "No note",
+          image: request.package.koi.image,
           typerequest: request.typeRequest, 
           status: request.status, 
         }));
@@ -227,10 +234,10 @@ const TableAssigment = () => {
         total: totalCount,
         onChange: handleChangePage,
     }}  />
-        <Modal title="Action" open={isModalRequestDecisionOpen}  onOk={handleOkRequestDecision} onCancel={handleCancelRequestDecision}>
+        <Modal title="Agree" open={isModalRequestDecisionOpen}  onOk={handleOkRequestDecision} onCancel={handleCancelRequestDecision}>
         <p>Bạn có đồng ý với lựa chọn này không</p>
       </Modal>
-      <Modal title="Action2" open={isModalRejectOpen}  onOk={handleOkReject} onCancel={handleCancelReject}>
+      <Modal title="Reject" open={isModalRejectOpen}  onOk={handleOkReject} onCancel={handleCancelReject}>
         <p>Bạn có muốn từ chối giao dịch này không</p>
       </Modal>
     </div>

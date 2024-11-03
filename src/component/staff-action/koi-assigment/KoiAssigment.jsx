@@ -13,6 +13,7 @@ const KoiAssigment = () => {
     const [formData,setFormData] = useState({field1: '', field2 :''});
     const [formReject,setFormReject] = useState({field1: ''});
     const [isModalRejectOpen, setIsModalRejectOpen] = useState(false);
+    const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
     const decisionlist = ["agree","reject"];
     const [totalCount, setTotalCount] = useState(0);
     const [pageNumber, setPageNumber] = useState(1);
@@ -224,6 +225,18 @@ const KoiAssigment = () => {
     const handleCancelReject = async () =>{
         setIsModalRejectOpen(false);
     }
+    //modal details 
+    const showModalDetails = (record) => { 
+      setSelectedRecord(record);
+      setIsModalDetailsOpen(true);
+  };
+  const handleDetailsOk = () => {
+    setIsModalDetailsOpen(false);
+};
+
+const HandleDetailsCancle = () => {
+    setIsModalDetailsOpen(false);
+};
     //change page 
     const handleChangePage = (page, pageSize) => {
       setPageNumber(page);
@@ -250,6 +263,11 @@ const KoiAssigment = () => {
             key: 'koiImage',
             render: (text) => <img src={text} alt="Koi" style={{ width: '50px' }} />, 
         },
+        {
+          title: 'Type Request',
+          dataIndex: 'typerequest', 
+          key: 'typerequest',
+      },
         {
             title: 'Age(years)',
             dataIndex: 'koiAge', 
@@ -345,6 +363,11 @@ const KoiAssigment = () => {
                               </Button>
                           </>
                       )}
+                      <>
+                      <Button color="default" variant="solid" onClick={() => showModalDetails(record)} >
+                                  ViewDetails
+                              </Button>
+                      </>
                   </Space>
 
               );
@@ -363,6 +386,10 @@ const KoiAssigment = () => {
             koiSize: quotation.koiSize + " cm" || 'N/A', 
             koiWeight: quotation.koiWeight + " kg" || 'N/A', 
             status: quotation.status || 'N/A', 
+            typerequest: quotation.typeRequest || '',
+            firstName: quotation.firstName || '',
+            lastName: quotation.lastName || '',
+            phoneNumber: quotation.phoneNumber || '',
             price: quotation.price !=0 ? (quotation.price +".000VND") : (quotation.price), 
             note: quotation.note || 'N/A', 
         }));
@@ -421,6 +448,10 @@ const KoiAssigment = () => {
                         onChange={(e) => setFormReject({ ...formData, field1: e.target.value })}
                     />
                 </div>
+          </Modal>
+          <Modal title="Infor of user" open={isModalDetailsOpen}  onOk={handleDetailsOk} onCancel={HandleDetailsCancle}>
+          <p>Full name: {selectedRecord ? `${selectedRecord.firstName} ${selectedRecord.lastName}` : 'N/A'}</p>
+          <p>Phone Number: {selectedRecord?. phoneNumber || 'N/A'}</p>
           </Modal>
           </motion.div>
     </div>
