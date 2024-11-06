@@ -43,6 +43,9 @@ const Login = () => {
       setError(true);
     }
   };
+  const handleGoHome = () => {
+    navigate("/");
+  };
 
   const handleGoogleLoginSuccess = async (credentialResponse) => {
     try {
@@ -136,6 +139,11 @@ const Login = () => {
                 />
               </div>
             </Form.Item>
+            <Form.Item>
+            <Button onClick={handleGoHome} block>
+              Back to Homepage
+            </Button>
+          </Form.Item>
           </Form>
         </div>
       </div>

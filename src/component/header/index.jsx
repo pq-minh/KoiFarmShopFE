@@ -51,7 +51,9 @@ const handleLogout = (e) => {
         </a>
       ),
     },
-    { key: "5", label: <Link to="/" onClick={handleLogout}>Log Out</Link> },
+    { key: "5", label: <Link to="/policy" >Policy</Link> },
+    { key: "6", label: <Link to="/" onClick={handleLogout}>Log Out</Link> },
+    
 ];
 
 useEffect(() => {
@@ -95,9 +97,6 @@ if (isLoading) {
     <Menu>
       <Menu.Item key="1">
         <Link to="/service/cleaning">Assigments</Link>
-      </Menu.Item>
-      <Menu.Item key="2">
-        <Link to="/service/maintenance">Maintenance</Link>
       </Menu.Item>
     </Menu>
   );

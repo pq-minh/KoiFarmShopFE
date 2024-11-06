@@ -12,7 +12,10 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
     "@canvasjs/react-charts": "^1.0.2",
+    "@ckeditor/ckeditor5-build-classic": "^43.3.0",
+    "@ckeditor/ckeditor5-react": "^9.3.1",
     "@react-oauth/google": "^0.12.1",
+    "@tinymce/tinymce-react": "^5.1.1",
     "antd": "^5.21.2",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
@@ -22,6 +25,7 @@
     "date-fns": "^4.1.0",
     "firebase": "^10.14.0",
     "framer-motion": "^11.11.9",
+    "jquery": "^3.7.1",
     "jwt-decode": "^4.0.0",
     "mdb-react-ui-kit": "^9.0.0",
     "react": "^18.3.1",
@@ -33,7 +37,8 @@
     "react-router-dom": "^6.26.2",
     "react-toastify": "^10.0.6",
     "source-map-js": "^1.2.1",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "summernote": "^0.9.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

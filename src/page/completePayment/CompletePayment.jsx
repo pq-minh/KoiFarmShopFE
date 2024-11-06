@@ -14,17 +14,18 @@ const CompletePayment = () => {
      <Header setIsLoggedIn={setIsLoggedIn}/>
     <div className='complete-payment-page'>
       
-      <div className='payment-notification'>
-        <h2>Giao dịch thành công!</h2>
-        <p>Cảm ơn bạn đã mua sắm với chúng tôi.</p>
-        <p>Thông tin đơn hàng của bạn đã được ghi nhận.</p>
-        <p>
-           Nếu có thắc mắc, vui lòng liên hệ với bộ phận hỗ trợ khách hàng.
-        </p>
-        <Button type='primary' onClick={handleGoHome}>
-          Quay lại trang chủ
-        </Button>
-      </div>
+    <div className='payment-notification'>
+  <h2>Transaction Successful!</h2>
+  <p>Thank you for shopping with us.</p>
+  <p>Your order information has been recorded.</p>
+  <p>
+    If you have any questions, please contact our customer support team.
+  </p>
+  <Button type='primary' onClick={handleGoHome}>
+    Return to Homepage
+  </Button>
+</div>
+
     </div>
     </>
   );

@@ -4,11 +4,13 @@ import api from '../../../config/axios';
 import api2 from '../../../config/axios';
 import { SearchOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
+import { message } from 'antd';
 
 import Highlighter from 'react-highlight-words';
 import './index.scss'
 const Discount = () => {
   const [discounts, setDiscounts] = useState([]);
+  const [discountCode,setDiscountCode] = useState([])
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord,setSelectedRecord] = useState(null)
@@ -233,6 +235,8 @@ const Discount = () => {
         const response = await api.get("discounts");
         if (response.status === 200) {
           setDiscounts(response.data); 
+          const codes = response.data.map(discount => discount.name);
+          setDiscountCode(codes);
         }
       } catch (err) {
         console.log(err);
@@ -263,7 +267,14 @@ const Discount = () => {
   //handle create new discout 
   const handleCreate = async (values) => {
     try {
-      const response = await api2.post("discounts/creatediscount", values);
+      const response = await api2.post("discounts/creatediscount", {
+        name:values.name,
+        description:values.description,
+        discountRate:values.discountRateCreate,
+        totalQuantity:values.totalQuantityCreate,
+        startDate:values.startDateCreate,
+        endDate:values.endDateCreate
+      });
       if (response.status === 200) {
         setDiscounts([...discounts, response.data]); 
         form.resetFields(); 
@@ -297,6 +308,16 @@ const Discount = () => {
             content: "An unexpected error occurred. Please try again.",
         });
     }
+    }
+  };
+  //handle check discount code
+  const handleCheckDiscountCode = (value) => {
+    const isValid = discountCode.some((discount) => discount === value);
+
+    if (!isValid) {
+      message.success('Discount code is valid!');
+    } else {
+      message.error('Discount code is duplicated!');
     }
   };
   //handle update discount
@@ -352,7 +373,8 @@ const Discount = () => {
             label="Code"
             rules={[{ required: true, message: 'Please input the name!' }]}
           >
-            <Input />
+            <Input  onBlur={(e) => handleCheckDiscountCode(e.target.value)}  />
+           
           </Form.Item>
           <Form.Item
             name="description"
@@ -362,28 +384,28 @@ const Discount = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="discountRate"
+            name="discountRateCreate"
             label="Discount Rate"
             rules={[{ required: true, message: 'Please input the discount rate!' }]}
           >
             <Input type="number" />
           </Form.Item>
           <Form.Item
-            name="totalQuantity"
+            name="totalQuantityCreate"
             label="Total Quantity"
             rules={[{ required: true, message: 'Please input the total quantity!' }]}
           >
             <Input type="number" />
           </Form.Item>
           <Form.Item
-            name="startDate"
+            name="startDateCreate"
             label="Start Date"
             rules={[{ required: true, message: 'Please select the start date!' }]}
           >
             <Input type="datetime-local" />
           </Form.Item>
           <Form.Item
-            name="endDate"
+            name="endDateCreate"
             label="End Date"
             rules={[{ required: true, message: 'Please select the end date!' }]}
           >

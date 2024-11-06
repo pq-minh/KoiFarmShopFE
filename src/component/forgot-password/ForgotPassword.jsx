@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import api from "../../config/axios";
 import { Modal } from 'antd';
 import { Flex, Spin } from 'antd';
+import { Button } from 'antd';
+import { useNavigate } from "react-router-dom";
 
 import { redirect } from 'react-router-dom';
 const ForgotPassword = () => {
@@ -10,7 +12,12 @@ const ForgotPassword = () => {
     const [email,setEmail] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
     //
+    const handleGoHome = () => {
+      navigate("/");
+    };
     const handleForgotPassword = async (event) => {
         event.preventDefault();
         setSuccessMessage(null);
@@ -54,7 +61,11 @@ const ForgotPassword = () => {
         Don't have an account?
         <a href="/register" className="signup-link link"> Sign up now</a>
       </p>
+      <Button onClick={handleGoHome} block>
+              Back to Homepage
+            </Button>
     </div>
+    
   </StyledWrapper>
   )
 }

@@ -39,6 +39,8 @@ import RequestCare from "./page/request-care";
 import RevenueChart from "./page/Dashboard/Chart/revenue";
 import ForgotPasswordPage from "./page/forgotpassword/Forgot-Password";
 import ConfirmPasswordPage from "./page/confirmpasswordpage/ConfirmPasswordPage";
+import Post from "./page/post/Post";
+import Policy from "./page/policy/Policy";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -197,7 +199,15 @@ const App = () => {
     {   
       path: "confirmpassword",
       element: <ConfirmPasswordPage />
-    } 
+    },
+    {
+      path: "posteditor",
+      element: <Post />
+    },
+    {
+      path: "policy",
+      element: <Policy />
+    }
   ]);      
   return (
     <GoogleOAuthProvider clientId="58740703879-3s8ddc1rno4kavb9neslns90iphlps9g.apps.googleusercontent.com">
