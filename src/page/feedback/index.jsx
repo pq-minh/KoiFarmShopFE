@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Table, Button, Modal, Input, Rate, notification, Card, Col, Row, Breadcrumb } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { Table, Button, Modal, Input, Rate, notification, Row, Col, Breadcrumb } from 'antd';
 import api from "../../config/axios";
 import Header from '../../component/header';
-import './index.scss'; 
+import './index.scss';
 
 const FeedbackPage = () => {
   const [orderDetails, setOrderDetails] = useState([]);
@@ -12,6 +12,8 @@ const FeedbackPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [rating, setRating] = useState(0);
   const [comments, setComments] = useState('');
+
+  const navigate = useNavigate();  // Hook for navigation
 
   useEffect(() => {
     fetchOrderDetails();
@@ -67,6 +69,9 @@ const FeedbackPage = () => {
         message: 'Feedback Submitted',
         description: 'Thank you for your purchase! Your feedback has been submitted successfully.',
       });
+
+      // Navigate to the AllFeedback page
+      navigate('/feedback');  // Navigate to AllFeedback page after submission
     } catch (error) {
       console.error("Error submitting review:", error);
       notification.error({
@@ -134,14 +139,14 @@ const FeedbackPage = () => {
   return (
     <div className="feedback-page">
       <Header setIsLoggedIn={setIsLoggedIn} />
-       {/* Breadcrumb Navigation */}
-       <Breadcrumb style={{ margin: '16px 0' }}>
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb style={{ margin: '16px 0' }}>
         <Breadcrumb.Item>
           <Link to="/feedback">All Feedback</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>Submit Feedback</Breadcrumb.Item>
       </Breadcrumb>
-      
+
       <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Koi Fish Order Feedback</h2>
 
       <Row gutter={16} justify="center">
@@ -150,6 +155,14 @@ const FeedbackPage = () => {
         </Col>
       </Row>
 
+      {/* Button to navigate to All Feedback page */}
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <Link to="/feedback">
+          <Button type="primary">View All Feedback</Button>
+        </Link>
+      </div>
+
+      {/* Modal for submitting feedback */}
       <Modal
         title={`Submit Feedback for Order #${selectedOrder?.orderId}`}
         visible={showFeedbackForm}

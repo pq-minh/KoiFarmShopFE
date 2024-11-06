@@ -78,7 +78,7 @@ const AllFeedback = () => {
       key: 'action',
       render: (text, record) => (
         <>
-          <Link to="/feedback">
+          <Link to="/submit-feedback">
             <Button type="primary">Update Feedback</Button>
           </Link>
           <Button type="link" onClick={() => handleKoiDetailClick(record.koiId)}>View Detail</Button>

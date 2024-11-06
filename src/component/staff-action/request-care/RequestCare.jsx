@@ -11,7 +11,7 @@ const RequestCare = () => {
     const [requestList, setRequestList] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [isModalVisible, setModalVisible] = useState(false);
-    const [confirmRefuse, setConfirmRefuse] = useState(false); 
+    const [confirmRefuse, setConfirmRefuse] = useState(false);
     const [formData, setFormData] = useState({ requestId: '', status: '' });
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -104,11 +104,16 @@ const RequestCare = () => {
             title: 'Request ID',
             dataIndex: 'requestId',
             key: 'requestId',
+            sorter: (a, b) => a.requestId - b.requestId, // Sort by requestId in ascending order
+            defaultSortOrder: 'ascend', // Set default sorting order
         },
         {
             title: 'Koi Name',
             dataIndex: 'koiName',
             key: 'koiName',
+            render: (_, record) => {
+                return record.isBatchKoi ? record.batchKoiName : record.koiName;
+            },
             ...getColumnSearchProps('koiName'),
         },
         {
@@ -137,13 +142,13 @@ const RequestCare = () => {
 
                 switch (status) {
                     case 'UnderCare':
-                        color = 'green'; 
+                        color = 'green';
                         break;
                     case 'CompletedCare':
-                        color = 'blue'; 
+                        color = 'blue';
                         break;
                     case 'RefusedCare':
-                        color = 'red'; 
+                        color = 'red';
                         break;
                     default:
                         color = 'blue';
@@ -156,7 +161,9 @@ const RequestCare = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button onClick={() => handleUpdate(record)}>Update Status</Button>
+                    {record.status !== 'CompletedCare' &&  record.status !== 'RefusedCare' && (
+                        <Button onClick={() => handleUpdate(record)}>Update Status</Button>
+                    )}
                 </Space>
             ),
         },
@@ -173,12 +180,13 @@ const RequestCare = () => {
             if (response.status === 200) {
                 const updatedRequestList = response.data.map(item => ({
                     ...item,
-                    key: item.requestId // Assuming requestId is unique
+                    key: item.requestId, // Assuming requestId is unique
+                    isBatchKoi: !!item.batchKoiName // Distinguishes between koi and batchKoi
                 }));
-
-                // Sort the request list by endDate ascending
-                updatedRequestList.sort((a, b) => new Date(a.endDate) - new Date(b.endDate));
-
+    
+                // Sort the request list by requestId ascending
+                updatedRequestList.sort((a, b) => a.requestId - b.requestId);
+    
                 setRequestList(updatedRequestList);
                 setTotalCount(response.data.length);
             }
@@ -188,7 +196,7 @@ const RequestCare = () => {
             setLoading(false);
         }
     };
-
+    
     useEffect(() => {
         fetchRequests();
     }, [pageNumber, pageSize]);
