@@ -38,6 +38,7 @@ import ViewRequests from "./page/request-care/viewrequest";
 import FeedbackPage from "./page/feedback";
 import AllFeedback from "./page/feedback/Allfeedback";
 import UpdateUserRole from "./page/Dashboard/UpdateRole/UpdateRole";
+import RevenueReport from "./page/Dashboard/RevenueReport/RevenueReport";
 
 
 const App = () => {
@@ -90,7 +91,11 @@ const App = () => {
             {
               path: "/admin/updaterole",
               element: <UpdateUserRole/>
-            },           
+            },  
+            {
+              path: "/admin/revenue-report",
+              element: <RevenueReport/>
+            },         
           ],
     },
     {

@@ -55,6 +55,10 @@ function Dashboard() {
       key: '8',
       label: <Link to="/admin/updaterole"><ReloadOutlined /> Update UserRole</Link>, 
     },
+    {
+      key: '9',
+      label: <Link to="/admin/revenue-report"><BarChartOutlined /> Revenue Report</Link>,
+    }    
   ];
 
   const onMenuClick = (e) => {
