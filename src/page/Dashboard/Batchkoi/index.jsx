@@ -29,24 +29,24 @@ function ViewBatchKoi() {
   return (
     <>
       <div className="koi-list">
-        <h2>Danh sách cá koi</h2>
+        <h2>BatchKoi List</h2>
         <div className="d-flex flex-wrap koi-cards">
           {batchKoiList.map((koi) => (
             <div className="koi-card d-flex flex-column m-2" key={koi.batchKoiId} style={{ width: '200px' }}>
               <img className="koi-image img-fluid" src={koi.image} alt={koi.name} />
               <h3>{koi.name}</h3>
-              <p>Mô tả: {koi.description}</p>
-              <p>Số lượng: {koi.quantity}</p>
-              <p>Giới tính: {koi.gender}</p>
-              <p>Độ tuổi: {koi.age !== null ? `${koi.age} năm` : 'Chưa xác định'}</p>
-              <p>Trọng lượng: {koi.weight} kg</p>
-              <p>Kích thước: {koi.size} cm</p>
-              <p>Xuất xứ: {koi.origin}</p>
+              <p>Description: {koi.description}</p>
+              <p>Quantity: {koi.quantity}</p>
+              <p>Gender: {koi.gender}</p>
+              <p>Age: {koi.age !== null ? `${koi.age} years` : 'Undefined'}</p>
+              <p>Weight: {koi.weight} kg</p>
+              <p>Size: {koi.size} cm</p>
+              <p>Origin: {koi.origin}</p>
               <img className="koi-image img-fluid" src={koi.certificate} alt={koi.certificate}/>
-              <p>Giá: ${koi.price}</p>
-              <p>Trạng thái: {koi.status}</p>
+              <p>Price: VND{koi.price}</p>
+              <p>Status: {koi.status}</p>
               <Button onClick={() => handleKoiId(koi.batchKoiId)}>
-                Cập nhật
+                Update
               </Button>
             </div>
           ))}

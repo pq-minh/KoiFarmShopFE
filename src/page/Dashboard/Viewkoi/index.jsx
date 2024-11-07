@@ -32,24 +32,24 @@ function ViewKoi() {
         <Breadcrumb.Item><Link to="/admin">Dashboard</Link></Breadcrumb.Item>
         <Breadcrumb.Item>ViewKoi</Breadcrumb.Item>
     </Breadcrumb>
-  <h2>Danh sách cá koi</h2>
+  <h2>View Koi List</h2>
   <div className="d-flex flex-wrap koi-cards ">
     {koiList.map((koi) => (
       <div className="koi-card d-flex flex-column m-2" key={koi.koiId} style={{ width: '200px' }}>
         <img className="koi-image img-fluid" src={koi.image} alt={koi.name} />
         <h3>{koi.name}</h3>
-        <p>Xuất xứ: {koi.origin}</p>
-        <p>Giới tính: {koi.gender}</p>
-        <p>Độ tuổi: {koi.age} năm</p>
-        <p>Trọng lượng: {koi.weight} kg</p>
-        <p>Kích thước: {koi.size} cm</p>
-        <p>Tính cách: {koi.personality}</p>
-        <p>Giá: ${koi.price}</p>
-        <p>Trạng thái: {koi.status}</p>
+        <p>Origin: {koi.origin}</p>
+        <p>Gender: {koi.gender}</p>
+        <p>Age: {koi.age} năm</p>
+        <p>Weight: {koi.weight} kg</p>
+        <p>Size: {koi.size} cm</p>
+        <p>Personality: {koi.personality}</p>
+        <p>Price: ${koi.price}</p>
+        <p>Status: {koi.status}</p>
         <Button
           onClick={() => handleKoiId(koi.koiId)}
         >
-          Cập nhật
+          Update
         </Button>
       </div>
     ))}
