@@ -1,0 +1,46 @@
+.view-requests {
+    padding: 20px; // Space around the entire component
+    background-color: rgba(249, 249, 249, 0.8); // Slightly transparent background color for contrast
+    
+
+    .requests-header {
+        font-size: 24px; // Header font size
+        font-weight: bold; // Bold header text
+        color: #333; // Header text color
+        text-align: center; // Center align header text
+        margin-bottom: 20px; // Space below the header
+    }
+
+    .requests-table {
+        margin: 20px auto; // Center the table
+        background: #fff; // Table background color
+        border-radius: 8px; // Rounded corners
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+
+        th {
+            background-color: #f0f0f0; // Header background color
+            font-weight: bold; // Bold header text
+            text-align: center; // Center align header text
+        }
+
+        td {
+            text-align: center; // Center align data
+            padding: 16px; // Add padding for cells
+        }
+
+        img {
+            border-radius: 5px; // Rounded corners for images
+            width: 50px; // Ensure the image size is consistent
+            height: 50px; // Maintain aspect ratio
+            transition: transform 0.2s; // Smooth zoom effect
+        }
+
+        img:hover {
+            transform: scale(1.1); // Scale image on hover
+        }
+    }
+
+    .breadcrumb {
+        margin: 16px 0; // Space around breadcrumb
+    }
+}

@@ -30,7 +30,7 @@ const ProductDetails = () => {
 
   return (
     <div>
-       <Header setIsLoggedIn={setIsLoggedIn}/>
+      <Header setIsLoggedIn={setIsLoggedIn} />
       <Breadcrumb 
         style={{ backgroundColor: '#fff', display: Flex, position: 'relative' }}
         items={[
@@ -57,11 +57,7 @@ const ProductDetails = () => {
         <div className="info-review-container">
           <div className="info-container">
             <h2 className="product-title">{product.name}</h2>
-            <p className="product-price">{product.price} VND</p>
-            <div className="button-group">
-              <button className="btn add-to-cart">Add to Cart</button>
-              <button className="btn buy-now">Pay Immediately</button>
-            </div>
+            <p className="product-price">{product.price} VND</p>            
             <h3>Details</h3>
             <ul className="details-list">                          
               <li>
@@ -95,14 +91,7 @@ const ProductDetails = () => {
               </li>
             </ul>
           </div>
-          <div className="review-container">
-            <h3>Review a {product.name}</h3>
-            <textarea
-              className="review-input"
-              placeholder="Write your review here..."
-            />
-            <button className="btn submit-review">Submit Review</button>
-          </div>
+          
         </div>
       </div>
     </div>

@@ -4,7 +4,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google"; 
 import Home from "./page/home";
 import Login from "./page/login";
-// import Dashboard from "./page/admin";
 import PrivateRoute from "./component/private-route";
 import Register from "./page/register";
 import SingleKoi from "./page/fish/single"; 
@@ -19,10 +18,10 @@ import AssignmentHistory from "./page/assigmentHistory/AssigmentHistory";
 import UserCart from "./page/usercart/UserCart";
 import CheckOut from "./page/checkout/CheckOut";
 // import OrderHistory from "./page/order/OrderHistory";
-import OrderHistoryPage from "./page/orderhistory/index";
+// import OrderHistoryPage from "./page/orderhistory/index";
 import Details from "./page/productdetails/Details";
 import ProductDetails from "./component/shop-component/product-cart-details/ProductDetails";
-// import OrderHistoryPage from "./page/orderhistory";
+import OrderHistoryPage from "./page/orderhistory";
 import CheckOutComplete from "./component/shopping-cartCP/CheckoutComplete/CheckoutComplete"
 import Comparison from "./component/comparison/Comparison";
 import ErrorPayment from "./page/errorPayment/ErrorPayment";
@@ -41,6 +40,13 @@ import ForgotPasswordPage from "./page/forgotpassword/Forgot-Password";
 import ConfirmPasswordPage from "./page/confirmpasswordpage/ConfirmPasswordPage";
 import Post from "./page/post/Post";
 import Policy from "./page/policy/Policy";
+import ViewRequests from "./page/request-care/viewrequest";
+import FeedbackPage from "./page/feedback";
+import AllFeedback from "./page/feedback/Allfeedback";
+import UpdateUserRole from "./page/Dashboard/UpdateRole/UpdateRole";
+import RevenueReport from "./page/Dashboard/RevenueReport/RevenueReport";
+
+
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -51,16 +57,7 @@ const App = () => {
       path: "login",
       element: <Login />,
     },
-    // {
-    //   path: "admin",
-    //   element: <PrivateRoute />, 
-    //   children: [
-    //     {
-    //       path: "dashboard",
-    //       element: <Dashboard />, 
-    //     },
-    //   ],
-    // },
+    
     {
       path: "admin",
       element: <Dashboard />,
@@ -97,6 +94,14 @@ const App = () => {
               path: "/admin/addbatchkoi",
               element: <AddBatchKoi/>
             },
+            {
+              path: "/admin/updaterole",
+              element: <UpdateUserRole/>
+            },  
+            {
+              path: "/admin/revenue-report",
+              element: <RevenueReport/>
+            },         
           ],
     },
     {
@@ -207,7 +212,20 @@ const App = () => {
     {
       path: "policy",
       element: <Policy />
-    }
+    },
+    {
+      path: "viewrequest",
+      element: <ViewRequests />
+    },
+    {
+      path: "/feedback",
+      element: <AllFeedback/>
+    },
+    {
+      path: "/submit-feedback",
+      element: <FeedbackPage />
+    },
+
   ]);      
   return (
     <GoogleOAuthProvider clientId="58740703879-3s8ddc1rno4kavb9neslns90iphlps9g.apps.googleusercontent.com">

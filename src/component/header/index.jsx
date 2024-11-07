@@ -44,7 +44,7 @@ const handleLogout = (e) => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => {
-            navigate("/requestcare");
+            navigate("/viewrequest");
           }}
         >
           Request Care
@@ -164,7 +164,7 @@ if (isLoading) {
             </Dropdown>
           </li>
           <li>
-            <Link to="/" className="text-dark text-decoration-none">
+            <Link to="/feedback" className="text-dark text-decoration-none">
               Feedbacks
             </Link>
           </li>

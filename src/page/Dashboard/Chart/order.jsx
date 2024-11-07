@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import CanvasJSReact from '@canvasjs/react-charts';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Import CSS của react-toastify
-// var CanvasJSReact = require('@canvasjs/react-charts');
+import 'react-toastify/dist/ReactToastify.css'; 
 
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -39,7 +38,7 @@ class OrderChart extends Component {
       noOrders: false
     });
 
-    const completedUrl = `https://localhost:7228/api/orders/management/completed?startDate=${startDate}&endDate=${endDate}`;
+    const completedUrl = `https://localhost:7228/api/orders/management/complete?startDate=${startDate}&endDate=${endDate}`;
     const pendingUrl = `https://localhost:7228/api/orders/management/pending?startDate=${startDate}&endDate=${endDate}`;
 
     Promise.all([

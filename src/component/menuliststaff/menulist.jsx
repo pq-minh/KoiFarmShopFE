@@ -18,9 +18,18 @@ const MenuList = ({darkTheme, onMenuClick}) => {
                     <Menu.Item key="user" >
                         Manage User
                     </Menu.Item>
-                    <Menu.Item key="review" >
-                        Manage Review
-                    </Menu.Item>                   
+                    <Menu.Item key="request-care" >
+                        Manage RequestCare
+                    </Menu.Item>        
+                    <Menu.Item key="order-detail" >
+                        Manage OrderDetail
+                    </Menu.Item>  
+                    <Menu.Item key="feedbacks" >
+                        Manage FeedBacks
+                    </Menu.Item>  
+                    <Menu.Item key="payment" >
+                        Manage Payments
+                    </Menu.Item>            
                 </Menu.SubMenu>
                 <Menu.Item key="Dasboard" icon={<AreaChartOutlined />}>
                     Dasboard

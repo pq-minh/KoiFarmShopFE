@@ -1,0 +1,39 @@
+.feedback-management .ant-table-thead > tr > th {
+    background-color: #f0f0f0; /* Làm nền của tiêu đề bảng sáng hơn để dễ phân biệt */
+  }
+  
+  .feedback-management .ant-table-tbody > tr > td {
+    background-color: #fff; /* Nền sáng cho các dòng dữ liệu */
+  }
+  
+  /* Đổi màu viền của nút Delete */
+  .feedback-management .ant-btn-danger {
+    border-color: #ff4d4f !important;  /* Thêm màu viền đỏ cho nút Delete */
+    background-color: #ff4d4f !important;  /* Màu nền đỏ cho nút Delete */
+    color: white !important;  /* Màu chữ trắng để nổi bật */
+  }
+  
+  /* Đổi màu viền của Modal */
+  .feedback-management .ant-modal {
+    border-radius: 10px; /* Làm tròn các góc của Modal */
+  }
+  
+  .feedback-management .ant-modal-content {
+    border: 1px solid #ff4d4f; /* Màu viền của Modal */
+  }
+  
+  .feedback-management .ant-modal-header {
+    background-color: #ff4d4f; /* Màu nền header của Modal */
+    color: white; /* Màu chữ của header Modal */
+  }
+  
+  .feedback-management .ant-modal-footer .ant-btn-primary {
+    background-color: #ff4d4f; /* Màu nền của nút "OK" */
+    border-color: #ff4d4f; /* Màu viền của nút "OK" */
+  }
+  
+  .feedback-management .ant-modal-footer .ant-btn-default {
+    color: #ff4d4f; /* Màu chữ của nút "Cancel" */
+    border-color: #ff4d4f; /* Màu viền của nút "Cancel" */
+  }
+  

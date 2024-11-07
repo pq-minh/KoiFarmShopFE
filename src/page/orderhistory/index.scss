@@ -48,19 +48,18 @@
   color: #555;
 }
 
-.status{
+.status {
   font-size: 1rem;
   font-weight: bold;
 }
-.status.Pending{
+
+.status.pending {  
   color: green;
 }
 
-.status.Completed{
+.status.completed {
   color: red;
 }
-
-
 .order-details-container {
   display: flex;
   justify-content: center;
@@ -114,7 +113,6 @@
 }
 
 .image-container {
-  width: 100%;
   height: 300px; 
   overflow: hidden;
   border-radius: 10px;
@@ -130,7 +128,7 @@
 
 .info-container p {
   margin: 10px 0;
-  font-size: 1.1rem; /* Tăng kích thước chữ */
+  font-size: 1.1rem; /* Increased font size */
   color: #333;
 }
 
