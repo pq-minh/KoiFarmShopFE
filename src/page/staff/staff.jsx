@@ -6,8 +6,9 @@ import Discount from "../../component/staff-action/discount/Discount";
 import './index.scss';
 import { motion } from 'framer-motion';
 import UserPoint from "../../component/staff-action/user/UserPoint";
-import RequestCare from "../../component/staff-action/request-care/Requestcare";
 import OrderManagement from "../../component/staff-action/order-detail/OrderDetail";
+import FeedbackManagement from "../../component/staff-action/feedbacks/Feedbacks";
+import RequestCare from "../../component/staff-action/request-care/RequestCare";
 const StaffPage = () => {
   const [selectedKey, setSelectedKey] = useState('assigment');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -51,6 +52,7 @@ const sideBar = {
           {selectedKey === 'user' && <div><UserPoint /></div>}
           {selectedKey === 'request-care' && <div><RequestCare/></div>}
           {selectedKey === 'order-detail' && <div><OrderManagement/></div>}
+          {selectedKey === 'feedbacks' && <div><FeedbackManagement/></div>}
           </motion.div>
       </div>
       </div>
