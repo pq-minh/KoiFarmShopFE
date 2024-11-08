@@ -170,16 +170,19 @@ const PaymentManagement = () => {
             render: (_, record) => {
                 const isCompleted = record.status === 'Completed';
                 return (
-                    <Button
-                        type={isCompleted ? 'danger' : 'primary'}
-                        onClick={() => updatePaymentStatus(record.paymentID, isCompleted ? 'Pending' : 'Completed')}
-                    >
-                        {isCompleted ? 'Mark as Pending' : 'Mark as Completed'}
-                    </Button>
+                    !isCompleted && (
+                        <Button
+                            type="primary"
+                            onClick={() => updatePaymentStatus(record.paymentID, 'Completed')}
+                        >
+                            Mark as Completed
+                        </Button>
+                    )
                 );
             },
         },
     ];
+    
 
     const handleChangePage = (page, pageSize) => {
         setPageNumber(page);

@@ -117,7 +117,6 @@ const OrderManagement = () => {
             dataIndex: 'koiName',
             key: 'koiName',
             render: (text, record) => {
-                // Kiểm tra nếu koiName là null hoặc không có
                 if (!record.koiName || record.koiName.trim() === '') {
                     return record.batchKoiName ? record.batchKoiName : 'No Name Available';
                 }
@@ -126,8 +125,14 @@ const OrderManagement = () => {
         },        
         {
             title: 'Total Quantity',
-            dataIndex: 'toTalQuantity', // Chú ý chính tả trong API response
+            dataIndex: 'toTalQuantity',
             key: 'toTalQuantity',
+        },
+        {
+            title: 'Create Date',
+            dataIndex: 'createDate',
+            key: 'createDate',
+            render: (date) => new Date(date).toLocaleDateString(),
         },
         {
             title: 'Status',
@@ -145,7 +150,7 @@ const OrderManagement = () => {
                 } else if (text === 'Delivered') {
                     color = 'green';
                 }
-                return <Tag color={color}>{text}</Tag>; // Use Tag to display status with color
+                return <Tag color={color}>{text}</Tag>;
             },
         },
         {
@@ -153,7 +158,9 @@ const OrderManagement = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button onClick={() => handleUpdate(record)}>Update Status</Button>
+                    {record.status !== 'Delivered' && (
+                        <Button onClick={() => handleUpdate(record)}>Update Status</Button>
+                    )}
                 </Space>
             ),
         },
@@ -167,11 +174,11 @@ const OrderManagement = () => {
     const fetchOrders = async () => {
         try {
             const response = await api.get(`/orders/orderdetail/staff?pageNumber=${pageNumber}&pageSize=${pageSize}`);
-            console.log(response.data); // Log the response to check the structure
+            console.log(response.data);
             if (response.status === 200) {
                 const updatedOrderList = response.data.map(item => ({
                     ...item,
-                    key: item.orderDetailsId, // Ensure this is correct
+                    key: item.orderDetailsId,
                 }));
                 setOrderList(updatedOrderList);
                 setTotalCount(response.data.length);
@@ -188,13 +195,13 @@ const OrderManagement = () => {
     }, [pageNumber, pageSize]);
 
     const handleUpdate = (record) => {
-        setFormData({ orderDetailId: record.orderDetailsId, status: record.status }); // Cập nhật để sử dụng orderDetailsId
+        setFormData({ orderDetailId: record.orderDetailsId, status: record.status });
         setModalVisible(true);
     };
 
     const handleOk = () => {
         if (formData.status === 'Delivered') {
-            setConfirmRefuse(true); // Hiển thị modal xác nhận
+            setConfirmRefuse(true);
         } else {
             updateStatus();
         }
