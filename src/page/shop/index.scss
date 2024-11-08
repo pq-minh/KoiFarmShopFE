@@ -1,0 +1,15 @@
+.horizon-filter{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+.comparison-box {
+    position: fixed; 
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 1000; 
+}
+
+.comparison-box Button {
+    padding: 10px 20px; 
+}
