@@ -68,7 +68,6 @@ const OrderHistoryPage = () => {
     }
   };
 
-
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedKoiDetail(null);
@@ -153,7 +152,6 @@ const OrderHistoryPage = () => {
                 },
               ]}
             />
-
           </div>
         )}
 
@@ -205,7 +203,6 @@ const OrderHistoryPage = () => {
             </div>
           )}
         </Modal>
-
 
       </div>
     </div>
