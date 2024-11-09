@@ -182,6 +182,16 @@ const KoiAssigment =() => {
         </Form.Item>
         <Form.Item label="Name" 
             name="name"
+            rules={[
+    {
+      required: true, 
+      message: 'Please input your name!',
+    },
+    {
+      pattern: /^Koi/, 
+      message: 'Name must start with "Koi".'
+    }
+  ]}
         >
           <Input placeholder="VD: Koi Onwa" />
           
@@ -207,17 +217,54 @@ const KoiAssigment =() => {
         </Form.Item>
         </div>
         <div className="col">
-        <Form.Item label="Age" name="age" >
-          <InputNumber />
+        <Form.Item label="Age" name="age"
+        rules={[
+    {
+      required: true,
+      message: 'Please input your age!',
+    },
+    {
+      type: 'number',
+      max: 19, 
+      message: 'Age must be less than 20.',
+    }
+  ]} >
+          <InputNumber placeholder='Years' />
         </Form.Item>
 
         <Form.Item label="Weight" name="weight" 
-             
+        rules={[
+    {
+      required: true,
+      message: 'Please input your weight!',
+    },
+    {
+      validator: (_, value) => {
+        if (value <= 1 || value >= 10) {
+          return Promise.reject('Weight must be greater than 1 kg and less than 19 kg.');
+        }
+        return Promise.resolve();
+      },
+    },
+  ]}
         >
-          <Input placeholder='kg' />
+           <InputNumber placeholder='kg' />
         </Form.Item>
 
-        <Form.Item label="Size" name="size" >
+        <Form.Item label="Size" name="size" 
+        rules={[
+    {
+      required: true,
+      message: 'Please input the size of the koi!',
+    },
+    {
+      type: 'number',
+      min: 10, 
+      max: 150, 
+      message: 'The size must be between 10 and 150 cm.',
+    },
+  ]}
+        >
           <Input placeholder='cm' />
         </Form.Item>
          

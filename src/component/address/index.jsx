@@ -90,6 +90,7 @@ function Address() {
         try {
             const response = await api.post("address/create-address", values);
             if (response.status === 200) {
+                window.location.reload();
                 console.log(response.data);
             }
         } catch (err) {

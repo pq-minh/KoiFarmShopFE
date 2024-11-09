@@ -159,15 +159,10 @@ const Home = () => {
             Koi Fish
           </h1>
           <p style={{ fontSize: "1.2rem", lineHeight: "1.6", color: "#333" }}>
-            Chào Mừng Bạn Đến Với{" "}
-            <span style={{ fontWeight: "bold" }}>Trang Trại Cá Koi SWP391</span>,
-            Nơi Chuyên Cung Cấp Và Chăm Sóc Các Giống Cá Koi Chất Lượng Cao.
-            Trang Web Của Chúng Tôi Không Chỉ Là Một Nơi Để Mua Bán Cá Koi, Mà
-            Còn Cung Cấp Hệ Thống Quản Lý Và Dịch Vụ Chăm Sóc Toàn Diện, Đáp Ứng
-            Mọi Nhu Cầu Của Những Người Đam Mê Cá Koi. Với Sứ Mệnh Mang Đến
-            Những Chú Cá Koi Khỏe Mạnh, Đẹp Mắt Cùng Các Dịch Vụ Chăm Sóc Chuyên
-            Nghiệp Chúng Tôi Tự Hào Là Địa Chỉ Uy Tín Và Đáng Tin Cậy Khách
-            Hàng.
+            Welcome to {" "}
+            <span style={{ fontWeight: "bold" }}>Koi Farm Shop SWP391</span>,
+            A Place Specializing in Providing and Caring for High-Quality Koi Fish.
+            Our website is not only a place to buy and sell Koi fish, but also offers a comprehensive management system and care services to meet all the needs of Koi enthusiasts. With a mission to deliver healthy, beautiful Koi fish along with professional care services, we are proud to be a trusted and reliable address for our customers.
           </p>
         </div>
 

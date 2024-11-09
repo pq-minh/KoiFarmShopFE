@@ -40,8 +40,7 @@ export default function Footer() {
                 KoiFarmShop
               </h6>
               <p>
-                Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
-                consectetur adipisicing elit.
+              We not only provide healthy, beautiful Koi fish, but also offer comprehensive care and management services to meet the needs of Koi enthusiasts. With a mission to deliver reliable products and services, we take pride in being a trusted address for our customers.
               </p>
             </MDBCol>
 
@@ -49,7 +48,7 @@ export default function Footer() {
               <h6 className='text-uppercase fw-bold mb-4'>Products</h6>
               <p>
                 <a href='#!' className='text-reset'>
-                  Angular
+                 Antd
                 </a>
               </p>
               <p>
@@ -59,21 +58,17 @@ export default function Footer() {
               </p>
               <p>
                 <a href='#!' className='text-reset'>
-                  Vue
+                 C#
                 </a>
               </p>
-              <p>
-                <a href='#!' className='text-reset'>
-                  Laravel
-                </a>
-              </p>
+             
             </MDBCol>
 
             <MDBCol md="3" lg="2" xl="2" className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>Useful links</h6>
               <p>
                 <a href='#!' className='text-reset'>
-                  Pricing
+                  FPT University
                 </a>
               </p>
               <p>
@@ -85,10 +80,10 @@ export default function Footer() {
                 <a href='#!' className='text-reset'>
                   Orders
                 </a>
-</p>
+            </p>
               <p>
-                <a href='#!' className='text-reset'>
-                  Help
+                <a href='' className='text-reset'>
+                  Policy
                 </a>
               </p>
             </MDBCol>
@@ -97,29 +92,22 @@ export default function Footer() {
               <h6 className='text-uppercase fw-bold mb-4'>Contact</h6>
               <p>
                 <MDBIcon icon="home" className="me-2" />
-                New York, NY 10012, US
+               Ho Chi Minh,District 9
               </p>
               <p>
                 <MDBIcon icon="envelope" className="me-3" />
-                info@example.com
+                koifarmshop@gmail.com
               </p>
               <p>
-                <MDBIcon icon="phone" className="me-3" /> + 01 234 567 88
+                <MDBIcon icon="phone" className="me-3" /> + 0334170354
               </p>
               <p>
-                <MDBIcon icon="print" className="me-3" /> + 01 234 567 89
+                <MDBIcon icon="print" className="me-3" /> + 0382265897    
               </p>
             </MDBCol>
           </MDBRow>
         </MDBContainer>
-      </section>
-
-      <div className='text-center p-4' style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)' }}>
-        © 2021 Copyright:
-        <a className='text-reset fw-bold' href='https://mdbootstrap.com/'>
-          MDBootstrap.com
-        </a>
-      </div>
+      </section>  
     </MDBFooter>
   );
 }

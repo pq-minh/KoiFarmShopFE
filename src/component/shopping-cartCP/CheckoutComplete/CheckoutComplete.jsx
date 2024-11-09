@@ -13,7 +13,7 @@ const CheckoutComplete = () => {
         const orderData = JSON.parse(localStorage.getItem('carts'));
         if (!orderData) {
             console.error('Order data is not available in localStorage.');
-            navigate('/'); // Redirect if orderData is not available
+            navigate('/'); 
             return;
         }
 

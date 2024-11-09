@@ -1,12 +1,19 @@
 import React, { useState ,useEffect,useContext } from 'react';
 import { Table, Input, Form, Radio, Button , message} from 'antd';
+import { Link, useNavigate } from "react-router-dom";
 import "./index.scss"
 import api2 from '../../../config/axios2';
 import api from '../../../config/axios';
 const CheckOutInfor = ({carts,setOrderData}) => {
   const [discount, setDiscount] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState('online');
-  const [address, setAddress] = useState([]);
+  const [address, setAddress] = useState({
+    city: '',
+    dictrict: '',
+    ward: '',
+    streetName: ''
+  });
+  const navigate = useNavigate();
   const [discountValue, setDiscountValue] = useState(null);
   const [discountId, setDiscountId] = useState(null);
   const totalAmount = carts.reduce((sum, cart) => sum + cart.totalPrice, 0); 
@@ -109,7 +116,7 @@ const CheckOutInfor = ({carts,setOrderData}) => {
         method: paymentMethod,
         discountId: discountId || 0,
         phoneNumber: phoneNumber || null,
-        address: `${address.city || ''}, ${address.district || ''}, ${address.ward || ''}, ${address.streetName || ''}`,
+        address: `${address.city || ''}, ${address.district || ''}, ${address.ward || ''}, ${address.streetName || ''}` ,
       };
      setOrderData(orderData)
       console.log(orderData);
@@ -127,7 +134,21 @@ const CheckOutInfor = ({carts,setOrderData}) => {
             console.log(redirectUrl);
             window.location.href = redirectUrl;
           } else {
-            message.success('Order created successfully');
+
+            const orderData = JSON.parse(localStorage.getItem('carts'));
+            const payload = {
+              carts: orderData.carts,
+              method: orderData.method,
+              discountId: orderData.discountId || 0,
+              phoneNumber: orderData.phoneNumber || null,
+              address: orderData.address,
+          };
+            const response2= await api.post("orders",payload)
+            if (response2.status == 204){
+              message.success("Order created successfully");
+              localStorage.removeItem('carts');  
+              navigate('/completepayment');
+          }
           }
         }
       } catch (err) {
@@ -135,7 +156,16 @@ const CheckOutInfor = ({carts,setOrderData}) => {
         message.error('An error occurred while creating the order. Please try again.');
       }
     };
-
+    //handle change address
+    const handleChangeAddress = (value, field) => {
+      setAddress({
+        ...address,
+        [field]: value.trim() 
+      });
+    };
+    const addressValue = address.city || address.district || address.ward || address.streetName
+    ? `${address.city}, ${address.district}, ${address.ward}, ${address.streetName}`
+    : '';
   return (
     <div className='checkout-infor-cp'>
       <Form layout="inline" onFinish={handleAddToOrder}>
@@ -169,9 +199,41 @@ const CheckOutInfor = ({carts,setOrderData}) => {
         pagination={false}
       />
        
-       <Form.Item label="Shipping address:" style={{ display: 'flex', alignItems: 'center',marginTop:20 }}>
-       <Input placeholder="Your Shipping Address"  value={`${address.city || ''}, ${address.dictrict || ''}, ${address.ward || ''}, ${address.streetName || ''}`} style={{ flex: 1,width:315  }} />
-      </Form.Item>
+       <Form.Item label="City:" style={{ display: 'flex', alignItems: 'center', marginTop: 20 }}>
+          <Input
+            placeholder="Your Shipping Address"
+            value={address.city}
+            onChange={(e) => handleChangeAddress(e.target.value, 'city')}
+            style={{ flex: 1, width: 315 }}
+          />
+        </Form.Item>
+
+        <Form.Item label="District:" style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
+          <Input
+            value={address.dictrict}
+            onChange={(e) => handleChangeAddress(e.target.value, 'district')}
+            placeholder="District"
+            style={{ flex: 1, width: 315 }}
+          />
+        </Form.Item>
+
+        <Form.Item label="Ward:" style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
+          <Input
+            value={address.ward}
+            onChange={(e) => handleChangeAddress(e.target.value, 'ward')}
+            placeholder="Ward"
+            style={{ flex: 1, width: 315 }}
+          />
+        </Form.Item>
+
+        <Form.Item label="Street Name:" style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
+          <Input
+            value={address.streetName}
+            onChange={(e) => handleChangeAddress(e.target.value, 'streetName')}
+            placeholder="Street Name"
+            style={{ flex: 1, width: 315 }}
+          />
+        </Form.Item>
       <Form.Item label="Phone number:" style={{ display: 'flex', alignItems: 'center',marginTop:10 }}>
        <Input placeholder="your phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ flex: 1,width:330 }} />
       </Form.Item>

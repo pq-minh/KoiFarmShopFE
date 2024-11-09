@@ -44,9 +44,16 @@ const CartInfor = ({carts,setIsChecked,quantities}) => {
             </div>
             </div>
             <div>
-           <Button type="primary" block style={{marginTop:15}} onClick={handleCheckOut}>
+            {
+                totalAmount === 0 ? (<Button type="primary" block style={{marginTop:15}} onClick={handleCheckOut} disabled={true}>
+                Check out
+            </Button>) : (
+                <Button type="primary" block style={{marginTop:15}} onClick={handleCheckOut}>
                 Check out
             </Button>
+            )
+            }
+           
            </div>
     </div>
     
