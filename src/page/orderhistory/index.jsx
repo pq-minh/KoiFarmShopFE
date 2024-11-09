@@ -7,11 +7,11 @@ import "./index.scss";
 
 const OrderHistoryPage = () => {
   const [orders, setOrders] = useState([]);
-  const [orderDetails, setOrderDetails] = useState(null);
-  const [selectedKoiDetail, setSelectedKoiDetail] = useState(null); 
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [orderDetails, setOrderDetails] = useState([]); // Store order details list
+  const [selectedKoiDetail, setSelectedKoiDetail] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+
   // Create a ref to the order details container
   const orderDetailsRef = useRef(null);
 
@@ -30,22 +30,38 @@ const OrderHistoryPage = () => {
 
   const handleOrderClick = async (orderId) => {
     try {
-      const response = await api.get(`/orders/${orderId}`);
-      setOrderDetails(response.data);
-      
+      const response = await api.get(`/orders/${orderId}`); // Adjusted endpoint
+      setOrderDetails(response.data.filter(detail => detail.orderId === orderId)); // Filter by orderId
+
       // Scroll to the order details section
-      orderDetailsRef.current.scrollIntoView({ behavior: 'smooth' });
+      orderDetailsRef.current.scrollIntoView({ behavior: "smooth" });
     } catch (error) {
       console.error("Error fetching order details:", error);
     }
   };
 
-  // Fetch and open modal with koi fish details
-  const handleKoiDetailClick = async (koiId) => {
-    if (!koiId) return; // Add a check to avoid undefined koiId
+  const handleKoiDetailClick = async (koiId, batchKoiId = null) => {
     try {
-      const response = await api.get(`/kois/${koiId}`);
-      setSelectedKoiDetail(response.data);
+      const response = await api.get("/koisandbatchkois/id", {
+        params: {
+          koiId: koiId || undefined,
+          batchKoiId: batchKoiId || undefined,
+        },
+      });
+
+      // Ưu tiên hiển thị `koi`, nếu không có thì hiển thị `batchKoi`
+      if (response.data.koi) {
+        setSelectedKoiDetail({
+          type: "koi",
+          data: response.data.koi,
+        });
+      } else if (response.data.batchKoi) {
+        setSelectedKoiDetail({
+          type: "batchKoi",
+          data: response.data.batchKoi,
+        });
+      }
+
       setIsModalOpen(true);
     } catch (error) {
       console.error("Error fetching koi details:", error);
@@ -59,35 +75,33 @@ const OrderHistoryPage = () => {
 
   const columns = [
     {
-      title: 'Order ID',
-      dataIndex: 'orderId',
-      key: 'orderId',
+      title: "Order ID",
+      dataIndex: "orderId",
+      key: "orderId",
     },
     {
-      title: 'Total Amount',
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
-      render: amount => `VND${amount}`, 
+      title: "Total Amount",
+      dataIndex: "totalAmount",
+      key: "totalAmount",
+      render: (amount) => `VND${amount}`,
     },
     {
-      title: 'Status',
-      dataIndex: 'orderStatus',
-      key: 'orderStatus',
-      render: status => (
-        <span className={`status ${status.toLowerCase()}`}> {/* Ensure lowercase */}
-      {status}
-    </span>
+      title: "Status",
+      dataIndex: "orderStatus",
+      key: "orderStatus",
+      render: (status) => (
+        <span className={`status ${status.toLowerCase()}`}>{status}</span>
       ),
     },
     {
-      title: 'Date',
-      dataIndex: 'createDate',
-      key: 'createDate',
-      render: date => new Date(date).toLocaleString(), 
+      title: "Date",
+      dataIndex: "createDate",
+      key: "createDate",
+      render: (date) => new Date(date).toLocaleString(),
     },
     {
-      title: 'Details',
-      key: 'details',
+      title: "Details",
+      key: "details",
       render: (_, order) => (
         <Button onClick={() => handleOrderClick(order.orderId)}>View Details</Button>
       ),
@@ -102,36 +116,38 @@ const OrderHistoryPage = () => {
         {orders.length === 0 ? (
           <p>No orders found.</p>
         ) : (
-          <Table
-            dataSource={orders}
-            columns={columns}
-            rowKey="orderId"
-          />
+          <Table dataSource={orders} columns={columns} rowKey="orderId" />
         )}
 
         {/* Order Details Table */}
-        {orderDetails && (
+        {orderDetails.length > 0 && (
           <div ref={orderDetailsRef} className="order-details-container">
-            <h3>Order Details for Order ID: {orderDetails.orderId}</h3>
+            <h3>Order Details</h3>
             <Table
               dataSource={orderDetails}
               rowKey="orderDetailsId"
               columns={[
                 {
-                  title: 'Koi Name',
-                  dataIndex: 'koiName',
-                  key: 'koiName',
+                  title: "Koi Name",
+                  key: "koiName",
+                  render: (detail) => detail.koiName || detail.batchKoiName || "N/A",
                 },
                 {
-                  title: 'Total Quantity',
-                  dataIndex: 'toTalQuantity',
-                  key: 'toTalQuantity',
+                  title: "Total Quantity",
+                  dataIndex: "toTalQuantity",
+                  key: "toTalQuantity",
                 },
                 {
-                  title: 'View Detail',
-                  key: 'viewDetail',
+                  title: "View Detail",
+                  key: "viewDetail",
                   render: (_, detail) => (
-                    <Button onClick={() => handleKoiDetailClick(detail.koiId)}>View Detail</Button>
+                    <Button
+                      onClick={() =>
+                        handleKoiDetailClick(detail.koiId, detail.batchKoiId)
+                      }
+                    >
+                      View Detail
+                    </Button>
                   ),
                 },
               ]}
@@ -143,29 +159,46 @@ const OrderHistoryPage = () => {
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           {selectedKoiDetail && (
             <div className="koi-detail-modal">
-              <h3>Koi Details</h3>
+              <h3>{selectedKoiDetail.type === "koi" ? "Koi Details" : "Batch Koi Details"}</h3>
               <div className="image-container">
                 <img
-                  src={selectedKoiDetail.koiImage}
-                  alt={selectedKoiDetail.name}
+                  src={selectedKoiDetail.data.image || "placeholder.jpg"}
+                  alt={selectedKoiDetail.data.name || "No Image"}
                   className="koi-image"
                 />
               </div>
               <div className="info-container">
-                <div className="info-fields">
-                  <div className="info-field"><strong>Koi Name:</strong> {selectedKoiDetail.name}</div>
-                  <div className="info-field"><strong>Type:</strong> {selectedKoiDetail.typeFish}</div>
-                  <div className="info-field"><strong>Origin:</strong> {selectedKoiDetail.origin}</div>
-                  <div className="info-field"><strong>Description:</strong> {selectedKoiDetail.description}</div>
-                  <div className="info-field"><strong>Gender:</strong> {selectedKoiDetail.gender}</div>
-                  <div className="info-field"><strong>Age:</strong> {selectedKoiDetail.age} years</div>
-                  <div className="info-field"><strong>Weight:</strong> {selectedKoiDetail.weight} kg</div>
-                  <div className="info-field"><strong>Size:</strong> {selectedKoiDetail.size} cm</div>
-                  <div className="info-field"><strong>Personality:</strong> {selectedKoiDetail.personality}</div>
-                  <div className="info-field"><strong>Status:</strong> {selectedKoiDetail.status}</div>
-                  <div className="info-field"><strong>Price:</strong> ${selectedKoiDetail.price}</div>
-                  <div className="info-field"><strong>Certificate:</strong> {selectedKoiDetail.certificate}</div>
-                </div>
+                {selectedKoiDetail.type === "koi" ? (
+                  <>
+                    <div className="info-field"><strong>Name:</strong> {selectedKoiDetail.data.name}</div>
+                    <div className="info-field"><strong>Type:</strong> {selectedKoiDetail.data.typeFish || "N/A"}</div>
+                    <div className="info-field"><strong>Origin:</strong> {selectedKoiDetail.data.origin}</div>
+                    <div className="info-field"><strong>Description:</strong> {selectedKoiDetail.data.description}</div>
+                    <div className="info-field"><strong>Gender:</strong> {selectedKoiDetail.data.gender}</div>
+                    <div className="info-field"><strong>Age:</strong> {selectedKoiDetail.data.age} years</div>
+                    <div className="info-field"><strong>Weight:</strong> {selectedKoiDetail.data.weight} kg</div>
+                    <div className="info-field"><strong>Size:</strong> {selectedKoiDetail.data.size} cm</div>
+                    <div className="info-field"><strong>Personality:</strong> {selectedKoiDetail.data.personality}</div>
+                    <div className="info-field"><strong>Status:</strong> {selectedKoiDetail.data.status}</div>
+                    <div className="info-field"><strong>Price:</strong> ${selectedKoiDetail.data.price}</div>
+                    <div className="info-field"><strong>Certificate:</strong> {selectedKoiDetail.data.certificate || "N/A"}</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="info-field"><strong>Batch Name:</strong> {selectedKoiDetail.data.name}</div>
+                    <div className="info-field"><strong>Description:</strong> {selectedKoiDetail.data.description || "N/A"}</div>
+                    <div className="info-field"><strong>Quantity:</strong> {selectedKoiDetail.data.quantity}</div>
+                    <div className="info-field"><strong>Weight:</strong> {selectedKoiDetail.data.weight} kg</div>
+                    <div className="info-field"><strong>Size:</strong> {selectedKoiDetail.data.size} cm</div>
+                    <div className="info-field"><strong>Age:</strong> {selectedKoiDetail.data.age} years</div>
+                    <div className="info-field"><strong>Origin:</strong> {selectedKoiDetail.data.origin}</div>
+                    <div className="info-field"><strong>Gender:</strong> {selectedKoiDetail.data.gender}</div>
+                    <div className="info-field"><strong>Status:</strong> {selectedKoiDetail.data.status}</div>
+                    <div className="info-field"><strong>Price:</strong> ${selectedKoiDetail.data.price}</div>
+                    <div className="info-field"><strong>Certificate:</strong> {selectedKoiDetail.data.certificate || "N/A"}</div>
+                    <div className="info-field"><strong>Type Batch:</strong> {selectedKoiDetail.data.typeBatch}</div>
+                  </>
+                )}
               </div>
             </div>
           )}

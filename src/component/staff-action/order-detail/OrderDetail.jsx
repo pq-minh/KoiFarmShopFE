@@ -116,13 +116,23 @@ const OrderManagement = () => {
             title: 'Koi Name',
             dataIndex: 'koiName',
             key: 'koiName',
-            render: (koiName, record) => koiName || record.batchKoiName, // Hiển thị koiName hoặc batchKoiName nếu không có koiName
-            ...getColumnSearchProps('koiName'),
-        },
+            render: (text, record) => {
+                if (!record.koiName || record.koiName.trim() === '') {
+                    return record.batchKoiName ? record.batchKoiName : 'No Name Available';
+                }
+                return record.koiName;
+            },
+        },        
         {
             title: 'Total Quantity',
-            dataIndex: 'toTalQuantity', // Chú ý chính tả trong API response
+            dataIndex: 'toTalQuantity',
             key: 'toTalQuantity',
+        },
+        {
+            title: 'Create Date',
+            dataIndex: 'createDate',
+            key: 'createDate',
+            render: (date) => new Date(date).toLocaleDateString(),
         },
         {
             title: 'Status',
@@ -140,7 +150,7 @@ const OrderManagement = () => {
                 } else if (text === 'Delivered') {
                     color = 'green';
                 }
-                return <Tag color={color}>{text}</Tag>; // Use Tag to display status with color
+                return <Tag color={color}>{text}</Tag>;
             },
         },
         {
@@ -148,7 +158,9 @@ const OrderManagement = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button onClick={() => handleUpdate(record)}>Update Status</Button>
+                    {record.status !== 'Delivered' && (
+                        <Button onClick={() => handleUpdate(record)}>Update Status</Button>
+                    )}
                 </Space>
             ),
         },
@@ -162,33 +174,34 @@ const OrderManagement = () => {
     const fetchOrders = async () => {
         try {
             const response = await api.get(`/orders/orderdetail/staff?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+            console.log(response.data);
             if (response.status === 200) {
                 const updatedOrderList = response.data.map(item => ({
                     ...item,
-                    key: item.orderDetailsId // Thay đổi để sử dụng orderDetailsId
+                    key: item.orderDetailsId,
                 }));
                 setOrderList(updatedOrderList);
                 setTotalCount(response.data.length);
             }
         } catch (err) {
-            console.error(err);
+            console.error('Error fetching orders:', err);
         } finally {
             setLoading(false);
         }
     };
-
+    
     useEffect(() => {
         fetchOrders();
     }, [pageNumber, pageSize]);
 
     const handleUpdate = (record) => {
-        setFormData({ orderDetailId: record.orderDetailsId, status: record.status }); // Cập nhật để sử dụng orderDetailsId
+        setFormData({ orderDetailId: record.orderDetailsId, status: record.status });
         setModalVisible(true);
     };
 
     const handleOk = () => {
         if (formData.status === 'Delivered') {
-            setConfirmRefuse(true); // Hiển thị modal xác nhận
+            setConfirmRefuse(true);
         } else {
             updateStatus();
         }
@@ -243,39 +256,39 @@ const OrderManagement = () => {
                 columns={columns}
                 dataSource={orderList}
                 pagination={{
-                    total: totalCount,
-                    pageSize: pageSize,
                     current: pageNumber,
+                    pageSize: pageSize,
+                    total: totalCount,
                     onChange: handleChangePage,
                 }}
                 loading={loading}
+                rowKey="orderDetailsId"
             />
             <Modal
                 title="Update Order Status"
-                open={isModalVisible}
+                visible={isModalVisible}
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
-                <div>
-                    <label>Status</label>
-                    <Select
-                        placeholder="Select a new status"
-                        value={formData.status}
-                        onChange={(value) => setFormData({ ...formData, status: value })}
-                        style={{ width: '100%' }}
-                    >
-                        <Option value="Pending">Pending</Option>
-                        <Option value="Delivered">Delivered</Option>                        
-                    </Select>
-                </div>
+                <Select
+                    value={formData.status}
+                    onChange={(value) => setFormData({ ...formData, status: value })}
+                    style={{ width: '100%' }}
+                >
+                    <Option value="Pending">Pending</Option>
+                    <Option value="Delivered">Delivered</Option>
+                </Select>
             </Modal>
+
             <Modal
                 title="Confirm Refusal"
-                open={confirmRefuse}
+                visible={confirmRefuse}
                 onOk={handleConfirmRefuse}
                 onCancel={() => setConfirmRefuse(false)}
+                okText="Yes"
+                cancelText="No"
             >
-                <p>Are you sure you want to update this order?</p>
+                <p>Are you sure you want to mark this as delivered?</p>
             </Modal>
         </div>
     );
