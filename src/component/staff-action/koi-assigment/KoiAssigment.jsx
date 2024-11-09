@@ -129,7 +129,7 @@ const KoiAssigment = () => {
         const fetchData = async (pageNumber, pageSize) => {
           try {
             const token = sessionStorage.getItem('token')?.replaceAll('"', '');
-            const response = await fetch(`https://localhost:7228/api/quotation/get-quotation?pageNumber=${pageNumber}&pageSize=${pageSize}`, {  
+            const response = await fetch(`http://localhost:5167/api/quotation/get-quotation?pageNumber=${pageNumber}&pageSize=${pageSize}`, {  
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`, 

@@ -9,8 +9,8 @@ const FeedbackManagement = () => {
     const [pageNumber, setPageNumber] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalCount, setTotalCount] = useState(0);
-    const [selectedFeedbackId, setSelectedFeedbackId] = useState(null); // Store selected feedback ID for deletion
-    const [isModalVisible, setIsModalVisible] = useState(false); // Control visibility of delete confirmation modal
+    const [selectedFeedbackId, setSelectedFeedbackId] = useState(null);
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     const columns = [
         {
@@ -50,16 +50,38 @@ const FeedbackManagement = () => {
             key: 'comments',
         },
         {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status) => {
+                // Normalize the status value to lowercase to avoid case sensitivity issues
+                const normalizedStatus = status?.toLowerCase();
+        
+                return (
+                    <span 
+                        style={{ 
+                            color: normalizedStatus === 'removed' ? 'red' : normalizedStatus === 'posted' ? 'green' : 'black', 
+                            fontWeight: 'bold' // Optional: make the status text bold for better visibility
+                        }}
+                    >
+                        {status}
+                    </span>
+                );
+            }
+        },        
+        {
             title: 'Action',
             key: 'action',
             render: (text, record) => (
-                <Button 
-                    type="danger" 
-                    style={{ borderRadius: '5px', padding: '5px 10px' }} 
-                    onClick={() => showDeleteConfirm(record.reviewId)}
-                >
-                    Delete
-                </Button>
+                record.status !== 'Removed' && (
+                    <Button 
+                        type="danger" 
+                        style={{ borderRadius: '5px', padding: '5px 10px' }} 
+                        onClick={() => showDeleteConfirm(record.reviewId)}
+                    >
+                        Delete
+                    </Button>
+                )
             ),
         },
     ];
@@ -92,16 +114,12 @@ const FeedbackManagement = () => {
                 data: { id: selectedFeedbackId },
             });
             if (response.status === 204) {
-                // Remove the deleted feedback from the list immediately
-                setFeedbackList((prevList) =>
-                    prevList.filter((feedback) => feedback.reviewId !== selectedFeedbackId)
-                );
-                
                 notification.success({
                     message: 'Feedback Deleted',
                     description: 'The feedback has been deleted successfully.',
                 });
-                setIsModalVisible(false); // Close the modal after deletion
+                setIsModalVisible(false); // Close the modal
+                fetchFeedback(); // Reload feedback data to get updated statuses
             }
         } catch (error) {
             console.error(error);
@@ -111,14 +129,15 @@ const FeedbackManagement = () => {
             });
         }
     };
+    
 
     const showDeleteConfirm = (id) => {
         setSelectedFeedbackId(id);
-        setIsModalVisible(true); // Show confirmation modal
+        setIsModalVisible(true);
     };
 
     const handleCancel = () => {
-        setIsModalVisible(false); // Close modal without deleting
+        setIsModalVisible(false);
     };
 
     const handleChangePage = (page, pageSize) => {
@@ -152,7 +171,7 @@ const FeedbackManagement = () => {
                 onCancel={handleCancel}
                 okText="Yes, Delete"
                 cancelText="No, Cancel"
-                okButtonProps={{ danger: true }} // Make the "Yes" button red to emphasize delete action
+                okButtonProps={{ danger: true }}
             >
                 <p>Are you sure you want to delete this feedback?</p>
             </Modal>
