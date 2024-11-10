@@ -45,7 +45,7 @@ import FeedbackPage from "./page/feedback";
 import AllFeedback from "./page/feedback/Allfeedback";
 import UpdateUserRole from "./page/Dashboard/UpdateRole/UpdateRole";
 import RevenueReport from "./page/Dashboard/RevenueReport/RevenueReport";
-
+import Footer from "./component/footer";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -106,7 +106,14 @@ const App = () => {
     },
     {
       path: "userinfor",
-      element: <UserInfor />,
+      element:
+      (
+      <>
+      <UserInfor />
+      <Footer />
+      </>
+      )
+      ,
     },
     {
       path: "register",
@@ -114,7 +121,12 @@ const App = () => {
     },
     {
       path: "shop", 
-      element: <Shop />,
+      element:( 
+      <>
+      <Shop />
+      <Footer />
+      </>
+      ),
     },
     {
       path: "/fish/single", 
@@ -161,11 +173,21 @@ const App = () => {
     ,   
     {
       path: "cart",
-      element: <UserCart />
+      element: (
+        <>
+      <UserCart />
+      <Footer />
+      </>
+    )
     },   
     {
       path: "checkout",
-      element: <CheckOut />
+      element: (
+        <>
+     <CheckOut />
+      <Footer />
+      </>
+    )
     },     
     {
       path: "details/:id", 
@@ -177,7 +199,13 @@ const App = () => {
     },
     {
       path: "checkoutcomplete",
-      element: <CheckOutComplete />
+      element: 
+      (
+        <>
+        <CheckOutComplete />
+        <Footer />
+        </>
+      )
     },   
     {
       path: "comparison",
@@ -185,15 +213,34 @@ const App = () => {
     },
     {
       path: "errorpayment",
-      element: <ErrorPayment/>
+      element: 
+        (
+          <>
+          <ErrorPayment/>
+          <Footer />
+          </>
+        )
+      
     },
     {
       path: "completepayment",
-      element: <CompletePayment/>
+      element:
+      (
+        <>
+        <CompletePayment/>
+        <Footer />
+        </>
+      ) 
     },
     {   
       path: "requestcare",
-      element: <RequestCare />
+      element:
+      (
+        <>
+         <RequestCare />
+        <Footer />
+        </>
+      ) 
     }   
     ,
     {   
@@ -211,19 +258,41 @@ const App = () => {
     },
     {
       path: "policy",
-      element: <Policy />
+      element: 
+      (
+        <>
+         <Policy />
+        <Footer />
+        </>
+      ) 
     },
     {
       path: "viewrequest",
-      element: <ViewRequests />
+      element:
+      (
+        <>
+         <ViewRequests />
+        <Footer />
+        </>
+      )  
     },
     {
       path: "/feedback",
-      element: <AllFeedback/>
+      element:
+      (
+        <>
+        <AllFeedback/>
+        <Footer />
+        </>
+      )   
     },
     {
       path: "/submit-feedback",
-      element: <FeedbackPage />
+      element: (
+        <> <FeedbackPage /> 
+        <Footer />
+        </>
+      ),
     },
 
   ]);      

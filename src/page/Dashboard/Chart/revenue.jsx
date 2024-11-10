@@ -12,11 +12,11 @@ const RevenueChart = () => {
             const endDate = new Date();
             const startDate = new Date();
             startDate.setFullYear(startDate.getFullYear() - 1); // Last 12 months
-
+            endDate.setDate(endDate.getDate() + 1);
             try {
                 const response = await api.get('/orders/management/get', {
                     params: {
-                        status: 'Complete',
+                        status: 'Completed',
                         startDate: startDate.toISOString().split('T')[0],
                         endDate: endDate.toISOString().split('T')[0],
                     },
@@ -56,11 +56,11 @@ const RevenueChart = () => {
         exportEnabled: true,
         theme: "light2",
         title: {
-            text: "Doanh thu kinh doanh cá Koi theo tháng"
+            text: "Monthly Koi Fish Business Revenue"
         },
         axisY: {
             includeZero: true,
-            title: "Doanh thu (VND)" // Y-axis label
+            title: "Revenue (VND)" // Y-axis label
         },
         axisX: {
             interval: 1,
@@ -69,7 +69,7 @@ const RevenueChart = () => {
                 return `${date.getMonth() + 1}/${date.getFullYear()}`;
             },
             intervalType: "month",
-            title: "Thời gian (12 tháng trở lại đây)" // X-axis label
+            title: "Time Period (Last 12 Months)" // X-axis label
         },
         data: [{
             type: "column",

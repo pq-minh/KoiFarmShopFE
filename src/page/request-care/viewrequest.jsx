@@ -14,7 +14,7 @@ function ViewRequests() {
     useEffect(() => {
         const fetchRequests = async () => {
             try {
-                const response = await api.get("/requestcare/allrequest");
+                const response = await api.get("/requestcare");
                 setRequests(response.data);
             } catch (error) {
                 console.error("Error fetching requests:", error);

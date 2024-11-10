@@ -5,10 +5,6 @@ export default function Footer() {
   return (
     <MDBFooter bgColor='light' className='text-center text-lg-start text-muted'>
       <section className='d-flex justify-content-center justify-content-lg-between p-4 border-bottom'>
-        <div className='me-5 d-none d-lg-block'>
-          <span>Get connected with us on social networks:</span>
-        </div>
-
         <div>
           <a href='' className='me-4 text-reset'>
             <MDBIcon fab icon="facebook-f" />
@@ -40,7 +36,7 @@ export default function Footer() {
                 KoiFarmShop
               </h6>
               <p>
-              We not only provide healthy, beautiful Koi fish, but also offer comprehensive care and management services to meet the needs of Koi enthusiasts. With a mission to deliver reliable products and services, we take pride in being a trusted address for our customers.
+              We not only provide healthy, beautiful Koi fish, but also offer comprehensive care and management services to meet the needs of Koi enthusiasts.
               </p>
             </MDBCol>
 

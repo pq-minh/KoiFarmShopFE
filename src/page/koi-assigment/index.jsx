@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { message } from 'antd';
+import { message,Modal } from 'antd';
 import "./index.scss";
 import { storage } from "../../firebase/firebase";
 import api from "../../config/axios";
@@ -35,6 +35,7 @@ const KoiAssigment =() => {
     const [url, setUrl] = useState("");
     const [type,setType] = useState(1);
     const [form] = Form.useForm();
+    const [modalVisible, setModalVisible] = useState(false);
     const [assignmentDate, setAssignmentDate] = useState(null);
 
     const handleAssignmentDateChange = (date) => {
@@ -121,13 +122,21 @@ const KoiAssigment =() => {
     // Gửi formData
     const response = await api.post("request/create-request", formData);
     if (response.status === 200) {
-      message.success('Create request successfully.');
-      form.resetFields();
+      setModalVisible(true);
     }
+    //
+   
   } catch (error) {
     console.error('Error uploading file or creating package:', error);
     message.error('Error uploading file or creating package.');
   }
+      };
+      //
+      const handleModalClose = () => {
+        setModalVisible(false);
+        setTimeout(() => {
+          form.resetFields(); 
+        }, 100);
       };
     return (
             <div className=" container koi-assigment">  
@@ -148,6 +157,7 @@ const KoiAssigment =() => {
         style={{
         
         }}
+        form={form}
         onFinish={onFinish}
       >
       <div className=" row">
@@ -206,12 +216,24 @@ const KoiAssigment =() => {
 
         <Form.Item label="Personality" 
             name="personality"
+            rules={[
+    {
+      required: true, 
+      message: 'Please input personality!',
+    }
+  ]}
         >
           <Input placeholder='Friendly' />         
         </Form.Item>
 
         <Form.Item label="Description"
             name="description"
+            rules={[
+    {
+      required: true, 
+      message: 'Please input description!',
+    }
+  ]}
         >
           <TextArea rows={4} /> 
         </Form.Item>
@@ -265,24 +287,45 @@ const KoiAssigment =() => {
     },
   ]}
         >
-          <Input placeholder='cm' />
-        </Form.Item>
+           <InputNumber placeholder='cm' />
+           </Form.Item>
          
-        <Form.Item label="Start Date" name="assigmentdate">
+        <Form.Item label="Start Date" name="assigmentdate" rules={[
+    {
+      required: true, 
+      message: 'Please input start date!',
+    }
+  ]}>
           <DatePicker disabledDate={ handleDisabledDate}  onChange={handleAssignmentDateChange}/>
         </Form.Item>
 
-        <Form.Item label="End Date" name="enddate">
+        <Form.Item label="End Date" name="enddate" 
+        rules={[
+    {
+      required: true, 
+      message: 'Please input end date!',
+    }
+  ]}>
           <DatePicker disabledDate={disabledEndDate} />
         </Form.Item>
 
-        <Form.Item label="Type Request" name="type">
+        <Form.Item label="Type Request" name="type" rules={[
+    {
+      required: true, 
+      message: 'Please input type of request',
+    }
+  ]}  >
           <Radio.Group>
             <Radio value="online" name='online'> Onlline </Radio>
             <Radio value="offline" name='offline'> Offline </Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Category" name="category">
+        <Form.Item label="Category" name="category"  rules={[
+    {
+      required: true, 
+      message: 'Please input koi category!',
+    }
+  ]}>
           <Select>
             <Select.Option value="1">Thuần chủng nhập khẩu </Select.Option>
             <Select.Option value="2">Lai F1 </Select.Option>
@@ -300,6 +343,15 @@ const KoiAssigment =() => {
         </div>
       </Form>
       </motion.div>  
+      <Modal
+        title="Success"
+       open={modalVisible}
+        onOk={handleModalClose}
+        onCancel={handleModalClose}
+        okText="OK"
+      >
+        <p>Your koi assignment has been successfully created!</p>
+      </Modal>
             </div>
     )
 }
