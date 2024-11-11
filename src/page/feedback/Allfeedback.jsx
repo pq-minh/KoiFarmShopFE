@@ -26,10 +26,27 @@ const AllFeedback = () => {
     }
   };
 
-  const handleKoiDetailClick = async (koiId) => {
+  const handleKoiDetailClick = async (koiId, batchKoiId = null) => {
     try {
-      const response = await api.get(`/kois/${koiId}`); // Ensure this endpoint is correct
-      setSelectedKoiDetail(response.data);
+      const response = await api.get("/koisandbatchkois/guest/id", {
+        params: {
+          koiId: koiId || undefined,
+          batchKoiId: batchKoiId || undefined,
+        },
+      });
+
+      if (response.data.koi) {
+        setSelectedKoiDetail({
+          type: "koi",
+          data: response.data.koi,
+        });
+      } else if (response.data.batchKoi) {
+        setSelectedKoiDetail({
+          type: "batchKoi",
+          data: response.data.batchKoi,
+        });
+      }
+
       setIsModalOpen(true);
     } catch (error) {
       console.error("Error fetching koi details:", error);
@@ -78,9 +95,11 @@ const AllFeedback = () => {
       key: 'action',
       render: (text, record) => (
         <>
-          <Link to="/submit-feedback">
-            <Button type="primary">Update Feedback</Button>
-          </Link>
+          {isLoggedIn && (
+            <Link to="/submit-feedback">
+              <Button type="primary">Update Feedback</Button>
+            </Link>
+          )}
           <Button type="link" onClick={() => handleKoiDetailClick(record.koiId)}>View Detail</Button>
         </>
       ),
@@ -93,44 +112,61 @@ const AllFeedback = () => {
       <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>All Feedback</h2>
       <Table columns={feedbackColumns} dataSource={feedbackData} rowKey="id" pagination={{ pageSize: 5 }} />
 
-      {/* Button to navigate to Submit Feedback */}
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
+      {isLoggedIn && (
         <Link to="/submit-feedback">
           <Button type="primary">Submit Feedback</Button>
         </Link>
+      )}
       </div>
 
-      {/* Modal to show koi fish details */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        {selectedKoiDetail && (
-          <div className="koi-detail-modal">
-            <h3>Koi Details</h3>
-            <div className="image-container">
-              <img
-                src={selectedKoiDetail.image}
-                alt={selectedKoiDetail.name}
-                className="koi-image"
-              />
-            </div>
-            <div className="info-container">
-              <div className="info-fields">
-                <div className="info-field"><strong>Koi Name:</strong> {selectedKoiDetail.name}</div>
-                <div className="info-field"><strong>Type:</strong> {selectedKoiDetail.typeFish}</div>
-                <div className="info-field"><strong>Origin:</strong> {selectedKoiDetail.origin}</div>
-                <div className="info-field"><strong>Description:</strong> {selectedKoiDetail.description}</div>
-                <div className="info-field"><strong>Gender:</strong> {selectedKoiDetail.gender}</div>
-                <div className="info-field"><strong>Age:</strong> {selectedKoiDetail.age} years</div>
-                <div className="info-field"><strong>Weight:</strong> {selectedKoiDetail.weight} kg</div>
-                <div className="info-field"><strong>Size:</strong> {selectedKoiDetail.size} cm</div>
-                <div className="info-field"><strong>Personality:</strong> {selectedKoiDetail.personality}</div>
-                <div className="info-field"><strong>Status:</strong> {selectedKoiDetail.status}</div>
-                <div className="info-field"><strong>Price:</strong> ${selectedKoiDetail.price}</div>
-                <div className="info-field"><strong>Certificate:</strong> {selectedKoiDetail.certificate}</div>
+          {selectedKoiDetail && (
+            <div className="koi-detail-modal">
+              <h3>{selectedKoiDetail.type === "koi" ? "Koi Details" : "Batch Koi Details"}</h3>
+              <div className="image-container">
+                <img
+                  src={selectedKoiDetail.data.image || "placeholder.jpg"}
+                  alt={selectedKoiDetail.data.name || "No Image"}
+                  className="koi-image"
+                />
+              </div>
+              <div className="info-container">
+                {selectedKoiDetail.type === "koi" ? (
+                  <>
+                    <div className="info-field"><strong>Name:</strong> {selectedKoiDetail.data.name}</div>
+                    <div className="info-field"><strong>Type:</strong> {selectedKoiDetail.data.typeFish || "N/A"}</div>
+                    <div className="info-field"><strong>Origin:</strong> {selectedKoiDetail.data.origin}</div>
+                    <div className="info-field"><strong>Description:</strong> {selectedKoiDetail.data.description}</div>
+                    <div className="info-field"><strong>Gender:</strong> {selectedKoiDetail.data.gender}</div>
+                    <div className="info-field"><strong>Age:</strong> {selectedKoiDetail.data.age} years</div>
+                    <div className="info-field"><strong>Weight:</strong> {selectedKoiDetail.data.weight} kg</div>
+                    <div className="info-field"><strong>Size:</strong> {selectedKoiDetail.data.size} cm</div>
+                    <div className="info-field"><strong>Personality:</strong> {selectedKoiDetail.data.personality}</div>
+                    <div className="info-field"><strong>Status:</strong> {selectedKoiDetail.data.status}</div>
+                    <div className="info-field"><strong>Price:</strong> ${selectedKoiDetail.data.price}</div>
+                    <div className="info-field"><strong>Certificate:</strong> {selectedKoiDetail.data.certificate || "N/A"}</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="info-field"><strong>Batch Name:</strong> {selectedKoiDetail.data.name}</div>
+                    <div className="info-field"><strong>Description:</strong> {selectedKoiDetail.data.description || "N/A"}</div>
+                    <div className="info-field"><strong>Quantity:</strong> {selectedKoiDetail.data.quantity}</div>
+                    <div className="info-field"><strong>Weight:</strong> {selectedKoiDetail.data.weight} kg</div>
+                    <div className="info-field"><strong>Size:</strong> {selectedKoiDetail.data.size} cm</div>
+                    <div className="info-field"><strong>Age:</strong> {selectedKoiDetail.data.age} years</div>
+                    <div className="info-field"><strong>Origin:</strong> {selectedKoiDetail.data.origin}</div>
+                    <div className="info-field"><strong>Gender:</strong> {selectedKoiDetail.data.gender}</div>
+                    <div className="info-field"><strong>Status:</strong> {selectedKoiDetail.data.status}</div>
+                    <div className="info-field"><strong>Price:</strong> ${selectedKoiDetail.data.price}</div>
+                    <div className="info-field"><strong>Certificate:</strong> {selectedKoiDetail.data.certificate || "N/A"}</div>
+                    <div className="info-field"><strong>Type Batch:</strong> {selectedKoiDetail.data.typeBatch}</div>
+                  </>
+                )}
               </div>
             </div>
-          </div>
-        )}
-      </Modal>
+          )}
+        </Modal>
     </div>
   );
 };

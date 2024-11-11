@@ -175,7 +175,7 @@ if (isLoading) {
             <ShoppingCartOutlined style={{ fontSize: "24px" }} /> Cart
           </Link>
           <Modal title="Login" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            <p>Vui lòng đăng nhập để có thể truy cập.</p>
+            <p>Please log in to access.</p>
           </Modal>
         </>
           ):( <Link to="/cart" className="text-blue text-decoration-none">

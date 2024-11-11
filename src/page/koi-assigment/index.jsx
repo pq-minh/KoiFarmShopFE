@@ -352,6 +352,7 @@ const KoiAssigment =() => {
       >
         <p>Your koi assignment has been successfully created!</p>
       </Modal>
+      <p style={{color:'red'}}>*Note:The shop will charge a 10% commission fee based on the assigment's selling price of the fish.</p>
             </div>
     )
 }

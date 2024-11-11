@@ -30,7 +30,7 @@ const OrderHistoryPage = () => {
 
   const handleOrderClick = async (orderId) => {
     try {
-      const response = await api.get(`/orders/${orderId}`); // Adjusted endpoint
+      const response = await api.get(`/orders/${orderId}`); 
       setOrderDetails(response.data.filter(detail => detail.orderId === orderId)); // Filter by orderId
 
       // Scroll to the order details section
@@ -98,6 +98,21 @@ const OrderHistoryPage = () => {
       dataIndex: "createDate",
       key: "createDate",
       render: (date) => new Date(date).toLocaleString(),
+    },
+    {
+      title: "Payment Method",
+      dataIndex: "paymentMethod",
+      key: "paymentMethod",
+      render: (method) => method || "N/A",
+    },
+    {
+      title: "Payment Status",
+      dataIndex: "paymentStatus",
+      key: "paymentStatus",
+      render: (status) => {
+        const statusColor = status === "Completed" ? "red" : status === "Pending" ? "green" : "black";
+        return <span style={{ color: statusColor,fontWeight: "bold"  }}>{status}</span>;
+      },
     },
     {
       title: "Details",

@@ -126,7 +126,7 @@ const CardProduct = ({products,setProductOne,setProductTwo,isLoggedIn}) => {
                 <div className='detail'>
                   <p className='size'>Origin: {product.origin}</p>
                   <p className='size'>Weight: {product.weight} kg</p>
-                  <p className='size'>Age: {product.age} age</p>
+                  <p className='size'>Age: {product.age} year-old</p>
                   <p className='size'>Size: {product.size} cm</p>
                   <button type="button" class="button-cp" onClick={() => handleCompare(product)}>
   <span class="button__text">Compare</span>

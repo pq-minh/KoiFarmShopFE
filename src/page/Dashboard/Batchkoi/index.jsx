@@ -42,7 +42,6 @@ function ViewBatchKoi() {
               <p>Weight: {koi.weight} kg</p>
               <p>Size: {koi.size} cm</p>
               <p>Origin: {koi.origin}</p>
-              <img className="koi-image img-fluid" src={koi.certificate} alt={koi.certificate}/>
               <p>Price: VND{koi.price}</p>
               <p>Status: {koi.status}</p>
               <Button onClick={() => handleKoiId(koi.batchKoiId)}>
