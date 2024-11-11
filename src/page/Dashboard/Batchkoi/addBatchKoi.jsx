@@ -145,9 +145,9 @@ function AddBatchKoi() {
           rules={[{ required: true, message: "Please input the batch type ID!" }]}
         >
           <Select>
-            <Select.Option value="1">F1</Select.Option>
-            <Select.Option value="2">Thuần chủng</Select.Option>
-            <Select.Option value="3">Lai</Select.Option>
+            <Select.Option value="1">Thuần chủng nhập khẩu</Select.Option>
+            <Select.Option value="2">Lai F1</Select.Option>
+            <Select.Option value="3">Thuần Việt</Select.Option>
           </Select>
         </Form.Item>
 
