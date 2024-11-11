@@ -64,7 +64,7 @@ export default function Footer() {
               <h6 className='text-uppercase fw-bold mb-4'>Useful links</h6>
               <p>
                 <a href='#!' className='text-reset'>
-                  FPT University
+                  FPT University 
                 </a>
               </p>
               <p>
@@ -78,7 +78,7 @@ export default function Footer() {
                 </a>
             </p>
               <p>
-                <a href='' className='text-reset'>
+                <a href='/policy' className='text-reset'>
                   Policy
                 </a>
               </p>
