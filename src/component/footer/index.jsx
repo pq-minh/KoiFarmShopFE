@@ -78,7 +78,7 @@ export default function Footer() {
                 </a>
             </p>
               <p>
-                <a href='' className='text-reset'>
+                <a href='/policy' className='text-reset'>
                   Policy
                 </a>
               </p>

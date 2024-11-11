@@ -39,11 +39,13 @@ const Policy = () => {
           
           <h3>- Koi Fish Consignment Fees</h3>
           <ul>
-            <li>For koi priced between 100,000 - 600,000 VND, the consignment fee is 20.000 VND.</li>
-            <li>For koi priced between 600,000 - 1,000,000 VND, the consignment fee is 50.000 VND.</li>
-            <li>For koi priced between 1,000,000 - 2,000,000 VND, the consignment fee is 100.000 VND.</li>
-            <li>If the koi value exceeds these amounts, we will contact the customer directly.</li>
+            <li style={{color:'red'}}>The shop will charge a 10% commission fee based on the assigment's selling price of the fish.</li>
           </ul>
+          <h3>- Type of Assigment</h3>
+            <ul>
+            <li>Online: If the customer wants to consign online, the shop will approve the koi immediately on the platform based on the principles mentioned above.</li>
+            <li>Offline: If the customer wants to consign offline, the shop will contact the customer to discuss the price of the koi, and then approve the order for the customer directly at the shop.</li>
+            </ul>
 
           <h3>- Post-Purchase Koi Consignment Service</h3>
           <ul>

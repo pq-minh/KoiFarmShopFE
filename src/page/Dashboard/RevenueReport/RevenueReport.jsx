@@ -19,9 +19,9 @@ const RevenueReport = () => {
           key: item.orderDetailsId,
           orderDetailsId: item.orderDetailsId,
           koiName: item.koi ? item.koi.name : item.batchKoi?.name || 'N/A',
-          price: item.price,
-          customerFunds: item.customerFunds,
-          shopRevenue: item.shopRevenue,
+          price: item.price * 1000,
+          customerFunds: item.customerFunds* 1000,
+          shopRevenue: item.shopRevenue* 1000,
         }));
         setReportData(data);
       }

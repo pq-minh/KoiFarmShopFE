@@ -279,12 +279,7 @@ const App = () => {
     {
       path: "/feedback",
       element:
-      (
-        <>
-        <AllFeedback/>
-        <Footer />
-        </>
-      )   
+        <AllFeedback/>   
     },
     {
       path: "/submit-feedback",

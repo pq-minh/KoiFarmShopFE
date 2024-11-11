@@ -83,7 +83,7 @@ const OrderHistoryPage = () => {
       title: "Total Amount",
       dataIndex: "totalAmount",
       key: "totalAmount",
-      render: (amount) => `VND${amount}`,
+      render: (amount) => `${amount}.000 VND `,
     },
     {
       title: "Status",
@@ -195,8 +195,20 @@ const OrderHistoryPage = () => {
                     <div className="info-field"><strong>Size:</strong> {selectedKoiDetail.data.size} cm</div>
                     <div className="info-field"><strong>Personality:</strong> {selectedKoiDetail.data.personality}</div>
                     <div className="info-field"><strong>Status:</strong> {selectedKoiDetail.data.status}</div>
-                    <div className="info-field"><strong>Price:</strong> ${selectedKoiDetail.data.price}</div>
-                    <div className="info-field"><strong>Certificate:</strong> {selectedKoiDetail.data.certificate || "N/A"}</div>
+                    <div className="info-field"><strong>Price:</strong> {selectedKoiDetail.data.price}.000 VND</div>
+                    <div className="info-field">
+                    <div className="info-field">
+  <strong>Certificate:</strong> 
+  <a 
+    href={selectedKoiDetail.data.certificate || "#"} 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    {selectedKoiDetail.data.certificate ? "View Certificate" : "N/A"}
+  </a>
+</div>
+
+</div>
                   </>
                 ) : (
                   <>
@@ -209,8 +221,17 @@ const OrderHistoryPage = () => {
                     <div className="info-field"><strong>Origin:</strong> {selectedKoiDetail.data.origin}</div>
                     <div className="info-field"><strong>Gender:</strong> {selectedKoiDetail.data.gender}</div>
                     <div className="info-field"><strong>Status:</strong> {selectedKoiDetail.data.status}</div>
-                    <div className="info-field"><strong>Price:</strong> ${selectedKoiDetail.data.price}</div>
-                    <div className="info-field"><strong>Certificate:</strong> {selectedKoiDetail.data.certificate || "N/A"}</div>
+                    <div className="info-field"><strong>Price:</strong> {selectedKoiDetail.data.price}.000 VND</div>
+                    <div className="info-field">
+  <strong>Certificate:</strong> 
+  <a 
+    href={selectedKoiDetail.data.certificate || "#"} 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    {selectedKoiDetail.data.certificate ? "View Certificate" : "N/A"}
+  </a>
+</div>
                     <div className="info-field"><strong>Type Batch:</strong> {selectedKoiDetail.data.typeBatch}</div>
                   </>
                 )}
